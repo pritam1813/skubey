@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Merienda } from "next/font/google";
 import "./globals.css";
+import "./main.scss";
 import Header from "@/components/Header";
 
 const merienda = Merienda({

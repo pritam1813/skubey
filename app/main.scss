@@ -1,0 +1,33 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+@import "../node_modules/bootstrap/scss/variables";
+
+.row {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+.row > * {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+@media (max-width: 575px) {
+  #top .row {
+    justify-content: space-between;
+  }
+  .top-left,
+  .top-right {
+    width: auto;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    max-width: 1500px;
+  }
+}

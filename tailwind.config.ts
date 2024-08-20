@@ -24,6 +24,13 @@ const config: Config = {
       backgroundColor: "#f9f9f9",
       borderColor: "#dddddd",
     },
+    screens: {
+      sm: "576px",
+      md: "768px",
+      lg: "992px",
+      xl: "1200px",
+      xxl: "1400px",
+    },
   },
   plugins: [],
 };

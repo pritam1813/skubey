@@ -3,6 +3,7 @@ import { Merienda } from "next/font/google";
 import "./globals.css";
 import "./main.scss";
 import Header from "@/components/Header";
+import Topbar from "@/components/Topbar";
 
 const merienda = Merienda({
   subsets: ["latin"],
@@ -21,6 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={merienda.className}>
+        <Topbar />
         <Header />
         {children}
       </body>

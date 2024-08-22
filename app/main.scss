@@ -27,7 +27,95 @@
 }
 
 @media (min-width: 992px) {
+  .slick-next {
+    right: 8px !important;
+  }
+
+  .slick-prev {
+    left: 8px !important;
+  }
+
   .container {
     max-width: 1500px;
+  }
+}
+
+.slick-next {
+  width: 50px !important;
+  height: 50px !important;
+  right: 20px !important;
+
+  &::before {
+    font-size: 50px !important;
+    opacity: 1 !important;
+    border-radius: 50%;
+    color: #fdc600 !important;
+  }
+}
+
+.slick-prev {
+  width: 50px !important;
+  height: 50px !important;
+  left: 20px !important;
+  z-index: 10 !important;
+  &::before {
+    font-size: 50px !important;
+    opacity: 1 !important;
+    border-radius: 50%;
+    color: #fdc600 !important;
+  }
+}
+
+@media (max-width: 1440px) {
+  .slick-next {
+    width: 34px !important;
+    height: 34px !important;
+    &::before {
+      font-size: 34px !important;
+    }
+  }
+
+  .slick-prev {
+    width: 34px !important;
+    height: 34px !important;
+    &::before {
+      font-size: 34px !important;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .slick-next {
+    width: 30px !important;
+    height: 30px !important;
+    &::before {
+      font-size: 30px !important;
+    }
+  }
+
+  .slick-prev {
+    width: 30px !important;
+    height: 30px !important;
+    &::before {
+      font-size: 30px !important;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .slick-next {
+    width: 20px !important;
+    height: 20px !important;
+    &::before {
+      font-size: 20px !important;
+    }
+  }
+
+  .slick-prev {
+    width: 20px !important;
+    height: 20px !important;
+    &::before {
+      font-size: 20px !important;
+    }
   }
 }

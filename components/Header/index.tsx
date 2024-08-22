@@ -12,7 +12,7 @@ import { Menu } from "@/data/menu";
 
 const Header = () => {
   return (
-    <header>
+    <header className="xl:tw-absolute tw-z-[11] tw-left-0 tw-right-0">
       <div className="container">
         <div className="row justify-content-between align-items-center">
           {/* Logo */}
@@ -29,7 +29,7 @@ const Header = () => {
           </div>
 
           {/* Utilities */}
-          <div className="col-xl-2 col-lg-6 col-sm-6 col order-xl-2 d-flex justify-content-end align-items-center tw-space-x-7 tw-py-5">
+          <div className="col-xl-2 col-lg-6 col-sm-6 col order-xl-2 d-flex justify-content-end align-items-center tw-space-x-4 md:tw-space-x-5 lg:tw-space-x-7 tw-py-5">
             <button
               id="navbartoggle"
               className="d-block d-lg-none tw-m-0 tw-bg-primaryHover tw-p-[5px]"

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  faAngleDown,
   faBars,
   faCartShopping,
   faMagnifyingGlass,
@@ -62,9 +63,17 @@ const Header = () => {
                     <li key={index}>
                       <Link
                         href={item.path}
-                        className="text-decoration-none tw-text-primary d-block position-relative tw-text-base tw-py-[15px]"
+                        className="text-decoration-none tw-text-primary d-block position-relative tw-text-base/5 tw-font-bold tw-py-[15px] hover:tw-text-secondaryLight hoverUnderlineStyle"
                       >
                         {item.title}
+                        {item.submenuItems ? (
+                          <FontAwesomeIcon
+                            icon={faAngleDown}
+                            className="tw-text-sm/4 tw-w-[14px] tw-h-[14px] d-inline-block tw-pl-1 "
+                          />
+                        ) : (
+                          ""
+                        )}
                       </Link>
                     </li>
                   ))}

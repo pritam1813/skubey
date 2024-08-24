@@ -14,6 +14,9 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      boxShadow: {
+        service: "0 0px 5px 0 rgba(0, 0, 0, 22%)",
+      },
     },
     colors: {
       primary: "#3c3e3d",
@@ -25,6 +28,7 @@ const config: Config = {
       borderColor: "#dddddd",
     },
     screens: {
+      xs: "480px",
       sm: "576px",
       md: "768px",
       lg: "992px",

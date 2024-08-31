@@ -17,7 +17,7 @@ const Carousel = () => {
   return (
     <section>
       <div className="slider-container  tw-mx-auto d-block">
-        <Slider {...settings} className="position-relative z-1 ">
+        <Slider {...settings} className="position-relative z-1 carouselslider">
           <div>
             <Image
               src="/banners/mainbanner1.png"

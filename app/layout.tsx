@@ -4,6 +4,7 @@ import "./globals.css";
 import "./main.scss";
 import Header from "@/components/Header";
 import Topbar from "@/components/Topbar";
+import "animate.css";
 
 const merienda = Merienda({
   subsets: ["latin"],

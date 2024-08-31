@@ -16,6 +16,20 @@ const config: Config = {
       },
       boxShadow: {
         service: "0 0px 5px 0 rgba(0, 0, 0, 22%)",
+        card: "0 0px 5px 0 rgba(0, 0, 0, 10%)",
+      },
+      borderRadius: {
+        pillcustom: "25px",
+        cardcustom: "50px",
+      },
+      animation: {
+        moveIt: "moveIt 3.5s ease-in-out infinite",
+      },
+      keyframes: {
+        moveIt: {
+          "0%, 100%": { transform: "rotate(40deg)" },
+          "50%": { transform: "rotate(-40deg)" },
+        },
       },
     },
     colors: {

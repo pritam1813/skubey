@@ -31,7 +31,7 @@ const ServiceBox = () => {
             <div className="position-relative max-lg:tw-mt-[30px]">
               <div
                 id="animated-icon"
-                className="position-absolute tw-left-10 -tw-top-[5px] tw-w-[48px] tw-h-[85px] xs:tw-w-[92px] xs:tw-h-[152px] "
+                className="position-absolute tw-left-10 -tw-top-[5px] tw-w-[48px] tw-h-[85px] xs:tw-w-[92px] xs:tw-h-[152px] tw-animate-moveIt tw-origin-[50%_0]"
               >
                 <Image
                   src="/service/service-pattern.png"

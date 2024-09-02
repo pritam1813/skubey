@@ -62,7 +62,7 @@ const Products = () => {
     (product) => product.topProductCategory === activeTab
   );
   return (
-    <div className="tw-mt-[30px] lg:tw-mt-[50px]">
+    <div className="tw-mt-[30px] lg:tw-mt-[50px] animate__animated animate__fadeInUp">
       <div className="container sm:tw-max-w-[540px] md:tw-max-w-[720px] lg:tw-max-w-[1500px]">
         <div className="mainTab">
           <div id="productstab">
@@ -73,15 +73,15 @@ const Products = () => {
               <h3 className="tw-inline-block tw-text-xl/5 tw-mb-5 lg:tw-text-3xl/5 lg:tw-mb-[30px] tw-capitalize tw-text-primary">
                 Top Product
               </h3>
-              <div className="tw-inline-block tw-space-x-5">
+              <div className="tw-inline-block tw-space-x-[5px] lg:tw-space-x-5">
                 <button
-                  className="tw-bg-primaryHover tw-h-12 tw-w-12 tw-rounded-full tw-text-primary hover:tw-bg-primary hover:tw-text-secondary hover:tw-ease-linear hover:tw-duration-700"
+                  className="tw-bg-primaryHover tw-w-[30px] tw-h-[30px] lg:tw-h-[50px] lg:tw-w-[50px] tw-text-[18px] lg:tw-text-[20px] tw-rounded-full tw-text-primary hover:tw-bg-primary hover:tw-text-secondary hover:tw-ease-linear hover:tw-duration-700"
                   onClick={previous}
                 >
                   <FontAwesomeIcon icon={faAngleLeft} />
                 </button>
                 <button
-                  className="tw-bg-primaryHover tw-h-12 tw-w-12 tw-rounded-full tw-text-primary hover:tw-bg-primary hover:tw-text-secondary hover:tw-ease-linear hover:tw-duration-700"
+                  className="tw-bg-primaryHover tw-w-[30px] tw-h-[30px] lg:tw-h-[50px] lg:tw-w-[50px] tw-text-[18px] lg:tw-text-[20px] tw-rounded-full tw-text-primary hover:tw-bg-primary hover:tw-text-secondary hover:tw-ease-linear hover:tw-duration-700"
                   onClick={next}
                 >
                   <FontAwesomeIcon icon={faAngleRight} />

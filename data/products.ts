@@ -9,7 +9,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -21,7 +21,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "5%",
+    discount: 20,
   },
   {
     productName: "Handy Crafters",
@@ -33,7 +33,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -45,7 +45,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -57,7 +57,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -69,7 +69,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -81,7 +81,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -93,7 +93,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "featured",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -105,7 +105,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -117,7 +117,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -129,7 +129,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -141,7 +141,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -153,7 +153,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -165,7 +165,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -177,7 +177,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -189,7 +189,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "latest",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -201,7 +201,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "bestseller",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -213,7 +213,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "bestseller",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -225,7 +225,7 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "bestseller",
-    discount: "0",
+    discount: 0,
   },
   {
     productName: "Handy Crafters",
@@ -237,6 +237,6 @@ export const ProductsData = [
     rating: 4.5,
     productLink: "/",
     topProductCategory: "bestseller",
-    discount: "0",
+    discount: 0,
   },
 ];

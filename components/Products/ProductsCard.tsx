@@ -16,19 +16,48 @@ export interface ProductsCardProps {
     url: string;
     alt: string;
   };
+  discount?: number;
   price: number;
   rating: number;
   productLink: string;
 }
 
 const ProductsCard = (product: { product: ProductsCardProps }) => {
-  const { productName, productImage, price, rating, productLink } =
+  const { productName, productImage, price, rating, productLink, discount } =
     product.product;
+
+  const utilityButtons = [
+    {
+      id: 1,
+      icon: faBagShopping,
+      title: "Add to Cart",
+      link: "#",
+    },
+    {
+      id: 2,
+      icon: faHeart,
+      title: "Add to Wishlist",
+      link: "#",
+    },
+    {
+      id: 3,
+      icon: faEye,
+      title: "Quick View",
+      link: "#",
+    },
+    {
+      id: 4,
+      icon: faShuffle,
+      title: "Compare",
+      link: "#",
+    },
+  ];
+
   return (
     <div id="item">
       <div className="col col-xs-12">
         <div id="productlayout" className="animate__animated animate__zoomIn">
-          <div className="tw-group tw-border-none tw-overflow-hidden tw-mb-[30px] tw-rounded-cardcustom tw-shadow-card tw-bg-secondaryHover">
+          <div className="tw-group tw-border-none tw-overflow-hidden tw-mb-5 lg:tw-mb-[30px] tw-rounded-cardcustom tw-shadow-card tw-bg-secondaryHover">
             <div
               id="imageSection"
               className="tw-bg-backgroundColor tw-relative tw-text-center tw-overflow-hidden tw-rounded-tl-cardcustom tw-rounded-tr-cardcustom tw-border-8 tw-border-solid tw-border-secondary tw-transition-all tw-duration-500 group-hover:tw-border-secondaryHover"
@@ -45,25 +74,22 @@ const ProductsCard = (product: { product: ProductsCardProps }) => {
             </div>
             <div
               id="prodescription"
-              className="tw-relative tw-px-[15px] tw-pt-[14px] tw-pb-[25px] tw-bg-secondary tw-transition-all tw-duration-500 group-hover:tw-bg-secondaryHover tw-rounded-br-cardcustom tw-rounded-bl-cardcustom"
+              className="tw-relative tw-px-[10px] tw-pt-[14px] tw-pb-[15px] lg:tw-px-[15px] lg:tw-pb-[25px] tw-bg-secondary tw-transition-all tw-duration-500 group-hover:tw-bg-secondaryHover tw-rounded-br-cardcustom tw-rounded-bl-cardcustom"
             >
-              <div id="caption" className="">
+              <div id="caption" className="max-xl:tw-text-center">
                 <div
                   id="buttongrp"
-                  className="tw-absolute -tw-top-[26px] tw-space-x-[5px] -tw-right-[150px] group-hover:tw-right-[18px] tw-opacity-0 group-hover:tw-opacity-100 tw-transition-all tw-duration-500 "
+                  // className="tw-absolute -tw-top-[26px] tw-space-x-[5px] -tw-right-[150px] group-hover:tw-right-[18px] tw-opacity-0 group-hover:tw-opacity-100 tw-transition-all tw-duration-500 "
+                  className="tw-block tw-absolute max-lg:tw-left-0 max-lg:tw-right-0 lg:-tw-right-[150px] -tw-top-[26px] tw-space-x-2 lg:group-hover:tw-right-[18px] lg:tw-opacity-0 lg:group-hover:tw-opacity-100 tw-transition-all tw-duration-500"
                 >
-                  <button className="tw-w-[38px] tw-h-[38px] tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-text-base/9 tw-rounded-full tw-ease-linear tw-duration-500 tw-transition">
-                    <FontAwesomeIcon icon={faBagShopping} />
-                  </button>
-                  <button className="tw-w-[38px] tw-h-[38px] tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-text-base/9 tw-rounded-full tw-ease-linear tw-duration-500 tw-transition">
-                    <FontAwesomeIcon icon={faHeart} />
-                  </button>
-                  <button className="tw-w-[38px] tw-h-[38px] tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-text-base/9 tw-rounded-full tw-ease-linear tw-duration-500 tw-transition">
-                    <FontAwesomeIcon icon={faEye} />
-                  </button>
-                  <button className="tw-w-[38px] tw-h-[38px] tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-text-base/9 tw-rounded-full tw-ease-linear tw-duration-500 tw-transition">
-                    <FontAwesomeIcon icon={faShuffle} />
-                  </button>
+                  {utilityButtons.map((button) => (
+                    <button
+                      key={button.id}
+                      className="tw-text-[14px] tw-w-[30px] tw-h-[30px] lg:tw-w-10 lg:tw-h-10 lg:tw-text-base xl:tw-h-[38px] xl:tw-w-[38px] tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-rounded-full tw-ease-linear tw-duration-500 tw-transition tw-shadow-card"
+                    >
+                      <FontAwesomeIcon icon={button.icon} />
+                    </button>
+                  ))}
                 </div>
                 <div id="producttitle">
                   <h4 className="tw-text-base/5 tw-mt-[3px] tw-mb-0 tw-text-primary hover:tw-text-secondaryLight tw-font-medium">
@@ -72,13 +98,22 @@ const ProductsCard = (product: { product: ProductsCardProps }) => {
                 </div>
                 <div
                   id="price"
-                  className="tw-inline-block tw-mt-[10px] tw-text-[15px] tw-text-primary tw-font-medium"
+                  className="tw-block xl:tw-inline-block tw-mt-[7px] xl:tw-mt-[10px] tw-text-sm xl:tw-text-[15px] tw-text-primary tw-font-medium"
                 >
-                  ${price}.00
+                  {discount ? (
+                    <>
+                      <span className="tw-mr-2">${price - discount}.00</span>
+                      <span className="tw-line-through tw-text-secondaryLight">
+                        ${price}.00
+                      </span>
+                    </>
+                  ) : (
+                    <span>${price}.00</span>
+                  )}
                 </div>
                 <div
                   id="rating"
-                  className="tw-inline-block tw-float-right tw-mt-[8px] tw-space-x-1"
+                  className="tw-block xl:tw-inline-block tw-float-none xl:tw-float-right tw-mt-[5px] xl:tw-mt-2 xl:tw-p-0 tw-space-x-1"
                 >
                   <FontAwesomeIcon
                     icon={faStarEmpty}

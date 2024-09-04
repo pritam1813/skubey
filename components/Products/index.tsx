@@ -4,8 +4,7 @@ import React, { useRef, useState } from "react";
 import Slider from "react-slick";
 import ProductsCard from "./ProductsCard";
 import { ProductsData } from "@/data/products";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import SliderButton from "../Buttons/SliderButton";
 
 const Products = () => {
   const [activeTab, setActiveTab] = useState("featured");
@@ -56,6 +55,7 @@ const Products = () => {
     ],
     rows: 2,
     centerPadding: "30px",
+    // Todo Add ZoomIn animation on slide change
   };
 
   const filteredProducts = ProductsData.filter(
@@ -73,20 +73,7 @@ const Products = () => {
               <h3 className="tw-inline-block tw-text-xl/5 tw-mb-5 lg:tw-text-3xl/5 lg:tw-mb-[30px] tw-capitalize tw-text-primary">
                 Top Product
               </h3>
-              <div className="tw-inline-block tw-space-x-[5px] lg:tw-space-x-5">
-                <button
-                  className="tw-bg-primaryHover tw-w-[30px] tw-h-[30px] lg:tw-h-[50px] lg:tw-w-[50px] tw-text-[18px] lg:tw-text-[20px] tw-rounded-full tw-text-primary hover:tw-bg-primary hover:tw-text-secondary hover:tw-ease-linear hover:tw-duration-700"
-                  onClick={previous}
-                >
-                  <FontAwesomeIcon icon={faAngleLeft} />
-                </button>
-                <button
-                  className="tw-bg-primaryHover tw-w-[30px] tw-h-[30px] lg:tw-h-[50px] lg:tw-w-[50px] tw-text-[18px] lg:tw-text-[20px] tw-rounded-full tw-text-primary hover:tw-bg-primary hover:tw-text-secondary hover:tw-ease-linear hover:tw-duration-700"
-                  onClick={next}
-                >
-                  <FontAwesomeIcon icon={faAngleRight} />
-                </button>
-              </div>
+              <SliderButton previous={previous} next={next} />
             </div>
 
             <div id="tabsSection">

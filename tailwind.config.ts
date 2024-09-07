@@ -9,10 +9,20 @@ const config: Config = {
   prefix: "tw-",
   theme: {
     extend: {
+      spacing: {
+        "1.2": "5px",
+        "3.75": "15px",
+        "13": "50px",
+      },
+      margin: {
+        "1.2": "5px",
+        "3.75": "15px",
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "offer-pattern": "url('/images/offer.png')",
       },
       boxShadow: {
         service: "0 0px 5px 0 rgba(0, 0, 0, 22%)",
@@ -24,11 +34,17 @@ const config: Config = {
       },
       animation: {
         moveIt: "moveIt 3.5s ease-in-out infinite",
+        flash: "flash 7s ease-in-out infinite",
+        "flash-slow": "flash 10s ease-in-out infinite",
       },
       keyframes: {
         moveIt: {
           "0%, 100%": { transform: "rotate(40deg)" },
           "50%": { transform: "rotate(-40deg)" },
+        },
+        flash: {
+          "0%, 50%, 100%": { opacity: "1" },
+          "25%, 75%": { opacity: "0" },
         },
       },
     },

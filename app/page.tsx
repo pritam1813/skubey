@@ -4,6 +4,7 @@ import ServiceBox from "@/components/ServiceBox";
 import Products from "@/components/Products";
 import Testimonial from "@/components/Testimonial";
 import LowerBanner from "@/components/LowerBanner";
+import NewsLetter from "@/components/NewsLetter";
 
 export default function Home() {
   return (
@@ -13,6 +14,7 @@ export default function Home() {
       <Products />
       <Testimonial />
       <LowerBanner />
+      <NewsLetter />
     </main>
   );
 }

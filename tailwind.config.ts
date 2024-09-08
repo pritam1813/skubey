@@ -12,11 +12,15 @@ const config: Config = {
       spacing: {
         "1.2": "5px",
         "3.75": "15px",
+        "7.5": "30px",
         "13": "50px",
+        "25": "100px",
       },
       margin: {
         "1.2": "5px",
         "3.75": "15px",
+        "7.5": "30px",
+        "25": "100px",
       },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",

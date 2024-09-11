@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect, useRef, useState } from "react";
 import {
   faAngleDown,
   faBars,
@@ -12,8 +13,25 @@ import Link from "next/link";
 import { Menu } from "@/data/menu";
 
 const Header = () => {
+  const [showHeader, setShowHeader] = useState(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      window.scrollY > 800 ? setShowHeader(true) : setShowHeader(false);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="xl:tw-absolute tw-z-[11] tw-left-0 tw-right-0">
+    <header
+      className={` tw-z-[11] tw-left-0 tw-right-0 ${
+        showHeader
+          ? "animate__animated animate__fadeInDown tw-fixed tw-bg-secondaryHover tw-top-0 tw-right-0"
+          : "xl:tw-absolute"
+      } `}
+    >
       <div className="container">
         <div className="row justify-content-between align-items-center">
           {/* Logo */}

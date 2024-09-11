@@ -40,6 +40,8 @@ const config: Config = {
         moveIt: "moveIt 3.5s ease-in-out infinite",
         flash: "flash 7s ease-in-out infinite",
         "flash-slow": "flash 10s ease-in-out infinite",
+        rightToLeft: "rightToLeft 5s ease-in-out infinite",
+        topToBottom: "topToBottom 1s infinite",
       },
       keyframes: {
         moveIt: {
@@ -49,6 +51,16 @@ const config: Config = {
         flash: {
           "0%, 50%, 100%": { opacity: "1" },
           "25%, 75%": { opacity: "0" },
+        },
+        rightToLeft: {
+          "0%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(-50px)" },
+          "100%": { transform: "translateX(0)" },
+        },
+        topToBottom: {
+          "0%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-20px)" },
+          "100%": { transform: "translateY(0)" },
         },
       },
     },

@@ -19,6 +19,7 @@
     "bootstrap": "^5.3.3",
     "next": "14.2.6",
     "react": "^18",
+    "react-animate-height": "^3.2.3",
     "react-dom": "^18",
     "react-slick": "^0.30.2",
     "slick-carousel": "^1.8.1",

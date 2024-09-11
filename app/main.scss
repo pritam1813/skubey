@@ -196,3 +196,21 @@
     padding-left: 10px;
   }
 }
+
+// Footer
+
+#footerInnerImages > div {
+  width: 33.33%;
+  position: relative;
+}
+
+.footerTopcol {
+  width: 20% !important;
+}
+
+@media (max-width: 991px) {
+  .footerTopcol {
+    width: 100% !important;
+    float: unset !important;
+  }
+}

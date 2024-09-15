@@ -214,3 +214,11 @@
     float: unset !important;
   }
 }
+
+.translateTailwind {
+  transform: translate3d(0, 0, 0);
+  transition: all;
+  transition-duration: 0.5s;
+  transition-timing-function: ease-in-out;
+  transition-delay: 0s;
+}

@@ -31,6 +31,9 @@ const config: Config = {
       boxShadow: {
         service: "0 0px 5px 0 rgba(0, 0, 0, 22%)",
         card: "0 0px 5px 0 rgba(0, 0, 0, 10%)",
+        headerItems: "0 6px 12px rgb(0 0 0 / 18%)",
+        header: "0 6px 10px rgb(0 0 0 / 20%)",
+        mobileHeader: "0px 5px 12px 0px rgb(0 0 0 / 10%);",
       },
       borderRadius: {
         pillcustom: "25px",

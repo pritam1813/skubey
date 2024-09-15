@@ -15,10 +15,6 @@ const NewsLetter = () => {
     console.log("Is it valid", isValidEmail);
   };
 
-  useEffect(() => {
-    emailRef.current?.focus();
-  }, []);
-
   return (
     <section className="animate__animated animate__fadeInUp tw-mt-7.5 lg:tw-mt-13 tw-z-0">
       <div className="container tw-px-3.75">
@@ -54,7 +50,7 @@ const NewsLetter = () => {
                 <div className="tw-block max-xs:tw-text-center xs:tw-flex max-xl:tw-max-w-2xl max-xl:tw-m-auto">
                   <input
                     type="email"
-                    className={`max-xs:tw-rounded-cardcustom xs:tw-rounded-tl-cardcustom xs:tw-rounded-bl-cardcustom max-xs:tw-mb-2.5 tw-py-1.2 tw-px-7.5 tw-h-13 xl:tw-h-[70px] tw-border-none tw-bg-backgroundColor tw-text-secondaryLight tw-text-sm tw-font-normal tw-w-full tw-outline-0 tw-outline-none  `}
+                    className="max-xs:tw-rounded-cardcustom xs:tw-rounded-tl-cardcustom xs:tw-rounded-bl-cardcustom max-xs:tw-mb-2.5 tw-py-1.2 tw-px-7.5 tw-h-13 xl:tw-h-[70px] tw-border-none tw-bg-backgroundColor tw-text-secondaryLight tw-text-sm tw-font-normal tw-w-full tw-outline-0 tw-outline-none"
                     placeholder="Enter Your E-mail.."
                     ref={emailRef}
                   />

@@ -29,7 +29,9 @@ const TestimonialSlider = () => {
   return (
     <>
       <div className="tw-absolute -tw-mt-[2px] -tw-top-12 tw-right-7 lg:-tw-top-[70px] lg:tw-right-5">
-        <SliderButton previous={previous} next={next} />
+        <div className="tw-inline-block tw-space-x-[5px] lg:tw-space-x-5">
+          <SliderButton previous={previous} next={next} />
+        </div>
       </div>
 
       <Slider {...settings} ref={sliderRef}>

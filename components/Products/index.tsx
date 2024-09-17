@@ -73,7 +73,9 @@ const Products = () => {
               <h3 className="tw-inline-block tw-text-xl/5 tw-mb-5 lg:tw-text-3xl/5 lg:tw-mb-[30px] tw-capitalize tw-text-primary">
                 Top Product
               </h3>
-              <SliderButton previous={previous} next={next} />
+              <div className="tw-inline-block tw-space-x-[5px] lg:tw-space-x-5">
+                <SliderButton previous={previous} next={next} />
+              </div>
             </div>
 
             <div id="tabsSection">

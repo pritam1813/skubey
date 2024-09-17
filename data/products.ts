@@ -1,10 +1,11 @@
 export const ProductsData = [
   {
-    productName: "Handy Crafters",
+    id: 1,
+    productName: "Rocking Horse Toy",
     price: 120,
     productImage: {
       url: "/products/1.jpg",
-      alt: "product Name",
+      alt: "Rocking Horse Toy Product Image",
     },
     rating: 4.5,
     productLink: "/",
@@ -12,6 +13,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 2,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -24,11 +26,12 @@ export const ProductsData = [
     discount: 20,
   },
   {
-    productName: "Handy Crafters",
+    id: 3,
+    productName: "Toy Temptations",
     price: 120,
     productImage: {
       url: "/products/3.jpg",
-      alt: "product Name",
+      alt: "Toy Temptations Image",
     },
     rating: 4.5,
     productLink: "/",
@@ -36,6 +39,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 4,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -48,6 +52,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 5,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -60,6 +65,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 6,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -72,6 +78,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 7,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -84,6 +91,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 8,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -96,6 +104,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 9,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -108,6 +117,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 10,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -120,6 +130,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 11,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -132,6 +143,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 12,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -144,6 +156,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 13,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -156,6 +169,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 14,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -168,6 +182,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 15,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -180,11 +195,12 @@ export const ProductsData = [
     discount: 0,
   },
   {
-    productName: "Handy Crafters",
+    id: 16,
+    productName: "Stadium Seatings",
     price: 120,
     productImage: {
       url: "/products/16.jpg",
-      alt: "product Name",
+      alt: "Stadium Seatings",
     },
     rating: 4.5,
     productLink: "/",
@@ -192,6 +208,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 17,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -204,6 +221,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 18,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -216,6 +234,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 19,
     productName: "Handy Crafters",
     price: 120,
     productImage: {
@@ -228,6 +247,7 @@ export const ProductsData = [
     discount: 0,
   },
   {
+    id: 20,
     productName: "Handy Crafters",
     price: 120,
     productImage: {

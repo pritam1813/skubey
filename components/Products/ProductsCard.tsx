@@ -1,6 +1,6 @@
-import Link from "next/link";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBagShopping,
@@ -9,8 +9,10 @@ import {
   faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
 import { faStar as faStarEmpty } from "@fortawesome/free-regular-svg-icons";
+import { useCartStore } from "@/app/stores/CartStore";
 
 export interface ProductsCardProps {
+  id: string;
   productName: string;
   productImage: {
     url: string;
@@ -23,8 +25,10 @@ export interface ProductsCardProps {
 }
 
 const ProductsCard = (product: { product: ProductsCardProps }) => {
-  const { productName, productImage, price, rating, productLink, discount } =
+  const { productName, productImage, price, productLink, discount, id } =
     product.product;
+
+  const { items, addItem } = useCartStore((state) => state);
 
   const utilityButtons = [
     {
@@ -84,8 +88,24 @@ const ProductsCard = (product: { product: ProductsCardProps }) => {
                 >
                   {utilityButtons.map((button) => (
                     <button
+                      title={button.title}
                       key={button.id}
                       className="tw-text-[14px] tw-w-[30px] tw-h-[30px] lg:tw-w-10 lg:tw-h-10 lg:tw-text-base xl:tw-h-[38px] xl:tw-w-[38px] tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-rounded-full tw-ease-linear tw-duration-500 tw-transition tw-shadow-card"
+                      onClick={
+                        button.id === 1
+                          ? () => {
+                              addItem({
+                                id,
+                                name: productName,
+                                price,
+                                image: productImage,
+                                link: productLink,
+                              });
+                              console.log(`add to cart ${items.length}`);
+                              //console.log(cart[0]);
+                            }
+                          : undefined
+                      }
                     >
                       <FontAwesomeIcon icon={button.icon} />
                     </button>

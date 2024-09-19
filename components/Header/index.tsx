@@ -12,6 +12,7 @@ import { Menu } from "@/data/menu";
 import SearchItems from "./SearchItems";
 import HeaderAccountAccess from "./HeaderAccountAccess";
 import HeaderCart from "./HeaderCart";
+import { usePathname } from "next/navigation";
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(false);
@@ -21,7 +22,9 @@ const Header = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      window.scrollY > 800 ? setShowHeader(true) : setShowHeader(false);
+      window.scrollY > window.innerHeight
+        ? setShowHeader(true)
+        : setShowHeader(false);
     };
     const savedState = localStorage.getItem("mobileMenuState");
     if (savedState) {
@@ -47,12 +50,16 @@ const Header = () => {
     setToggleMobileMenu(!toggleMobileMenu);
   };
 
+  const pathname = usePathname();
+
   return (
     <header
       className={` tw-z-[11] tw-left-0 tw-right-0 ${
         showHeader
           ? "animate__animated animate__fadeInDown tw-fixed tw-bg-secondaryHover tw-top-0 tw-right-0  tw-shadow-header"
-          : "xl:tw-absolute"
+          : pathname === "/"
+          ? "xl:tw-absolute"
+          : ""
       } `}
     >
       <div className="container">
@@ -65,6 +72,7 @@ const Header = () => {
                 alt="Skubey Logo"
                 width={265}
                 height={150}
+                priority={true}
                 className={` tw-w-auto tw-h-auto max-xl:tw-max-w-[120px] max-xl:tw-py-1.2 ${
                   showHeader ? "tw-max-w-[120px] " : ""
                 }`}

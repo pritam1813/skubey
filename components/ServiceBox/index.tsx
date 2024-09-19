@@ -37,6 +37,7 @@ const ServiceBox = () => {
                   src="/service/service-pattern.png"
                   alt="animated icon"
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div id="main-banner">

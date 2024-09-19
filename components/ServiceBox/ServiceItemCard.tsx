@@ -22,6 +22,7 @@ const ServiceItemCard = ({
             src={icon}
             alt={imagealt}
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="group-hover/service:[transform:rotateY(360deg)] tw-duration-700"
           />
         </div>

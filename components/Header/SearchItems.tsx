@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimateHeight from "react-animate-height";
@@ -7,6 +7,27 @@ import AnimateHeight from "react-animate-height";
 const SearchItems = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [height, setHeight] = useState<string | number>(0);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setShowSearch(false);
+        setHeight(0);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const handleSearchInputShow = () => {
     setShowSearch(!showSearch);
@@ -14,7 +35,11 @@ const SearchItems = () => {
   };
   return (
     <div className="tw-relative max-lg:tw-ml-5">
-      <button className="tw-flex tw-py-5" onClick={handleSearchInputShow}>
+      <button
+        ref={buttonRef}
+        className="tw-flex tw-py-5"
+        onClick={handleSearchInputShow}
+      >
         {showSearch ? (
           <FontAwesomeIcon
             icon={faXmark}
@@ -32,7 +57,11 @@ const SearchItems = () => {
         height={height as number}
         className="tw-absolute tw-right-0 tw-z-[9]"
       >
-        <div id="headersearch" className={`tw-shadow-headerItems`}>
+        <div
+          ref={dropdownRef}
+          id="headersearch"
+          className={`tw-shadow-headerItems`}
+        >
           <div className=" tw-w-60 tw-flex tw-rounded-none tw-border-0 ">
             <input
               type="text"

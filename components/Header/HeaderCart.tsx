@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { faCartShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCartStore } from "@/app/stores/CartStore";
@@ -13,6 +13,26 @@ const HeaderCart = () => {
   const gstontotal = (18 / 100) * getTotalPrice();
   const displayedItems = items.slice(0, 3);
   const remainingItemsCount = Math.max(items.length - 3, 0);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setHeaderCartDropDown(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <div>
@@ -20,6 +40,7 @@ const HeaderCart = () => {
         <button
           className="tw-text-primary tw-py-5"
           onClick={() => setHeaderCartDropDown(!headerCartDropDown)}
+          ref={buttonRef}
         >
           <FontAwesomeIcon icon={faCartShopping} className="tw-w-5 tw-h-5" />
           {items.length > 0 && (
@@ -33,6 +54,7 @@ const HeaderCart = () => {
         </button>
         {headerCartDropDown && items.length > 0 && (
           <div
+            ref={dropdownRef}
             id="cartheaderview"
             className="tw-absolute tw-w-72 tw-bg-secondary tw-z-[1000] tw-shadow-headerItems tw-right-0 tw-p-3"
           >

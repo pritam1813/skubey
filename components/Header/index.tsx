@@ -68,7 +68,7 @@ const Header = () => {
           <div id="logo" className="col-xl-2 col-lg-6 col-sm-6 col">
             <Link href="/" className="">
               <Image
-                src="logo.svg"
+                src="/logo.svg"
                 alt="Skubey Logo"
                 width={265}
                 height={150}

@@ -15,6 +15,11 @@ const nosifier = Nosifer({
 const Breadcrumb = ({ customTitle }: { customTitle?: string }) => {
   const pathname = usePathname();
 
+  // Don't render breadcrumbs on home page or admin routes
+  if (pathname === "/" || pathname.startsWith("/admin")) {
+    return null;
+  }
+
   const pathSegments = pathname.split("/").filter((segment) => segment !== "");
 
   const breadcrumbs = pathSegments.map((segment: string, index: number) => {

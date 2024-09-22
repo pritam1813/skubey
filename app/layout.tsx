@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Topbar from "@/components/Topbar";
 import "animate.css";
 import Footer from "@/components/Footer";
+import Breadcrumb from "@/components/Breadcrumb";
 
 const merienda = Merienda({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
       <body className={merienda.className}>
         <Topbar />
         <Header />
+        <Breadcrumb />
         {children}
         <Footer />
       </body>

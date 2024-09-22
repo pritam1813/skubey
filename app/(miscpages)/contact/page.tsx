@@ -1,4 +1,5 @@
-import ContactForm from "@/components/ContactForm";
+import React from "react";
+import ContactForm from "@/components/Forms/ContactForm";
 import {
   faClock,
   faHome,
@@ -7,7 +8,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
-import React from "react";
 
 const Contact = () => {
   return (

@@ -22,6 +22,7 @@ export const Menu = [
         path: "/submenu2",
       },
     ],
+    submenuType: 1,
   },
   {
     id: 3,
@@ -29,13 +30,15 @@ export const Menu = [
     path: "/categories",
     submenu: true,
     submenuItems: [],
+    submenuType: 2,
   },
   {
     id: 4,
-    title: "Products",
+    title: "Product",
     path: "/products",
     submenu: true,
     submenuItems: [],
+    submenuType: 3,
   },
   {
     id: 5,
@@ -43,6 +46,7 @@ export const Menu = [
     path: "/pages",
     submenu: true,
     submenuItems: [],
+    submenuType: 4,
   },
   {
     id: 6,

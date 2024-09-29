@@ -1,10 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import {
-  faAngleDown,
-  faPlus,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +9,7 @@ import SearchItems from "./SearchItems";
 import HeaderAccountAccess from "./HeaderAccountAccess";
 import HeaderCart from "./HeaderCart";
 import { usePathname } from "next/navigation";
+import MenuItems from "./MenuItems";
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(false);
@@ -95,24 +92,7 @@ const Header = () => {
                             key={index}
                             className="tw-py-[25px] tw-inline-block"
                           >
-                            <Link
-                              href={item.path}
-                              passHref
-                              className="text-decoration-none tw-text-primary d-block position-relative tw-text-base/5 tw-font-bold tw-py-[15px] hover:tw-text-secondaryLight hoverUnderlineStyle"
-                              onClick={(e) => {
-                                item.submenu ? e.preventDefault() : null;
-                              }}
-                            >
-                              {item.title}{" "}
-                              {item.submenuItems ? (
-                                <FontAwesomeIcon
-                                  icon={faAngleDown}
-                                  className="tw-text-sm/4 tw-w-[14px] tw-h-[14px] d-inline-block tw-pl-1 "
-                                />
-                              ) : (
-                                ""
-                              )}
-                            </Link>
+                            <MenuItems item={item} />
                           </li>
                         ))}
                       </ul>
@@ -161,24 +141,7 @@ const Header = () => {
                       <ul className="tw-m-0 tw-list-none tw-relative tw-p-0 tw-space-x-[25px]">
                         {Menu.map((item, index) => (
                           <li key={index} className="tw-inline-block">
-                            <Link
-                              href={item.path}
-                              passHref
-                              className="text-decoration-none tw-text-primary d-lg-block tw-justify-between position-relative tw-text-base/5 tw-font-bold tw-py-[15px] hover:tw-text-secondaryLight hoverUnderlineStyle"
-                              onClick={(e) => {
-                                item.submenu ? e.preventDefault() : null;
-                              }}
-                            >
-                              {item.title}{" "}
-                              {item.submenuItems ? (
-                                <FontAwesomeIcon
-                                  icon={faAngleDown}
-                                  className="tw-text-sm/4 tw-w-[14px] tw-h-[14px] d-inline-block tw-pl-1 "
-                                />
-                              ) : (
-                                ""
-                              )}
-                            </Link>
+                            <MenuItems item={item} />
                           </li>
                         ))}
                       </ul>

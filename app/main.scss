@@ -228,3 +228,43 @@
 .breadcrumbsign {
   vertical-align: middle !important;
 }
+
+// Header submenu
+
+.OfferSubmenu {
+  &::before {
+    content: "Offer";
+    font-size: 10px;
+    border-radius: 4px;
+    background-color: #fdc600;
+    padding: 2px 5px;
+  }
+  &::after {
+    content: "";
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    margin: -1px auto 0 auto;
+    width: 5px;
+    display: block;
+    border-top: 5px solid #fdc600;
+  }
+}
+
+.HotSubmenu {
+  &::before {
+    content: "Hot";
+    font-size: 10px;
+    border-radius: 4px;
+    background-color: #3c3e3d;
+    padding: 2px 5px;
+  }
+  &::after {
+    content: "";
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    margin: -1px auto 0 auto;
+    width: 5px;
+    display: block;
+    border-top: 5px solid #3c3e3d;
+  }
+}

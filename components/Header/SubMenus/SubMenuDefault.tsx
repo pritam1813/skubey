@@ -24,4 +24,6 @@ const SubMenuDefault = forwardRef<HTMLDivElement>(({}, ref) => {
   );
 });
 
+SubMenuDefault.displayName = "SubMenuDefault";
+
 export default SubMenuDefault;

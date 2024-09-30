@@ -102,4 +102,7 @@ const SubMenu = ({ item }: { item: MenuItem }) => {
   );
 };
 
+SubMenu.displayName = "SubMenu";
+RenderSubMenuContent.displayName = "RenderSubMenuContent";
+
 export default SubMenu;

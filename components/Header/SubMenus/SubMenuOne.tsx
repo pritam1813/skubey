@@ -2,12 +2,12 @@ import React, { forwardRef } from "react";
 import Image from "next/image";
 import ToysUnderCategory, { categoryType } from "./ToysUnderCategory";
 
-interface SubMenu1Props {
+interface SubMenuOneProps {
   CategoryWiseToys: categoryType[];
   columnsCount?: number;
 }
 
-const SubMenu1 = forwardRef<HTMLDivElement, SubMenu1Props>(
+const SubMenuOne = forwardRef<HTMLDivElement, SubMenuOneProps>(
   ({ CategoryWiseToys, columnsCount = 2 }, ref) => {
     const categoriesPerColumn = Math.ceil(
       CategoryWiseToys.length / columnsCount
@@ -49,6 +49,6 @@ const SubMenu1 = forwardRef<HTMLDivElement, SubMenu1Props>(
   }
 );
 
-SubMenu1.displayName = "SubMenu1";
+SubMenuOne.displayName = "SubMenuOne";
 
-export default SubMenu1;
+export default SubMenuOne;

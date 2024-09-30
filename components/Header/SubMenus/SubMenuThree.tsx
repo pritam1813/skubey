@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import { ProductsData } from "@/data/products";
 import ProductsThumbnail from "@/components/Products/ProductsThumbnail";
 
-const SubMenu3 = forwardRef<HTMLDivElement>(({}, ref) => {
+const SubMenuThree = forwardRef<HTMLDivElement>(({}, ref) => {
   const productSubmenuArray = ["popular", "bestseller", "latest"];
   let ind = 0;
   return (
@@ -42,4 +42,6 @@ const SubMenu3 = forwardRef<HTMLDivElement>(({}, ref) => {
   );
 });
 
-export default SubMenu3;
+SubMenuThree.displayName = "SubMenuThree";
+
+export default SubMenuThree;

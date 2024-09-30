@@ -5,7 +5,7 @@ import Link from "next/link";
 import React, { forwardRef } from "react";
 import Image from "next/image";
 
-const SubMenu2 = forwardRef<HTMLDivElement>(({}, ref) => {
+const SubMenuTwo = forwardRef<HTMLDivElement>(({}, ref) => {
   return (
     <div
       ref={ref}
@@ -80,4 +80,6 @@ const SubMenu2 = forwardRef<HTMLDivElement>(({}, ref) => {
   );
 });
 
-export default SubMenu2;
+SubMenuTwo.displayName = "SubMenuTwo";
+
+export default SubMenuTwo;

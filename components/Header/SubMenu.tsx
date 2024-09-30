@@ -1,15 +1,32 @@
 "use client";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { MenuItem, SubmenuType } from "./MenuItems";
 import AnimateHeight from "react-animate-height";
 import { CategoryWiseToys } from "@/data/categories";
-import SubMenu1 from "./SubmenuTypes/SubMenu1";
-import SubMenu2 from "./SubmenuTypes/SubMenu2";
-import SubMenu3 from "./SubmenuTypes/SubMenu3";
-import { PagesSubmenu } from "@/data/pages";
-import Link from "next/link";
+import {
+  SubMenuOne,
+  SubMenuTwo,
+  SubMenuThree,
+  SubMenuDefault,
+} from "./SubMenus";
+
+export const RenderSubMenuContent = forwardRef<HTMLDivElement, MenuItem>(
+  ({ submenuType }, ref) => {
+    switch (submenuType) {
+      case SubmenuType.one:
+        return <SubMenuOne ref={ref} CategoryWiseToys={CategoryWiseToys} />;
+      case SubmenuType.two:
+        return <SubMenuTwo ref={ref} />;
+      case SubmenuType.three:
+        return <SubMenuThree ref={ref} />;
+      case SubmenuType.default:
+      default:
+        return <SubMenuDefault ref={ref} />;
+    }
+  }
+);
 
 const SubMenu = ({ item }: { item: MenuItem }) => {
   const [showSubmenu, setShowSubmenu] = useState(false);
@@ -41,39 +58,7 @@ const SubMenu = ({ item }: { item: MenuItem }) => {
     };
   }, []);
   const { submenuType } = item;
-  const renderSubMenuContent = () => {
-    switch (submenuType) {
-      case SubmenuType.one:
-        return (
-          <SubMenu1 ref={dropdownRef} CategoryWiseToys={CategoryWiseToys} />
-        );
-      case SubmenuType.two:
-        return <SubMenu2 ref={dropdownRef} />;
-      case SubmenuType.three:
-        return <SubMenu3 ref={dropdownRef} />;
-      case SubmenuType.default:
-      default:
-        return (
-          <div
-            ref={dropdownRef}
-            className=" tw-bg-secondary tw-p-5 tw-shadow-headerItems"
-          >
-            <ul className="tw-m-0 tw-p-0">
-              {PagesSubmenu.map((page, index) => (
-                <li key={index} className="tw-text-left tw-min-w-40">
-                  <Link
-                    href={page.href}
-                    className="tw-block tw-text-secondaryLight hover:tw-text-primary tw-text-sm/5 tw-font-medium tw-py-1.2 tw-no-underline tw-capitalize"
-                  >
-                    {page.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        );
-    }
-  };
+
   return (
     <>
       <button
@@ -103,7 +88,15 @@ const SubMenu = ({ item }: { item: MenuItem }) => {
           item.submenuType == SubmenuType.default ? "" : "tw-left-0"
         }`}
       >
-        {showSubmenu && renderSubMenuContent()}
+        {showSubmenu && (
+          <RenderSubMenuContent
+            ref={dropdownRef}
+            submenuType={submenuType}
+            id={item.id}
+            path={item.path}
+            title={item.title}
+          />
+        )}
       </AnimateHeight>
     </>
   );

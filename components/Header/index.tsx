@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { faPlus, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,6 +10,7 @@ import HeaderAccountAccess from "./HeaderAccountAccess";
 import HeaderCart from "./HeaderCart";
 import { usePathname } from "next/navigation";
 import MenuItems from "./MenuItems";
+import MobileSubmenu from "./MobileSubmenu";
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(false);
@@ -187,26 +188,7 @@ const Header = () => {
                             key={index}
                             className="tw-border-b tw-border-borderColor tw-border-solid tw-block tw-py-2.5 tw-px-3.75 tw-float-none tw-w-auto tw-relative -tw-ml-[1px]"
                           >
-                            <Link
-                              href={item.path}
-                              passHref
-                              className="text-decoration-none tw-text-primary tw-flex  tw-justify-between position-relative tw-text-base/5 tw-font-bold lg:tw-py-[15px] hover:tw-text-secondaryLight hoverUnderlineStyle"
-                              onClick={(e) => {
-                                item.submenu ? e.preventDefault() : null;
-                              }}
-                            >
-                              {item.title}{" "}
-                              {item.submenuItems ? (
-                                <button className="tw-w-5 tw-h-5 tw-bg-primaryHover tw-text-primary">
-                                  <FontAwesomeIcon
-                                    icon={faPlus}
-                                    className="tw-text-sm/4 tw-w-[14px] tw-h-[14px] d-inline-block"
-                                  />
-                                </button>
-                              ) : (
-                                ""
-                              )}
-                            </Link>
+                            <MobileSubmenu item={item} />
                           </li>
                         ))}
                       </ul>

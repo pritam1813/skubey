@@ -9,10 +9,13 @@ const SubMenu2 = forwardRef<HTMLDivElement>(({}, ref) => {
   return (
     <div
       ref={ref}
-      className="tw-bg-secondary tw-p-5 tw-shadow-headerItems tw-w-[900px]"
+      className="tw-bg-secondary lg:tw-p-5  lg:tw-shadow-headerItems lg:tw-w-[900px]"
     >
-      <div className="tw-grid tw-grid-cols-3 tw-grid-flow-row tw-gap-4">
-        <div id="product thumb col" className="tw-space-y-4 tw-text-left">
+      <div className="tw-grid  tw-grid-cols-1 lg:tw-grid-cols-3 tw-grid-flow-row lg:tw-gap-4">
+        <div
+          id="product thumb col"
+          className="tw-space-y-4 tw-text-left max-lg:tw-pt-3"
+        >
           <span className="tw-text-primary tw-border-b tw-border-solid tw-border-borderColor tw-text-[15px] tw-font-medium tw-block tw-pb-1.2">
             Special Products
           </span>
@@ -20,7 +23,10 @@ const SubMenu2 = forwardRef<HTMLDivElement>(({}, ref) => {
             <ProductsThumbnail key={index} product={product} />
           ))}
         </div>
-        <div id="category 1" className="tw-space-y-4 tw-text-left">
+        <div
+          id="category 1"
+          className="tw-space-y-4 tw-text-left max-lg:tw-pt-5"
+        >
           <span className="tw-text-primary tw-border-b tw-border-solid tw-border-borderColor tw-text-[15px] tw-font-medium tw-block tw-pb-1.2">
             {CategoryWiseToys[0].title}
           </span>
@@ -43,7 +49,10 @@ const SubMenu2 = forwardRef<HTMLDivElement>(({}, ref) => {
             height={80}
           />
         </div>
-        <div id="category 2" className="tw-space-y-4 tw-text-left">
+        <div
+          id="category 2"
+          className="tw-space-y-4 tw-text-left max-lg:tw-pt-5"
+        >
           <span className="tw-text-primary tw-border-b tw-border-solid tw-border-borderColor tw-text-[15px] tw-font-medium tw-block tw-pb-1.2">
             {CategoryWiseToys[1].title}
           </span>

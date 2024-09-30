@@ -4,6 +4,7 @@ export const Menu = [
     title: "Home",
     path: "/",
     submenu: false,
+    submenuType: 4,
   },
   {
     id: 2,
@@ -53,5 +54,6 @@ export const Menu = [
     title: "Blog",
     path: "/blog",
     submenu: false,
+    submenuType: 4,
   },
 ];

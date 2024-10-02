@@ -24,8 +24,8 @@ model Product {
   // Relation to Image model
   images ProductImage[]
 
-  inStock    Boolean  @default(true)
-  categories String[] @default(["latest"])
+  inStock    Boolean    @default(true)
+  categories Category[] @relation("ProductToCategory")
 }
 
 model ProductImage {
@@ -36,4 +36,10 @@ model ProductImage {
   product   Product @relation(fields: [productId], references: [id])
 
   @@index([productId])
+}
+
+model Category {
+  categoryId   Int       @id @default(autoincrement())
+  categoryName String    @unique
+  products     Product[] @relation("ProductToCategory")
 }

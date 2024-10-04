@@ -22,6 +22,7 @@
 //     })),
 // }));
 
+import { ProductImageProps } from "@/components/Products";
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 
@@ -29,10 +30,7 @@ interface Product {
   id: string;
   name: string;
   price: number;
-  image: {
-    url: string;
-    alt: string;
-  };
+  image: ProductImageProps;
   link: string;
 }
 

@@ -491,3 +491,102 @@ export const toyData = [
     categories: [{ categoryName: "Bestseller" }],
   },
 ];
+
+export const toyData2 = [
+  {
+    name: "Handy Crafters",
+    price: 34.95,
+    rating: 3.8,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/2.jpg",
+        alt: "Craft kit for kids",
+      },
+    ],
+    categories: [{ categoryName: "Featured" }],
+  },
+  {
+    name: "Teddy Bear",
+    price: 19.99,
+    rating: 4.8,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/7.jpg",
+        alt: "Soft plush teddy bear",
+      },
+    ],
+    categories: [{ categoryName: "Featured" }],
+  },
+  {
+    name: "Orange Rubber Ducky",
+    price: 9.99,
+    rating: 4.1,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/8.jpg",
+        alt: "Orange rubber duck bath toy",
+      },
+    ],
+    categories: [{ categoryName: "Featured" }],
+  },
+  {
+    name: "In The Treehouse",
+    price: 129.99,
+    rating: 4.6,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/9.jpg",
+        alt: "Wooden treehouse playset",
+      },
+    ],
+    categories: [{ categoryName: "Featured" }],
+  },
+  {
+    name: "Cartoon Robot",
+    price: 44.95,
+    rating: 3.9,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/10.jpg",
+        alt: "Colorful toy robot",
+      },
+    ],
+    categories: [{ categoryName: "Bestseller" }],
+  },
+  {
+    name: "Digital Geometric Toy",
+    price: 29.99,
+    rating: 4.3,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/11.jpg",
+        alt: "Electronic geometric puzzle toy",
+      },
+    ],
+    categories: [{ categoryName: "Bestseller" }],
+  },
+  {
+    name: "Platform Bed",
+    price: 199.99,
+    rating: 4.5,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/12.jpg",
+        alt: "Children's platform bed",
+      },
+    ],
+    categories: [{ categoryName: "Bestseller" }],
+  },
+  {
+    name: "Enlighten Kids",
+    price: 39.99,
+    rating: 3.7,
+    images: [
+      {
+        url: "storage/v1/object/public/productImages/13.jpg",
+        alt: "Educational light-up toy",
+      },
+    ],
+    categories: [{ categoryName: "Bestseller" }],
+  },
+];

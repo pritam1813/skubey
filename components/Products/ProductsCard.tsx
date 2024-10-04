@@ -8,8 +8,8 @@ import {
   faHeart,
   faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
-import { faStar as faStarEmpty } from "@fortawesome/free-regular-svg-icons";
 import { useCartStore } from "@/app/stores/CartStore";
+import { ProductsDataProps } from ".";
 
 export interface ProductsCardProps {
   id: string;
@@ -24,11 +24,11 @@ export interface ProductsCardProps {
   productLink: string;
 }
 
-const ProductsCard = (product: { product: ProductsCardProps }) => {
-  const { productName, productImage, price, productLink, discount, id } =
+const ProductsCard = (product: { product: ProductsDataProps }) => {
+  const { name, images, price, discount, id, rating, inStock, categories } =
     product.product;
 
-  const { items, addItem } = useCartStore((state) => state);
+  const { addItem } = useCartStore((state) => state);
 
   const utilityButtons = [
     {
@@ -66,10 +66,10 @@ const ProductsCard = (product: { product: ProductsCardProps }) => {
               id="imageSection"
               className="tw-bg-backgroundColor tw-relative tw-text-center tw-overflow-hidden tw-rounded-tl-cardcustom tw-rounded-tr-cardcustom tw-border-8 tw-border-solid tw-border-secondary tw-transition-all tw-duration-500 group-hover:tw-border-secondaryHover"
             >
-              <Link href={productLink}>
+              <Link href={`/product/${id}`}>
                 <Image
-                  src={productImage.url}
-                  alt={productImage.alt}
+                  src={`${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID_DEV}/${images[0].url}`}
+                  alt={images[0].alt}
                   className="img-fluid"
                   width={920}
                   height={1093}
@@ -96,12 +96,12 @@ const ProductsCard = (product: { product: ProductsCardProps }) => {
                           ? () => {
                               addItem({
                                 id,
-                                name: productName,
+                                name,
                                 price,
-                                image: productImage,
-                                link: productLink,
+                                image: images[0],
+                                link: `/product/${id}`,
                               });
-                              console.log(`add to cart ${items.length}`);
+                              //console.log(`add to cart ${items.length}`);
                               //console.log(cart[0]);
                             }
                           : undefined
@@ -113,7 +113,7 @@ const ProductsCard = (product: { product: ProductsCardProps }) => {
                 </div>
                 <div id="producttitle">
                   <h4 className="tw-text-base/5 tw-mt-[3px] tw-mb-0 tw-text-primary hover:tw-text-secondaryLight tw-font-medium">
-                    {productName}
+                    {name}
                   </h4>
                 </div>
                 <div
@@ -135,26 +135,17 @@ const ProductsCard = (product: { product: ProductsCardProps }) => {
                   id="rating"
                   className="tw-block xl:tw-inline-block tw-float-none xl:tw-float-right tw-mt-[5px] xl:tw-mt-2 xl:tw-p-0 tw-space-x-1"
                 >
-                  <FontAwesomeIcon
-                    icon={faStarEmpty}
-                    className="tw-w-[14px] tw-h-[14px] tw-text-[#e69500]"
-                  />
-                  <FontAwesomeIcon
-                    icon={faStarEmpty}
-                    className="tw-w-[14px] tw-h-[14px] tw-text-[#e69500]"
-                  />
-                  <FontAwesomeIcon
-                    icon={faStarEmpty}
-                    className="tw-w-[14px] tw-h-[14px] tw-text-[#e69500]"
-                  />
-                  <FontAwesomeIcon
-                    icon={faStarEmpty}
-                    className="tw-w-[14px] tw-h-[14px] tw-text-[#e69500]"
-                  />
-                  <FontAwesomeIcon
-                    icon={faStarEmpty}
-                    className="tw-w-[14px] tw-h-[14px] tw-text-[#e69500]"
-                  />
+                  {Array.from({ length: 5 }, (_, i) =>
+                    i < Math.floor(rating) ? (
+                      <span key={i} className="tw-text-primaryHover">
+                        &#9733;
+                      </span>
+                    ) : (
+                      <span key={i} className="tw-text-primaryHover">
+                        &#9734;
+                      </span>
+                    )
+                  )}
                 </div>
               </div>
             </div>

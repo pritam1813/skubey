@@ -3,12 +3,39 @@ import React, { useRef, useState } from "react";
 
 import Slider from "react-slick";
 import ProductsCard from "./ProductsCard";
-import { ProductsData } from "@/data/products";
 import SliderButton from "../Buttons/SliderButton";
+import useSWR from "swr";
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export interface ProductImageProps {
+  url: string;
+  alt: string;
+}
+
+interface CategoriesProps {
+  categoryName: string;
+}
+
+export interface ProductsDataProps {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  discount?: number;
+  rating: number;
+  images: ProductImageProps[];
+  categories: CategoriesProps[];
+  inStock: boolean;
+}
 
 const Products = () => {
-  const [activeTab, setActiveTab] = useState("featured");
+  const [activeTab, setActiveTab] = useState("Featured");
   const sliderRef = useRef<Slider | null>(null);
+
+  const { data, error, isLoading } = useSWR("/api/product", fetcher);
+  if (error) return <div>failed to load</div>;
+  if (isLoading) return <div>loading...</div>;
 
   const next = () => {
     if (sliderRef.current) {
@@ -22,10 +49,17 @@ const Products = () => {
   };
 
   const tabs = [
-    { title: "featured", url: "/featured" },
-    { title: "latest", url: "/latest" },
-    { title: "bestseller", url: "/bestseller" },
+    { title: "Featured", url: "/featured" },
+    { title: "Latest", url: "/latest" },
+    { title: "Bestseller", url: "/bestseller" },
   ];
+
+  const filteredProducts = data.filter(
+    (product: ProductsDataProps) =>
+      product.categories[0].categoryName === activeTab
+  );
+
+  let rowsCount = filteredProducts.length > 4 ? 2 : 1;
 
   let settings = {
     slidesToShow: 4,
@@ -53,14 +87,13 @@ const Products = () => {
         },
       },
     ],
-    rows: 2,
+    rows: rowsCount,
     centerPadding: "30px",
     // Todo Add ZoomIn animation on slide change
   };
 
-  const filteredProducts = ProductsData.filter(
-    (product) => product.topProductCategory === activeTab
-  );
+  //console.log(filteredProducts);
+
   return (
     <div className="tw-mt-[30px] lg:tw-mt-[50px] animate__animated animate__fadeInUp">
       <div className="container sm:tw-max-w-[540px] md:tw-max-w-[720px] lg:tw-max-w-[1500px]">
@@ -103,11 +136,13 @@ const Products = () => {
                   className="productslider"
                   key={activeTab}
                 >
-                  {filteredProducts.map((product, index) => (
-                    <div key={index}>
-                      <ProductsCard product={product} />
-                    </div>
-                  ))}
+                  {filteredProducts.map(
+                    (product: ProductsDataProps, index: number) => (
+                      <div key={index}>
+                        <ProductsCard product={product} />
+                      </div>
+                    )
+                  )}
                 </Slider>
               </div>
             </div>

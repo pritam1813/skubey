@@ -5,6 +5,7 @@ import Products from "@/components/Products";
 import Testimonial from "@/components/Testimonial";
 import LowerBanner from "@/components/LowerBanner";
 import NewsLetter from "@/components/NewsLetter";
+import QuickView from "@/components/Products/QuickView";
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Testimonial />
       <LowerBanner />
       <NewsLetter />
+      <QuickView />
     </main>
   );
 }

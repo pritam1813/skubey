@@ -5,29 +5,9 @@ import Slider from "react-slick";
 import ProductsCard from "./ProductsCard";
 import SliderButton from "../Buttons/SliderButton";
 import useSWR from "swr";
+import { Product } from "@/app/lib/types";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-export interface ProductImageProps {
-  url: string;
-  alt: string;
-}
-
-interface CategoriesProps {
-  categoryName: string;
-}
-
-export interface ProductsDataProps {
-  id: string;
-  name: string;
-  description?: string;
-  price: number;
-  discount?: number;
-  rating: number;
-  images: ProductImageProps[];
-  categories: CategoriesProps[];
-  inStock: boolean;
-}
 
 const Products = () => {
   const [activeTab, setActiveTab] = useState("Featured");
@@ -55,8 +35,7 @@ const Products = () => {
   ];
 
   const filteredProducts = data.filter(
-    (product: ProductsDataProps) =>
-      product.categories[0].categoryName === activeTab
+    (product: Product) => product.categories[0].categoryName === activeTab
   );
 
   let rowsCount = filteredProducts.length > 4 ? 2 : 1;
@@ -91,8 +70,6 @@ const Products = () => {
     centerPadding: "30px",
     // Todo Add ZoomIn animation on slide change
   };
-
-  //console.log(filteredProducts);
 
   return (
     <div className="tw-mt-[30px] lg:tw-mt-[50px] animate__animated animate__fadeInUp">
@@ -136,13 +113,11 @@ const Products = () => {
                   className="productslider"
                   key={activeTab}
                 >
-                  {filteredProducts.map(
-                    (product: ProductsDataProps, index: number) => (
-                      <div key={index}>
-                        <ProductsCard product={product} />
-                      </div>
-                    )
-                  )}
+                  {filteredProducts.map((product: Product, index: number) => (
+                    <div key={index}>
+                      <ProductsCard product={product} />
+                    </div>
+                  ))}
                 </Slider>
               </div>
             </div>

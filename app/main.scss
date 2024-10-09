@@ -268,3 +268,26 @@
     border-top: 5px solid #3c3e3d;
   }
 }
+
+#quickSlider {
+  .slick-slide {
+    padding: 0 5px;
+  }
+
+  /* the parent */
+  .slick-list {
+    margin: 0 -5px;
+  }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

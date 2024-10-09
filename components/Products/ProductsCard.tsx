@@ -8,27 +8,23 @@ import {
   faHeart,
   faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useCartStore } from "@/app/stores/CartStore";
-import { ProductsDataProps } from ".";
+import { useCartStore } from "@/app/stores/";
+import { Product } from "@/app/lib/types";
 
-export interface ProductsCardProps {
-  id: string;
-  productName: string;
-  productImage: {
-    url: string;
-    alt: string;
-  };
-  discount?: number;
-  price: number;
-  rating: number;
-  productLink: string;
-}
+const ProductsCard = ({ product }: { product: Product }) => {
+  const { addToCart, setQuickViewProduct } = useCartStore();
 
-const ProductsCard = (product: { product: ProductsDataProps }) => {
-  const { name, images, price, discount, id, rating, inStock, categories } =
-    product.product;
-
-  const { addItem } = useCartStore((state) => state);
+  const {
+    id,
+    name,
+    price,
+    description,
+    categories,
+    inStock,
+    images,
+    rating,
+    discount,
+  } = product;
 
   const utilityButtons = [
     {
@@ -36,24 +32,47 @@ const ProductsCard = (product: { product: ProductsDataProps }) => {
       icon: faBagShopping,
       title: "Add to Cart",
       link: "#",
+      onClickHandler: () => {
+        addToCart(product);
+      },
     },
     {
       id: 2,
       icon: faHeart,
       title: "Add to Wishlist",
       link: "#",
+      onClickHandler: () => {
+        console.log("Add to Wishlist");
+      },
     },
     {
       id: 3,
       icon: faEye,
       title: "Quick View",
       link: "#",
+      onClickHandler: () => {
+        setQuickViewProduct({
+          id,
+          name,
+          slug: `/product/${id}`,
+          description,
+          images,
+          price,
+          rating,
+          discount,
+          inStock,
+          categories,
+        });
+      },
     },
     {
       id: 4,
       icon: faShuffle,
       title: "Compare",
       link: "#",
+      onClickHandler: () => {
+        console.log("compare");
+      },
     },
   ];
 
@@ -91,21 +110,7 @@ const ProductsCard = (product: { product: ProductsDataProps }) => {
                       title={button.title}
                       key={button.id}
                       className="tw-text-[14px] tw-w-[30px] tw-h-[30px] lg:tw-w-10 lg:tw-h-10 lg:tw-text-base xl:tw-h-[38px] xl:tw-w-[38px] tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-rounded-full tw-ease-linear tw-duration-500 tw-transition tw-shadow-card"
-                      onClick={
-                        button.id === 1
-                          ? () => {
-                              addItem({
-                                id,
-                                name,
-                                price,
-                                image: images[0],
-                                link: `/product/${id}`,
-                              });
-                              //console.log(`add to cart ${items.length}`);
-                              //console.log(cart[0]);
-                            }
-                          : undefined
-                      }
+                      onClick={button.onClickHandler}
                     >
                       <FontAwesomeIcon icon={button.icon} />
                     </button>
@@ -122,13 +127,13 @@ const ProductsCard = (product: { product: ProductsDataProps }) => {
                 >
                   {discount ? (
                     <>
-                      <span className="tw-mr-2">${price - discount}.00</span>
+                      <span className="tw-mr-2">${price - discount}</span>
                       <span className="tw-line-through tw-text-secondaryLight">
-                        ${price}.00
+                        ${price}
                       </span>
                     </>
                   ) : (
-                    <span>${price}.00</span>
+                    <span>${price}</span>
                   )}
                 </div>
                 <div

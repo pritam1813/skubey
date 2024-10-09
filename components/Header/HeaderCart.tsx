@@ -2,13 +2,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { faCartShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useCartStore } from "@/app/stores/CartStore";
 import Link from "next/link";
 import Image from "next/image";
+import { useCartStore } from "@/app/stores/";
 
 const HeaderCart = () => {
   const [headerCartDropDown, setHeaderCartDropDown] = useState(false);
-  const { items, removeItem, getTotalPrice } = useCartStore((state) => state);
+  //const { items, removeItem, getTotalPrice } = useCartStore((state) => state);
+  const { cart, getTotalPrice, removeFromCart } = useCartStore(
+    (state) => state
+  );
   const fallbackImageUrl = "/products/1.jpg";
   const gstontotal = (18 / 100) * getTotalPrice();
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -45,10 +48,10 @@ const HeaderCart = () => {
             id="cartTotal"
             className="tw-pt-[3px] tw-pl-[3px] tw-pb-0.5 tw-pr-0.5 tw-absolute -tw-right-2.5 tw-top-1.2 tw-bg-primary tw-text-primaryHover tw-text-xs/3 tw-rounded-full tw-min-w-[17px] tw-z-[1] tw-text-center"
           >
-            {items.reduce((total, item) => total + item.quantity, 0)}
+            {cart.reduce((total, item) => total + item.quantity, 0)}
           </span>
         </button>
-        {headerCartDropDown && items.length > 0 && (
+        {headerCartDropDown && cart.length > 0 && (
           <ul
             style={{ minWidth: "unset" }}
             className="tw-w-[300px] tw-z-[1001] tw-p-0 tw-right-0 tw-left-auto tw-absolute tw-top-full tw-shadow-headerItems tw-bg-[#fff] tw-m-0"
@@ -60,18 +63,21 @@ const HeaderCart = () => {
             >
               <table className="tw-mb-2.5 tw-border-none tw-w-full">
                 <tbody>
-                  {items.map((item) => (
-                    <tr className="tw-my-5 tw-pb-5 tw-relative tw-border-b tw-border-solid tw-border-borderColor tw-block">
+                  {cart.map((item) => (
+                    <tr
+                      key={item.id}
+                      className="tw-my-5 tw-pb-5 tw-relative tw-border-b tw-border-solid tw-border-borderColor tw-block"
+                    >
                       <td className="tw-p-0 tw-w-[70px]">
                         <Link href={`product/${item.id}`}>
                           <Image
                             src={
                               `${process.env
                                 .NEXT_PUBLIC_SUPABASE_PROJECT_ID_DEV!}/${
-                                item.image.url
+                                item.images[0].url
                               }` || fallbackImageUrl
                             }
-                            alt={item.image.alt}
+                            alt={item.images[0].alt}
                             width={60}
                             height={71}
                             className="tw-border-solid tw-border-2 tw-border-primaryHover tw-rounded-md"
@@ -96,7 +102,7 @@ const HeaderCart = () => {
                         </div>
                       </td>
                       <td className="tw-absolute tw-top-0 tw-p-0 tw-right-0">
-                        <button onClick={() => removeItem(item.id)}>
+                        <button onClick={() => removeFromCart(item.id)}>
                           <FontAwesomeIcon
                             icon={faTrash}
                             className="tw-w-3 tw-h-3"

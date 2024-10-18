@@ -9,7 +9,7 @@ import {
   faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
 import { useCartStore } from "@/app/stores/";
-import { Product } from "@/app/lib/types";
+import { Product } from "@/app/types";
 
 const ProductsCard = ({ product }: { product: Product }) => {
   const { addToCart, setQuickViewProduct } = useCartStore();

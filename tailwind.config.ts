@@ -75,6 +75,7 @@ const config: Config = {
       secondaryLight: "#777777",
       backgroundColor: "#f9f9f9",
       borderColor: "#dddddd",
+      danger: "#F8D7DA",
     },
     screens: {
       xs: "480px",
@@ -83,6 +84,7 @@ const config: Config = {
       lg: "992px",
       xl: "1200px",
       xxl: "1400px",
+      "3xl": "1500px",
     },
   },
   plugins: [],

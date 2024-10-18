@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import ProductsCard from "./ProductsCard";
 import SliderButton from "../Buttons/SliderButton";
 import useSWR from "swr";
-import { Product } from "@/app/lib/types";
+import { Product } from "@/app/types";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 

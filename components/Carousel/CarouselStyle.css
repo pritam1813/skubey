@@ -1,0 +1,36 @@
+.embla {
+  margin-left: auto;
+  margin-right: auto;
+  width: auto;
+}
+
+.embla__viewport {
+  overflow: hidden;
+  width: 100%;
+}
+.embla__container {
+  display: flex;
+}
+
+.embla__button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.embla__slide {
+  flex: 0 0 auto;
+  min-width: 0;
+  margin-right: 20px;
+}
+
+.embla__prev {
+  left: -10%;
+}
+
+.embla__next {
+  right: -10%;
+}

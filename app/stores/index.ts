@@ -1,5 +1,5 @@
 import { devtools, persist } from "zustand/middleware";
-import { Product, CartItem } from "../lib/types";
+import { CartItem, Product } from "../types";
 import { create } from "zustand";
 
 interface QuickViewState {

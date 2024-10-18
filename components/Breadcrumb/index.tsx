@@ -12,7 +12,11 @@ const nosifier = Nosifer({
   subsets: ["latin"],
 });
 
-const Breadcrumb = ({ customTitle }: { customTitle?: string }) => {
+const Breadcrumb = ({
+  customTitle = "Not Found",
+}: {
+  customTitle?: string;
+}) => {
   const pathname = usePathname();
 
   // Don't render breadcrumbs on home page or admin routes
@@ -35,9 +39,10 @@ const Breadcrumb = ({ customTitle }: { customTitle?: string }) => {
           <h2
             className={`${nosifier.className} tw-text-primary tw-text-base/none lg:tw-text-3xl/none tw-mb-[7px] lg:tw-mb-[27px] tw-capitalize tw-relative tw-z-10`}
           >
-            {customTitle
+            {/* {customTitle
               ? customTitle
-              : breadcrumbs[breadcrumbs.length - 1].label}
+              : breadcrumbs[breadcrumbs.length - 1].label} */}
+            {customTitle}
           </h2>
           <ul className="tw-flex tw-m-0 tw-p-0 tw-flex-wrap tw-list-none tw-justify-center tw-gap-2 ">
             <li className="tw-z-10 tw-relative tw-leading-5 tw-whitespace-nowrap">
@@ -65,7 +70,9 @@ const Breadcrumb = ({ customTitle }: { customTitle?: string }) => {
                       : "tw-text-primary"
                   } tw-text-sm lg:tw-text-base tw-no-underline tw-ml-2`}
                 >
-                  {breadcrumb.label}
+                  {index === breadcrumbs.length - 1
+                    ? customTitle
+                    : breadcrumb.label}
                 </Link>
               </li>
             ))}

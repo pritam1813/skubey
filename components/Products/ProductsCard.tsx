@@ -10,9 +10,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useCartStore } from "@/app/stores/";
 import { Product } from "@/app/types";
+import useCurrencyStore from "@/app/stores/currencyStore";
 
 const ProductsCard = ({ product }: { product: Product }) => {
   const { addToCart, setQuickViewProduct } = useCartStore();
+  const { formatPrice } = useCurrencyStore();
 
   const {
     id,
@@ -133,7 +135,7 @@ const ProductsCard = ({ product }: { product: Product }) => {
                       </span>
                     </>
                   ) : (
-                    <span>${price}</span>
+                    <span>{formatPrice(price)}</span>
                   )}
                 </div>
                 <div

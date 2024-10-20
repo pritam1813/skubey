@@ -7,7 +7,7 @@ export default function NotFound() {
       <Breadcrumb />
       <div className="container">
         <div className="row">
-          <div className="col-sm-9 max-lg:tw-w-full tw-min-h-[80vh] lg:tw-space-x-5 max-lg:tw-text-center">
+          <div className="col-sm-9 max-lg:tw-w-full tw-min-h-[10vh] lg:tw-space-x-5 max-lg:tw-text-center">
             <p className="lg:tw-inline-block">
               The page you requested cannot be found!
             </p>

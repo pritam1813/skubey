@@ -12,10 +12,24 @@ const nosifier = Nosifer({
   subsets: ["latin"],
 });
 
-// Merge main breadcrumb component or Improve
-
 export default function Bradcrumb() {
-  const segments = useSelectedLayoutSegments();
+  const allsegments = useSelectedLayoutSegments();
+  console.log(allsegments);
+
+  if (
+    allsegments.length === 0 ||
+    allsegments.includes("product") ||
+    allsegments.includes("/_not-found")
+  )
+    return null;
+
+  const segments = allsegments.filter((segment) => !segment.startsWith("("));
+
+  const breadcrumbs = segments.map((segment: string, index: number) => {
+    const href = `/${segments.slice(0, index + 1).join("/")}`;
+    const label = segment.charAt(0).toUpperCase() + segment.slice(1);
+    return { href, label };
+  });
 
   return (
     <div className="tw-py-5 lg:tw-py-13 xl:tw-py-25 tw-relative tw-mb-13 lg:tw-mb-13 tw-bg-cover">
@@ -24,10 +38,7 @@ export default function Bradcrumb() {
           <h2
             className={`${nosifier.className} tw-text-primary tw-text-base/none lg:tw-text-3xl/none tw-mb-[7px] lg:tw-mb-[27px] tw-capitalize tw-relative tw-z-10`}
           >
-            {/* {customTitle
-            ? customTitle
-            : breadcrumbs[breadcrumbs.length - 1].label} */}
-            {segments[segments.length - 1]}
+            {breadcrumbs[breadcrumbs.length - 1].label}
           </h2>
           <ul className="tw-flex tw-m-0 tw-p-0 tw-flex-wrap tw-list-none tw-justify-center tw-gap-2 ">
             <li className="tw-z-10 tw-relative tw-leading-5 tw-whitespace-nowrap">
@@ -38,7 +49,7 @@ export default function Bradcrumb() {
                 Home
               </Link>
             </li>
-            {segments.map((segment, index) => (
+            {breadcrumbs.map((breadcrumb, index) => (
               <li
                 key={index}
                 className="tw-z-10 tw-relative tw-leading-5 tw-whitespace-nowrap"
@@ -48,14 +59,14 @@ export default function Bradcrumb() {
                   className="tw-w-2.5 tw-h-2.5 lg:tw-w-3 lg:tw-h-3 breadcrumbsign"
                 />
                 <Link
-                  href={`/${segment}`}
+                  href={breadcrumb.href}
                   className={`${
-                    index === segments.length - 1
+                    index === breadcrumbs.length - 1
                       ? "tw-text-secondaryLight"
                       : "tw-text-primary"
-                  } tw-text-sm lg:tw-text-base tw-no-underline tw-ml-2`}
+                  } tw-text-sm lg:tw-text-base tw-no-underline tw-ml-2 tw-capitalize`}
                 >
-                  {segment}
+                  {breadcrumb.label}
                 </Link>
               </li>
             ))}

@@ -14,7 +14,7 @@ const nosifier = Nosifer({
 
 export default function Bradcrumb() {
   const allsegments = useSelectedLayoutSegments();
-  console.log(allsegments);
+  // console.log(allsegments);
 
   if (
     allsegments.length === 0 ||

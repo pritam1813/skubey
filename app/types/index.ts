@@ -1,5 +1,12 @@
+import { ProductThumbnailProps } from "@/components/Products/ProductsThumbnail";
+
 export interface CategoriesProps {
+  categoryId: number;
   categoryName: string;
+}
+
+export interface CategoryWiseProductThumbnailProps {
+  products: ProductThumbnailProps[];
 }
 
 export interface ProductImage {

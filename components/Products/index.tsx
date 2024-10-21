@@ -7,7 +7,7 @@ import SliderButton from "../Buttons/SliderButton";
 import useSWR from "swr";
 import { Product } from "@/app/types";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 const Products = () => {
   const [activeTab, setActiveTab] = useState("Featured");

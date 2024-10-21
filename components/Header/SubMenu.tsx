@@ -11,14 +11,20 @@ import {
   SubMenuThree,
   SubMenuDefault,
 } from "./SubMenus";
+import { useCategoryWiseProducts } from "@/app/hooks/CategoryWiseProducts";
 
 export const RenderSubMenuContent = forwardRef<HTMLDivElement, MenuItem>(
   ({ submenuType }, ref) => {
+    const { data, isError, isLoading } = useCategoryWiseProducts("bestseller");
+
+    if (isError) return <div>failed to load</div>;
+    if (isLoading) return <div>loading...</div>;
+
     switch (submenuType) {
       case SubmenuType.one:
         return <SubMenuOne ref={ref} CategoryWiseToys={CategoryWiseToys} />;
       case SubmenuType.two:
-        return <SubMenuTwo ref={ref} />;
+        return <SubMenuTwo ref={ref} products={data.products} />;
       case SubmenuType.three:
         return <SubMenuThree ref={ref} />;
       case SubmenuType.default:

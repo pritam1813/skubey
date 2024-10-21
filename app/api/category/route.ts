@@ -1,5 +1,5 @@
 import prisma from "@/prisma/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 const sampleCategories = [
   { categoryName: "Latest" },
@@ -7,12 +7,14 @@ const sampleCategories = [
   { categoryName: "Featured" },
 ];
 
-export async function GET(req: Request) {
+export async function GET(req: NextRequest) {
   try {
-    //const data = req.json();
-    const data = await prisma.category.findMany({
-      include: { products: { select: { name: true, id: true } } },
-    });
+    // const { searchParams } = new URL(req.url);
+    // const id = searchParams.get("id");
+
+    // const include
+
+    const data = await prisma.category.findMany();
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.log(error);

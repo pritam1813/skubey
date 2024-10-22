@@ -19,7 +19,7 @@ const CategorySidebar = async () => {
   ).then((res) => res.json());
 
   return (
-    <aside id="sidebarleft" className="col-sm-3 tw-order-2">
+    <aside id="sidebarleft" className="col-sm-3 tw-order-2 lg:tw-order-1">
       <SidebarMenu
         menuTitle="Categories"
         menuItems={categories.map((category, index) => (

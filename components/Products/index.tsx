@@ -115,7 +115,12 @@ const Products = () => {
                 >
                   {filteredProducts.map((product: Product, index: number) => (
                     <div key={index}>
-                      <ProductsCard product={product} />
+                      <div id="item">
+                        <ProductsCard
+                          product={product}
+                          columnsStyle="col col-xs-12"
+                        />
+                      </div>
                     </div>
                   ))}
                 </Slider>

@@ -1,10 +1,13 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import useSWRMutation from "swr/mutation";
+import { PostFetcher } from "@/app/utils/fetcherFunctions";
+import toast, { Toaster } from "react-hot-toast";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -20,73 +23,96 @@ const LoginForm = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    // Handle form submission (e.g., send login request to server)
+  const { trigger, isMutating } = useSWRMutation("/api/user", PostFetcher);
+
+  const onSubmit = async (formData: FormData) => {
+    try {
+      await toast.promise(trigger(formData), {
+        loading: "Please Wait . . .",
+        success: "Logged In successfully!",
+        error: "Failed to Login",
+      });
+      reset();
+    } catch (error) {
+      console.error("Error submitting review:", error);
+    }
   };
 
+  useEffect(() => {
+    // Display error messages using toast
+    Object.entries(errors).forEach(([key, value]) => {
+      if (value?.message) {
+        toast.error(
+          `${
+            value.type === "invalid_type" ? `${key} is required` : value.message
+          } `
+        );
+      }
+    });
+  }, [errors]);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="tw-mb-3.75 tw-mt-3.75">
-        <label
-          htmlFor="email"
-          className="tw-inline-block tw-max-w-full tw-mb-1.2"
-        >
-          E-mail Address
-        </label>
+    <>
+      <Toaster position="top-center" />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="tw-mb-3.75 tw-mt-3.75">
+          <label
+            htmlFor="email"
+            className="tw-inline-block tw-max-w-full tw-mb-1.2"
+          >
+            E-mail Address
+          </label>
 
-        <input
-          {...register("email")}
-          placeholder="Your Email"
-          id="email"
-          type="email"
-          className="tw-py-1.5 tw-px-2.5 lg:tw-px-7.5 tw-rounded-[20px] lg:tw-rounded-cardcustom tw-leading-6 tw-h-10 tw-border-solid tw-border tw-border-borderColor tw-block tw-w-full tw-outline-0"
-        />
-        {errors.email && (
-          <p className="tw-text-[#f00] tw-text-sm tw-mt-1">
-            {errors.email.message}
-          </p>
-        )}
-      </div>
-      <div className="tw-mb-3.75">
-        <label
-          htmlFor="password"
-          className="tw-inline-block tw-max-w-full tw-mb-1.2"
-        >
-          Password
-        </label>
+          <input
+            {...register("email")}
+            placeholder="Your Email"
+            id="email"
+            type="email"
+            className="tw-py-1.5 tw-px-2.5 lg:tw-px-7.5 tw-rounded-[20px] lg:tw-rounded-cardcustom tw-leading-6 tw-h-10 tw-border-solid tw-border tw-border-borderColor tw-block tw-w-full tw-outline-0"
+          />
+        </div>
+        <div className="tw-mb-3.75">
+          <label
+            htmlFor="password"
+            className="tw-inline-block tw-max-w-full tw-mb-1.2"
+          >
+            Password
+          </label>
 
-        <input
-          {...register("password")}
-          placeholder="Password"
-          id="password"
-          type="password"
-          className="tw-py-1.5 tw-px-2.5 lg:tw-px-7.5 tw-rounded-[20px] lg:tw-rounded-cardcustom tw-leading-6 tw-h-10 tw-border-solid tw-border tw-border-borderColor tw-block tw-w-full tw-outline-0"
-        />
-        {errors.password && (
-          <p className="tw-text-[#f00] tw-text-sm tw-mt-1">
-            {errors.password.message}
-          </p>
-        )}
-      </div>
-      <div className="tw-flex tw-flex-wrap tw-justify-between">
-        <Link
-          href="/forgotpassword"
-          className="tw-py-2.5 tw-no-underline tw-text-primary hover:tw-text-secondaryLight tw-align-middle"
-        >
-          Forgot Password ?
-        </Link>
-        <input
-          type="submit"
-          value="Login"
-          className="tw-bg-primary tw-text-secondary hover:tw-bg-primaryHover hover:tw-text-primary tw-py-2.5 tw-px-7.5 tw-rounded-cardcustom tw-transition-all tw-duration-500 tw-ease-in-out"
-        />
-      </div>
-    </form>
+          <input
+            {...register("password")}
+            placeholder="Password"
+            id="password"
+            type="password"
+            className="tw-py-1.5 tw-px-2.5 lg:tw-px-7.5 tw-rounded-[20px] lg:tw-rounded-cardcustom tw-leading-6 tw-h-10 tw-border-solid tw-border tw-border-borderColor tw-block tw-w-full tw-outline-0"
+          />
+        </div>
+        <div className="tw-flex tw-flex-wrap tw-justify-between">
+          <Link
+            href="/forgotpassword"
+            className="tw-py-2.5 tw-no-underline tw-text-primary hover:tw-text-secondaryLight tw-align-middle"
+          >
+            Forgot Password ?
+          </Link>
+          <button
+            type="submit"
+            value="Login"
+            className="tw-bg-primary tw-text-secondary hover:tw-bg-primaryHover hover:tw-text-primary tw-py-2.5 tw-px-7.5 tw-rounded-cardcustom tw-transition-all tw-duration-500 tw-ease-in-out"
+          >
+            Login
+          </button>
+        </div>
+      </form>
+    </>
   );
 };
 

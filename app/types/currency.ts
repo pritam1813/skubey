@@ -10,12 +10,14 @@ export interface UserPreference {
   preferredCurrency: string;
 }
 
+// Define more specific types
+export type ExchangeRates = Record<string, number>;
+
 export interface CurrencyState {
-  currencies: Currency[];
-  selectedCurrency: Currency;
-  userId: string | null;
-  setSelectedCurrency: (currency: Currency) => void;
-  setUserId: (id: string | null) => void;
-  convertPrice: (amount: number) => number;
-  formatPrice: (amount: number) => string;
+  currency: string;
+  exchangeRates: ExchangeRates;
+  isLoading: boolean;
+  error: string | null;
+  setCurrency: (currency: string) => Promise<void>;
+  updateExchangeRates: () => Promise<void>;
 }

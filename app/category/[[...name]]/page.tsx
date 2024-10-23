@@ -4,8 +4,7 @@ import CustomSelect from "@/components/Dropdown/CustomSelect";
 
 import { faList, faTh } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ProductsCard from "@/components/Products/ProductsCard";
-
+import ProductCard from "@/components/ProductCard";
 const sortOptions = [
   { text: "Price: Low to High", value: "price_asc" },
   { text: "Price: High to Low", value: "price_desc" },
@@ -103,7 +102,7 @@ export default async function CategoryPage({
 
       <div id="category_row" className="row">
         {data.slice(0, 9).map((product: Product, index: number) => (
-          <ProductsCard
+          <ProductCard
             product={product}
             key={index}
             columnsStyle="col-lg-4 col-md-6 col-sm-4 col-xs-4"

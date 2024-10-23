@@ -10,6 +10,8 @@ import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import DescriptionAndReview from "@/components/Products/DescriptionAndReview";
 import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import ProductReviewForm from "@/components/Products/ProductReviewForm";
+import { Rating } from "@smastrom/react-rating";
+import ProductPrice from "@/components/ProductCard/ProductPrice";
 
 interface ProductResult extends Product {
   error?: string;
@@ -60,17 +62,10 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
                       {product.name}
                     </h1>
                     <div id="ratingDetails" className="tw-mb-2.5">
-                      {Array.from({ length: 5 }, (_, i) =>
-                        i < Math.floor(product.rating || 0) ? (
-                          <span key={i} className="tw-text-primaryHover">
-                            &#9733;
-                          </span>
-                        ) : (
-                          <span key={i} className="tw-text-primaryHover">
-                            &#9734;
-                          </span>
-                        )
-                      )}
+                      <span className="tw-max-w-16 tw-inline-flex tw-align-middle">
+                        <Rating readOnly value={product.rating} />
+                      </span>
+
                       <span className="tw-ml-2 tw-text-xs tw-text-secondaryLight tw-mr-3.75">
                         {product.rating}
                       </span>
@@ -124,20 +119,10 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
                     </ul>
                     <hr className="tw-my-5" />
                     <ul className="tw-text-primary tw-p-0 tw-leading-6">
-                      <li>
-                        <span className="tw-text-xl/5 tw-font-medium tw-text-primary tw-mr-2.5">
-                          {product.price}
-                        </span>
-                        {product.discount ? (
-                          <span className="tw-text-sm tw-inline-block tw-text-secondaryLight">
-                            <del>{product.price}</del>
-                          </span>
-                        ) : (
-                          <span className="tw-text-sm tw-inline-block tw-text-secondaryLight">
-                            <del>{product.price}</del>
-                          </span>
-                        )}
-                      </li>
+                      <ProductPrice
+                        amount={product.price}
+                        discount={product.discount}
+                      />
                       <li className="tw-text-sm tw-mt-1.2 tw-text-primary">
                         {" "}
                         GST / Tax:{" "}

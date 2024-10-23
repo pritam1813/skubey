@@ -2,7 +2,7 @@
 import React, { useRef, useState } from "react";
 
 import Slider from "react-slick";
-import ProductsCard from "./ProductsCard";
+import ProductCard from "../ProductCard";
 import SliderButton from "../Buttons/SliderButton";
 import useSWR from "swr";
 import { Product } from "@/app/types";
@@ -116,7 +116,7 @@ const Products = () => {
                   {filteredProducts.map((product: Product, index: number) => (
                     <div key={index}>
                       <div id="item">
-                        <ProductsCard
+                        <ProductCard
                           product={product}
                           columnsStyle="col col-xs-12"
                         />

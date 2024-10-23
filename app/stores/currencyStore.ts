@@ -1,45 +1,66 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import type { Currency, CurrencyState } from "@/app/types/currency";
+import { fetchExchangeRates } from "../utils/fetchExchangeRates";
+import { CurrencyState, ExchangeRates } from "../types/currency";
 
-const currencies: Currency[] = [
-  { code: "INR", symbol: "₹", name: "Indian Rupee", rate: 83.29 },
-  { code: "USD", symbol: "$", name: "US Dollar", rate: 1 },
-  { code: "EUR", symbol: "€", name: "Euro", rate: 0.92 },
-] as const;
+const defaultExchangeRates: ExchangeRates = {
+  USD: 1,
+  EUR: 0.9236,
+  INR: 84.1029,
+};
 
 const useCurrencyStore = create<CurrencyState>()(
   persist(
     (set, get) => ({
-      currencies,
-      selectedCurrency: currencies[0],
-      userId: null,
+      currency: "INR",
+      exchangeRates: defaultExchangeRates,
+      isLoading: false,
+      error: null,
 
-      setSelectedCurrency: (currency: Currency) =>
-        set({ selectedCurrency: currency }),
+      setCurrency: async (newCurrency) => {
+        set({ isLoading: true, error: null });
 
-      setUserId: (id: string | null) => set({ userId: id }),
-
-      convertPrice: (amount: number): number => {
-        const { selectedCurrency } = get();
-        return amount * selectedCurrency.rate;
+        try {
+          const rates = await fetchExchangeRates();
+          set({
+            currency: newCurrency,
+            exchangeRates: rates || defaultExchangeRates,
+            isLoading: false,
+          });
+        } catch (error) {
+          set({
+            error: "Failed to update exchange rates",
+            isLoading: false,
+          });
+        }
       },
 
-      formatPrice: (amount: number): string => {
-        const { selectedCurrency } = get();
-        return new Intl.NumberFormat("en-US", {
-          style: "currency",
-          currency: selectedCurrency.code,
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        }).format(amount * selectedCurrency.rate);
+      updateExchangeRates: async () => {
+        set({ isLoading: true, error: null });
+
+        try {
+          const rates = await fetchExchangeRates();
+          if (rates) {
+            set({
+              exchangeRates: rates,
+              isLoading: false,
+            });
+          } else {
+            throw new Error("Failed to fetch exchange rates");
+          }
+        } catch (error) {
+          set({
+            error: "Failed to update exchange rates",
+            isLoading: false,
+          });
+        }
       },
     }),
     {
       name: "currency-storage",
       partialize: (state) => ({
-        selectedCurrency: state.selectedCurrency,
-        userId: state.userId,
+        currency: state.currency,
+        exchangeRates: state.exchangeRates,
       }),
     }
   )

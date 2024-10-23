@@ -2,14 +2,18 @@
 import React, { useEffect, useRef, useState } from "react";
 
 import useCurrencyStore from "@/app/stores/currencyStore";
-import { Currency } from "@/app/types/currency";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import AnimateHeight from "react-animate-height";
 
+const currencies = [
+  { code: "INR", symbol: "₹", name: "Indian Rupee" },
+  { code: "USD", symbol: "$", name: "US Dollar" },
+  { code: "EUR", symbol: "€", name: "Euro" },
+];
+
 const CurrencySelector = () => {
-  const { currencies, selectedCurrency, setSelectedCurrency, userId } =
-    useCurrencyStore();
+  const { setCurrency, currency } = useCurrencyStore();
 
   const [dropdownShow, setDropdownShow] = useState(false);
   const [height, setHeight] = useState<string | number>(0);
@@ -41,8 +45,8 @@ const CurrencySelector = () => {
     };
   }, [handleDropdownShow]);
 
-  const handleCurrencySelect = (currency: Currency) => {
-    setSelectedCurrency(currency);
+  const handleCurrencySelect = (currency: string) => {
+    setCurrency(currency);
     setHeight(0);
   };
 
@@ -53,7 +57,7 @@ const CurrencySelector = () => {
         ref={buttonRef}
         className="text-decoration-none tw-text-primary d-block position-relative tw-text-base/5 tw-font-bold  hover:tw-text-secondaryLight"
       >
-        Currency : {selectedCurrency.code}
+        Currency : {currency}
         <FontAwesomeIcon
           icon={faAngleDown}
           className="tw-text-sm/4 tw-w-[14px] tw-h-[14px] d-inline-block tw-pl-1 "
@@ -72,7 +76,7 @@ const CurrencySelector = () => {
             <li key={currency.code}>
               <button
                 className="tw-text-left tw-py-1.2 tw-px-3.75 tw-leading-5 tw-text-primary hover:tw-text-secondaryLight tw-font-normal"
-                onClick={() => handleCurrencySelect(currency)}
+                onClick={() => handleCurrencySelect(currency.code)}
               >
                 {currency.symbol} {currency.name}
               </button>

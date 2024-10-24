@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
@@ -7,39 +8,236 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// We could not retrieve columns for the underlying table. Either it has none or you are missing rights to see them. Please check your privileges.
-// model test {
-// }
+// This model mirrors Supabase's auth.users table
+model User {
+  id        String   @id // Maps to Supabase user.id (UUID)
+  email     String   @unique // Maps to Supabase user.email
+  createdAt DateTime @default(now()) // Maps to Supabase user.created_at
+  updatedAt DateTime @updatedAt
 
-model Product {
-  id          String   @id @default(uuid())
-  name        String
-  description String?
-  price       Decimal  @db.Decimal(10, 2)
-  discount    Int?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  rating      Float    @default(0.0)
+  // Additional user profile information
+  profile Profile? // One-to-one relation with profile
 
-  // Relation to Image model
-  images ProductImage[]
+  // E-commerce related relations
+  orders        Order[]
+  reviews       Review[]
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
+  addresses     Address[]
 
-  inStock    Boolean    @default(true)
-  categories Category[] @relation("ProductToCategory")
+  @@map("users")
 }
 
-model ProductImage {
-  id        String  @id @default(uuid())
-  url       String
-  alt       String
-  productId String
-  product   Product @relation(fields: [productId], references: [id])
+// Separate profile model for additional user information
+model Profile {
+  id          String  @id @default(cuid())
+  userId      String  @unique // References Supabase user.id
+  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName   String?
+  lastName    String?
+  phoneNumber String?
+  role        Role    @default(CUSTOMER)
+  avatarUrl   String?
+  metadata    Json? // Additional profile data
 
-  @@index([productId])
+  @@map("profiles")
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+model Product {
+  id            String             @id @default(cuid())
+  name          String
+  description   String
+  price         Decimal            @db.Decimal(10, 2)
+  stock         Int                @default(0)
+  images        String[]
+  categoryId    String
+  category      Category           @relation(fields: [categoryId], references: [id])
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+  orderItems    OrderItem[]
+  cartItems     CartItem[]
+  wishlistItems WishlistItem[]
+  reviews       Review[]
+  attributes    ProductAttribute[]
+
+  // Search and filter specific fields
+  slug         String                   @unique // URL-friendly name
+  sku          String                   @unique // Stock keeping unit
+  isActive     Boolean                  @default(true)
+  isPublished  Boolean                  @default(false)
+  tags         String[] // Array of searchable tags
+  brand        String? // Brand name for filtering
+  weight       Float? // For shipping calculations
+  dimensions   Json? // Store height, width, length
+  searchVector Unsupported("tsvector")? // Full-text search vector
+  avgRating    Float                    @default(0) // Calculated average rating
+  totalReviews Int                      @default(0) // Count of reviews
+
+  // Numeric fields for various filtering scenarios
+  priceDiscount Decimal? @db.Decimal(10, 2)
+  salesCount    Int      @default(0) // Number of times sold
+  viewCount     Int      @default(0) // Number of times viewed
+
+  // Additional metadata for filtering
+  metadata Json? // Flexible storage for additional attributes
+
+  @@index([name])
+  @@index([price])
+  @@index([createdAt])
+  @@index([avgRating])
+  @@index([salesCount])
+  @@index([categoryId])
+  @@index([isActive, isPublished])
+  @@index([tags])
+  // Full-text search index (Postgres specific)
+  @@index([searchVector], type: Gin)
+  @@map("products")
 }
 
 model Category {
-  categoryId   Int       @id @default(autoincrement())
-  categoryName String    @unique
-  products     Product[] @relation("ProductToCategory")
+  id          String     @id @default(cuid())
+  name        String     @unique
+  description String?
+  parentId    String?
+  parent      Category?  @relation("CategoryToSubcategory", fields: [parentId], references: [id])
+  children    Category[] @relation("CategoryToSubcategory")
+  products    Product[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Search and filter specific fields
+  slug     String  @unique // URL-friendly name
+  isActive Boolean @default(true)
+  order    Int     @default(0) // For custom sorting
+  icon     String? // Category icon
+  imageUrl String? // Category image
+  metadata Json? // Additional metadata
+
+  // Fields for nested category handling
+  level Int      @default(0) // Depth in category tree
+  path  String[] // Full path from root to this category
+
+  @@index([name])
+  @@index([slug])
+  @@index([parentId])
+  @@index([path])
+  @@index([isActive])
+  @@map("categories")
+}
+
+model ProductAttribute {
+  id        String  @id @default(cuid())
+  name      String
+  value     String
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  // Added for better filtering
+  isFilterable Boolean @default(false)
+  isSearchable Boolean @default(false)
+  displayOrder Int     @default(0)
+
+  @@index([name, value])
+  @@index([productId])
+  @@map("product_attributes")
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  userId        String // References Supabase user.id
+  user          User          @relation(fields: [userId], references: [id])
+  status        OrderStatus   @default(PENDING)
+  total         Decimal       @db.Decimal(10, 2)
+  addressId     String
+  address       Address       @relation(fields: [addressId], references: [id])
+  orderItems    OrderItem[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  paymentStatus PaymentStatus @default(PENDING)
+  paymentId     String?
+
+  @@map("orders")
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+model OrderItem {
+  id        String  @id @default(cuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal @db.Decimal(10, 2)
+
+  @@map("order_items")
+}
+
+model CartItem {
+  id        String  @id @default(cuid())
+  userId    String // References Supabase user.id
+  user      User    @relation(fields: [userId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int
+
+  @@map("cart_items")
+}
+
+model WishlistItem {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@map("wishlist_items")
+}
+
+model Address {
+  id         String  @id @default(cuid())
+  userId     String
+  user       User    @relation(fields: [userId], references: [id])
+  street     String
+  city       String
+  state      String
+  country    String
+  postalCode String
+  isDefault  Boolean @default(false)
+  orders     Order[]
+
+  @@map("addresses")
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  userId    String // References Supabase user.id
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  rating    Int      @db.SmallInt
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
 }

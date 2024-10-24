@@ -21,14 +21,14 @@ export async function GET(req: NextRequest) {
   }
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
-    //const data = req.json();
-    const data = await prisma.category.createMany({
-      data: sampleCategories,
-      skipDuplicates: true,
+    const data = await req.json();
+    const category = await prisma.category.create({
+      data,
     });
-    return NextResponse.json(data, { status: 201 });
+
+    return NextResponse.json(category, { status: 201 });
   } catch (error) {
     console.log(error);
   }

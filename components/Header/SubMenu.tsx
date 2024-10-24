@@ -18,7 +18,19 @@ export const RenderSubMenuContent = forwardRef<HTMLDivElement, MenuItem>(
     const { data, isError, isLoading } = useCategoryWiseProducts("bestseller");
 
     if (isError) return <div>failed to load</div>;
-    if (isLoading) return <div>loading...</div>;
+    if (isLoading) {
+      switch (submenuType) {
+        case SubmenuType.one:
+          return <div>loading</div>;
+        case SubmenuType.two:
+          return <SubMenuTwo ref={ref} products={[]} isLoading={true} />;
+        case SubmenuType.three:
+          return <SubMenuThree ref={ref} />;
+        case SubmenuType.default:
+        default:
+          return <SubMenuDefault ref={ref} />;
+      }
+    }
 
     switch (submenuType) {
       case SubmenuType.one:

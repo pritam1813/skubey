@@ -1,6 +1,9 @@
 import prisma from "@/prisma/db";
 import { NextRequest, NextResponse } from "next/server";
 
+const delay = (ms: number | undefined) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 export async function GET(
   req: NextRequest,
   {

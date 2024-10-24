@@ -6,6 +6,7 @@ import ProductCard from "../ProductCard";
 import SliderButton from "../Buttons/SliderButton";
 import useSWR from "swr";
 import { Product } from "@/app/types";
+import ProductSliderSkeleon from "./ProductSliderSkeleon";
 
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -15,7 +16,7 @@ const Products = () => {
 
   const { data, error, isLoading } = useSWR("/api/product", fetcher);
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <ProductSliderSkeleon />;
 
   const next = () => {
     if (sliderRef.current) {

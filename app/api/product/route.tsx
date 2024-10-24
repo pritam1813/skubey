@@ -3,12 +3,17 @@ import prisma from "@/prisma/db";
 // import { toyData } from "@/data/products";
 import { z } from "zod";
 
+const delay = (ms: number | undefined) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
+
 // Get all product data
 export async function GET() {
   try {
     const products = await prisma.product.findMany({
       include: { categories: true, images: true },
     });
+
+    // await delay(5000);
     return NextResponse.json(products, { status: 200 });
   } catch (error) {
     console.log(error);

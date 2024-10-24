@@ -7,6 +7,7 @@ import Topbar from "@/components/Topbar";
 import "animate.css";
 import Footer from "@/components/Footer";
 import Bradcrumb from "@/components/Breadcrumb/Bradcrumb";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const merienda = Merienda({
   subsets: ["latin"],

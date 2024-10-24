@@ -3,6 +3,7 @@ import ProductsThumbnail, {
   ProductThumbnailProps,
 } from "@/components/Products/ProductsThumbnail";
 import { useCategoryWiseProducts } from "@/app/hooks/CategoryWiseProducts";
+import { ProductThumbnailSkeleton } from "@/components/Skeletons";
 
 type CategorySection = {
   category: string;
@@ -23,7 +24,24 @@ const SubMenuThree = forwardRef<HTMLDivElement>((_, ref) => {
 
   // Check for loading state
   if (results.some((result) => result.isLoading)) {
-    return <div className="tw-p-4">Loading...</div>;
+    return (
+      <div className="tw-bg-secondary lg:tw-p-5 max-lg:tw-pt-5 lg:tw-shadow-headerItems lg:tw-w-[900px]">
+        <div className="tw-grid tw-grid-cols-1 lg:tw-grid-cols-3 tw-grid-flow-row tw-gap-4">
+          {SECTIONS.map(({ category, title }, sectionIndex) => (
+            <div key={sectionIndex}>
+              <span className="tw-text-left tw-text-primary tw-border-b tw-border-solid tw-border-borderColor tw-text-[15px] tw-font-medium tw-block tw-pb-1.2 tw-capitalize">
+                {title || `${category} products`}
+              </span>
+              {Array.from({ length: 3 }, (_, i) => (
+                <div key={i} className="tw-my-3">
+                  <ProductThumbnailSkeleton />
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
   }
 
   // Check for errors

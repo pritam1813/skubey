@@ -1,13 +1,6 @@
 import type { Metadata } from "next";
 import { Merienda } from "next/font/google";
 import "./globals.css";
-import "./main.scss";
-import Header from "@/components/Header";
-import Topbar from "@/components/Topbar";
-import "animate.css";
-import Footer from "@/components/Footer";
-import Bradcrumb from "@/components/Breadcrumb/Bradcrumb";
-import "react-loading-skeleton/dist/skeleton.css";
 
 const merienda = Merienda({
   subsets: ["latin"],
@@ -25,13 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={merienda.className}>
-        <Topbar />
-        <Header />
-        <Bradcrumb />
-        {children}
-        <Footer />
-      </body>
+      <body className={merienda.className}>{children}</body>
     </html>
   );
 }

@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: ["class"],
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -26,7 +27,6 @@ const config: Config = {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        "offer-pattern": "url('/images/offer.png')",
       },
       boxShadow: {
         service: "0 0px 5px 0 rgba(0, 0, 0, 22%)",
@@ -38,6 +38,9 @@ const config: Config = {
       borderRadius: {
         pillcustom: "25px",
         cardcustom: "50px",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       animation: {
         moveIt: "moveIt 3.5s ease-in-out infinite",
@@ -48,35 +51,66 @@ const config: Config = {
       },
       keyframes: {
         moveIt: {
-          "0%, 100%": { transform: "rotate(40deg)" },
-          "50%": { transform: "rotate(-40deg)" },
+          "0%, 100%": {
+            transform: "rotate(40deg)",
+          },
+          "50%": {
+            transform: "rotate(-40deg)",
+          },
         },
         flash: {
-          "0%, 50%, 100%": { opacity: "1" },
-          "25%, 75%": { opacity: "0" },
+          "0%, 50%, 100%": {
+            opacity: "1",
+          },
+          "25%, 75%": {
+            opacity: "0",
+          },
         },
         rightToLeft: {
-          "0%": { transform: "translateX(0)" },
-          "50%": { transform: "translateX(-50px)" },
-          "100%": { transform: "translateX(0)" },
+          "0%": {
+            transform: "translateX(0)",
+          },
+          "50%": {
+            transform: "translateX(-50px)",
+          },
+          "100%": {
+            transform: "translateX(0)",
+          },
         },
         topToBottom: {
-          "0%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-20px)" },
-          "100%": { transform: "translateY(0)" },
+          "0%": {
+            transform: "translateY(0)",
+          },
+          "50%": {
+            transform: "translateY(-20px)",
+          },
+          "100%": {
+            transform: "translateY(0)",
+          },
         },
       },
+      colors: {
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
+        primary: "#3c3e3d",
+        primaryHover: "#fdc600",
+        secondary: "#ffffff",
+        secondaryHover: "#ccf7ff",
+        secondaryLight: "#777777",
+        backgroundColor: "#f9f9f9",
+        borderColor: "#dddddd",
+        danger: "#F8D7DA",
+      },
     },
-    colors: {
-      primary: "#3c3e3d",
-      primaryHover: "#fdc600",
-      secondary: "#ffffff",
-      secondaryHover: "#ccf7ff",
-      secondaryLight: "#777777",
-      backgroundColor: "#f9f9f9",
-      borderColor: "#dddddd",
-      danger: "#F8D7DA",
-    },
+
     screens: {
       xs: "480px",
       sm: "576px",
@@ -87,6 +121,6 @@ const config: Config = {
       "3xl": "1500px",
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
 export default config;

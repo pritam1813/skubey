@@ -1,31 +1,18 @@
 import { z } from "zod";
 
-export const categorySchema = z.object({
-  name: z
-    .string()
-    .min(2, "Name must be at least 2 characters")
-    .max(50, "Name must be less than 50 characters"),
-  slug: z
-    .string()
-    .min(2, "Slug must be at least 2 characters")
-    .max(50, "Slug must be less than 50 characters")
-    .regex(
-      /^[a-z0-9]+(?:-[a-z0-9]+)*$/,
-      "Slug must contain only lowercase letters, numbers, and hyphens"
-    ),
-  description: z
-    .string()
-    .max(500, "Description must be less than 500 characters")
-    .optional(),
+// Validation schema for category
+export const CategorySchema = z.object({
+  name: z.string().min(2).max(50),
+  description: z.string().optional(),
   parentId: z.string().optional().nullable(),
-  isActive: z.boolean().default(true),
-  order: z.number().int().min(0, "Order must be a positive number").default(0),
+  isActive: z.boolean().optional(),
+  order: z.number().optional(),
   icon: z.string().optional(),
-  imageUrl: z.string().url("Invalid image URL").optional(),
+  imageUrl: z.string().optional(),
   metadata: z.record(z.any()).optional(),
 });
 
-export type CategoryFormData = z.infer<typeof categorySchema>;
+export type CategoryFormData = z.infer<typeof CategorySchema>;
 
 export interface ParentCategory {
   id: string;
@@ -33,7 +20,22 @@ export interface ParentCategory {
 }
 
 export type CategoryFormProps = {
-  onSubmit: (data: CategoryFormData) => Promise<void>;
   parentCategories?: ParentCategory[];
   initialData?: Partial<CategoryFormData>;
 };
+
+export const createCategorySchema = z.object({
+  name: z
+    .string()
+    .min(2, "Name must be at least 2 characters")
+    .max(50, "Name cannot exceed 50 characters"),
+  description: z.string().optional(),
+  parentId: z.string().optional(),
+  isActive: z.boolean().optional(),
+  order: z.number().optional(),
+  icon: z.string().optional(),
+  imageUrl: z.string().optional(),
+  metadata: z.record(z.any()).optional(),
+});
+
+export type CreateCategoryInput = z.infer<typeof createCategorySchema>;

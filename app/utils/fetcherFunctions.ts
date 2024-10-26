@@ -7,3 +7,5 @@ export const PostFetcher = async (url: string, { arg }: { arg: Object }) => {
   if (!res.ok) throw new Error("Failed to submit review");
   return res.json();
 };
+
+export const fetcher = (url: string) => fetch(url).then((r) => r.json());

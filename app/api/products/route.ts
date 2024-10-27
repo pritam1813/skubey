@@ -1,96 +1,133 @@
 import { NextResponse } from "next/server";
 import prisma from "@/prisma/db";
-// import { toyData } from "@/data/products";
 import { z } from "zod";
+import { Prisma } from "@prisma/client";
+
+export const ProductSchema = z.object({
+  name: z.string().min(2).max(100),
+  description: z.string(),
+  price: z.number().positive(),
+  stock: z.number().int().min(0),
+  images: z.array(z.string()),
+  categoryId: z.string(),
+  sku: z.string(),
+  isActive: z.boolean().optional(),
+  isPublished: z.boolean().optional(),
+  tags: z.array(z.string()).optional(),
+  brand: z.string().optional(),
+  weight: z.number().optional(),
+  dimensions: z.record(z.any()).optional(),
+  priceDiscount: z.number().optional(),
+  metadata: z.record(z.any()).optional(),
+  attributes: z
+    .array(
+      z.object({
+        name: z.string(),
+        value: z.string(),
+        isFilterable: z.boolean().optional(),
+        isSearchable: z.boolean().optional(),
+        displayOrder: z.number().optional(),
+      })
+    )
+    .optional(),
+});
 
 const delay = (ms: number | undefined) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
-// Get all product data
-export async function GET() {
+export async function POST(req: Request) {
   try {
-    const products = await prisma.product.findMany({
-      include: { categories: true, images: true },
+    const body = await req.json();
+    const validatedData = ProductSchema.parse(body);
+
+    const product = await prisma.product.create({
+      data: {
+        ...validatedData,
+        slug: validatedData.name.toLowerCase().replace(/\s+/g, "-"),
+        attributes: {
+          create: validatedData.attributes,
+        },
+      },
+      include: {
+        category: true,
+        attributes: true,
+      },
     });
 
-    // await delay(5000);
-    return NextResponse.json(products, { status: 200 });
+    return NextResponse.json(product, { status: 201 });
   } catch (error) {
-    console.log(error);
+    if (error instanceof z.ZodError) {
+      return NextResponse.json({ error: error.errors }, { status: 400 });
+    }
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
 
-// Define the schema for image
-const ProductImageSchema = z.object({
-  url: z.string().url(),
-  alt: z.string(),
-});
-
-// Define the schema for product creation
-const CreateProductSchema = z.object({
-  name: z.string().min(1, "Name is required"),
-  description: z.string().optional(),
-  price: z.number().positive("Price must be positive"),
-  discount: z.number().min(0).max(100).optional(),
-  inStock: z.boolean().default(true),
-  categories: z.array(z.string()).default(["latest"]),
-  images: z.array(ProductImageSchema).min(1, "At least one image is required"),
-});
-
-// Creating a product
-export async function POST(request: Request) {
+export async function GET(req: Request) {
   try {
-    // Parse request body
-    //const json = await request.json();
+    const { searchParams } = new URL(req.url);
+    const page = parseInt(searchParams.get("page") ?? "1");
+    const limit = parseInt(searchParams.get("limit") ?? "10");
+    const search = searchParams.get("search");
+    const categoryId = searchParams.get("categoryId");
+    const minPrice = searchParams.get("minPrice");
+    const maxPrice = searchParams.get("maxPrice");
+    const brand = searchParams.get("brand");
+    const inStock = searchParams.get("inStock");
+    const sortBy = searchParams.get("sortBy") ?? "createdAt";
+    const sortOrder = searchParams.get("sortOrder") ?? "desc";
 
-    // Validate input
-    //const validatedData = CreateProductSchema.parse(JSON.parse(sampData));
+    const where = {
+      isActive: true,
+      ...(search && {
+        OR: [
+          { name: { contains: search, mode: Prisma.QueryMode.insensitive } },
+          {
+            description: {
+              contains: search,
+              mode: Prisma.QueryMode.insensitive,
+            },
+          },
+          { tags: { has: search } },
+        ],
+      }),
+      ...(categoryId && { categoryId }),
+      ...(brand && { brand }),
+      ...(inStock === "true" && { stock: { gt: 0 } }),
+      ...((minPrice || maxPrice) && {
+        price: {
+          ...(minPrice && { gte: parseFloat(minPrice) }),
+          ...(maxPrice && { lte: parseFloat(maxPrice) }),
+        },
+      }),
+    };
 
-    // Create product with images
-    // const product = await prisma.product.create({
-    //   data: {
-    //     name: validatedData.name,
-    //     description: validatedData.description,
-    //     price: validatedData.price,
-    //     discount: validatedData.discount,
-    //     inStock: validatedData.inStock,
-    //     categories: validatedData.categories,
-    //     images: {
-    //       create: validatedData.images,
-    //     },
-    //   },
-    //   include: {
-    //     images: true, // Include images in the response
-    //   },
-    // });
+    const [products, total] = await Promise.all([
+      prisma.product.findMany({
+        where,
+        include: {
+          category: true,
+          attributes: true,
+        },
+        skip: (page - 1) * limit,
+        take: limit,
+        orderBy: { [sortBy]: sortOrder },
+      }),
+      prisma.product.count({ where }),
+    ]);
 
-    //To add sample data
-
-    // toyData.map(async (product) => {
-    //   await prisma.product.create({
-    //     data: {
-    //       name: product.name,
-    //       price: product.price,
-    //       rating: product.rating,
-    //       images: {
-    //         create: product.images.map((image) => ({
-    //           url: image.url,
-    //           alt: image.alt,
-    //         })),
-    //       },
-    //       categories: {
-    //         connectOrCreate: product.categories.map((category) => ({
-    //           where: { categoryName: category.categoryName },
-    //           create: { categoryName: category.categoryName },
-    //         })),
-    //       },
-    //     },
-    //   });
-    // });
-
-    return NextResponse.json({ message: "product added" }, { status: 201 });
+    return NextResponse.json({
+      products,
+      total,
+      pages: Math.ceil(total / limit),
+    });
   } catch (error) {
-    console.error("Error adding sample products:", error);
-    return NextResponse.json({ error: "Internal server error" });
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }

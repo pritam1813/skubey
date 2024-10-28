@@ -267,6 +267,7 @@ const ProductForm = () => {
                     <FormControl>
                       <Input
                         type="number"
+                        step="0.01"
                         {...field}
                         onChange={(e) =>
                           field.onChange(parseFloat(e.target.value))
@@ -502,7 +503,7 @@ const ProductForm = () => {
                       <FormControl>
                         <Input
                           type="number"
-                          min={0}
+                          step="0.01"
                           {...field}
                           onChange={(e) =>
                             field.onChange(parseFloat(e.target.value))

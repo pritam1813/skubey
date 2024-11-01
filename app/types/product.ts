@@ -13,7 +13,6 @@ export const ProductSchema = z
     price: z.number().positive("Price must be positive"),
     stock: z.number().int().min(0, "Stock cannot be negative"),
     categoryId: z.string().min(1, "Category is required"),
-    sku: z.string().optional(),
     isActive: z.boolean().optional(),
     isPublished: z.boolean().optional(),
     tags: z.array(z.string()).optional(),

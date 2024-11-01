@@ -10,7 +10,6 @@ export const ProductSchema = z.object({
   stock: z.number().int().min(0),
   images: z.array(z.string()),
   categoryId: z.string(),
-  sku: z.string(),
   isActive: z.boolean().optional(),
   isPublished: z.boolean().optional(),
   tags: z.array(z.string()).optional(),

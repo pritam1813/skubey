@@ -67,7 +67,6 @@ model Product {
 
   // Search and filter specific fields
   slug         String                   @unique // URL-friendly name
-  sku          String                   @unique // Stock keeping unit
   isActive     Boolean                  @default(true)
   isPublished  Boolean                  @default(false)
   tags         String[] // Array of searchable tags

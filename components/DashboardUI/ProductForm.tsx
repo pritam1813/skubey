@@ -81,7 +81,6 @@ const ProductForm = () => {
       price: 0,
       stock: 0,
       categoryId: "",
-      sku: "",
       isActive: true,
       isPublished: false,
       brand: "",
@@ -511,20 +510,6 @@ const ProductForm = () => {
                           className="no-step"
                           onWheel={(e) => (e.target as HTMLInputElement).blur()}
                         />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="sku"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>SKU</FormLabel>
-                      <FormControl>
-                        <Input {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>

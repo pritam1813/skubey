@@ -42,7 +42,6 @@ interface Product {
   attributes: ProductAttribute[];
   reviews: Review[];
   slug: string;
-  sku: string;
   isActive: boolean;
   isPublished: boolean;
   tags: string[];

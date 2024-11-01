@@ -98,6 +98,8 @@ const ProductTable = () => {
     fetcher
   );
 
+  console.log("Products: ", data);
+
   // Fetch categories for the form
   const { data: categoriesData } = useSWR<CategoriesApiResponse>(
     "/api/category",
@@ -143,12 +145,12 @@ const ProductTable = () => {
 
   const handleDelete = async (productId: string) => {
     try {
-      //   await fetch(`/api/products/${productId}`, {
-      //     method: "DELETE",
-      //   });
-      //   mutate();
-      //   clearSelection();
-      console.log(productId);
+      await fetch(`/api/products/${productId}`, {
+        method: "DELETE",
+      });
+      mutate();
+      clearSelection();
+      // console.log(productId);
     } catch (error) {
       console.error("Error deleting product:", error);
     }
@@ -156,14 +158,14 @@ const ProductTable = () => {
 
   const handleBulkDelete = async () => {
     try {
-      //   await Promise.all(
-      //     selectedProducts.map((id) =>
-      //       fetch(`/api/products/${id}`, { method: "DELETE" })
-      //     )
-      //   );
-      //   mutate();
-      //   clearSelection();
-      console.log(selectedProducts);
+      await Promise.all(
+        selectedProducts.map((id) =>
+          fetch(`/api/products/${id}`, { method: "DELETE" })
+        )
+      );
+      mutate();
+      clearSelection();
+      // console.log(selectedProducts);
     } catch (error) {
       console.error("Error performing bulk delete:", error);
     }

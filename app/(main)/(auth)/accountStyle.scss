@@ -1,0 +1,46 @@
+.container {
+  max-width: 100% !important;
+}
+
+@media (min-width: 1341px) {
+  #sidebarleft {
+    width: 20%;
+  }
+}
+
+@media (min-width: 1341px) and (max-width: 1440px) {
+  .container {
+    width: 1300px !important;
+  }
+}
+
+@media (min-width: 1441px) and (max-width: 1540px) {
+  .container {
+    width: 1400px;
+  }
+}
+
+@media (min-width: 1541px) {
+  .container {
+    width: 1500px;
+  }
+}
+
+// Sidebar
+
+@media (max-width: 991px) {
+  #content {
+    width: 100% !important;
+  }
+
+  #sidebarleft {
+    width: 100% !important;
+    margin-top: 30px !important;
+  }
+}
+
+@media (max-width: 767px) {
+  #sidebarleft {
+    margin-top: 20px !important;
+  }
+}

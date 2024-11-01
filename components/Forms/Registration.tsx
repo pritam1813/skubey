@@ -1,54 +1,21 @@
 "use client";
-import Link from "next/link";
 import React from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
+import Link from "next/link";
+import { createUser } from "@/app/actions";
+import { useFormState } from "react-dom";
+import { useFormErrors } from "@/app/hooks/useFormErrors";
+import FormErrorMessage from "./FormErrorMessage";
+import { Toaster } from "react-hot-toast";
 
-const schema = z
-  .object({
-    firstName: z
-      .string()
-      .min(3, { message: "First name must be at least 3 characters" }),
-    lastName: z
-      .string()
-      .min(3, { message: "Last name must be at least 3 characters" }),
-    email: z.string().email({ message: "Invalid email address" }),
-    phone: z
-      .string()
-      .regex(/^\d{10}$/, { message: "Phone number must be 10 digits" }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
-    confirmPassword: z.string(),
-    newsletter: z.enum(["yes", "no"]).default("yes"),
-    agree: z.literal(true, {
-      errorMap: () => ({ message: "You must agree to the Privacy Policy" }),
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
-
-type FormData = z.infer<typeof schema>;
+const initialState = {
+  errors: undefined,
+  success: false,
+  code: undefined,
+};
 
 const Registration = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
-    defaultValues: {
-      newsletter: "yes",
-    },
-  });
-
-  const onSubmit = (data: FormData) => {
-    console.log(data);
-    // Handle form submission
-  };
+  const [state, formAction] = useFormState(createUser, initialState);
+  const { getFieldError } = useFormErrors(state);
 
   const personalDetails = [
     { label: "First Name", name: "firstName", type: "text" },
@@ -56,9 +23,11 @@ const Registration = () => {
     { label: "E-Mail", name: "email", type: "email" },
     { label: "Phone", name: "phone", type: "tel" },
   ];
+  // console.log(state);
 
   return (
-    <form className="tw-block" onSubmit={handleSubmit(onSubmit)}>
+    <form className="tw-block" action={formAction}>
+      <Toaster position="top-center" toastOptions={{ duration: 5000 }} />
       <fieldset id="account">
         <legend className="tw-text-lg tw-border-b tw-border-solid tw-border-borderColor tw-py-[7px] tw-mb-5">
           Your Personal Details
@@ -74,17 +43,13 @@ const Registration = () => {
             </label>
             <div className="col-sm-10 tw-float-left tw-relative tw-px-3.75 tw-w-full">
               <input
-                {...register(personalDetail.name as keyof FormData)}
+                name={personalDetail.name}
                 placeholder={personalDetail.label}
                 id={personalDetail.name}
                 type={personalDetail.type}
                 className="tw-py-1.5 tw-px-2.5 lg:tw-px-7.5 tw-rounded-[20px] lg:tw-rounded-cardcustom tw-leading-6 tw-h-10 tw-border-solid tw-border tw-border-borderColor tw-block tw-w-full tw-outline-0"
               />
-              {errors[personalDetail.name as keyof FormData] && (
-                <p className="tw-text-[#f00] tw-text-sm tw-mt-1">
-                  {errors[personalDetail.name as keyof FormData]?.message}
-                </p>
-              )}
+              <FormErrorMessage error={getFieldError(personalDetail.name)} />
             </div>
           </div>
         ))}
@@ -103,17 +68,13 @@ const Registration = () => {
           </label>
           <div className="col-sm-10 tw-float-left tw-relative tw-px-3.75 tw-w-full">
             <input
-              {...register("password")}
+              name="password"
               placeholder="Password"
               id="password"
               type="password"
               className="tw-py-1.5 tw-px-2.5 lg:tw-px-7.5 tw-rounded-[20px] lg:tw-rounded-cardcustom tw-leading-6 tw-h-10 tw-border-solid tw-border tw-border-borderColor tw-block tw-w-full tw-outline-0"
             />
-            {errors.password && (
-              <p className="tw-text-[#f00] tw-text-sm tw-mt-1">
-                {errors.password.message}
-              </p>
-            )}
+            <FormErrorMessage error={getFieldError("password")} />
           </div>
         </div>
 
@@ -127,17 +88,13 @@ const Registration = () => {
           </label>
           <div className="col-sm-10 tw-float-left tw-relative tw-px-3.75  tw-w-full">
             <input
-              {...register("confirmPassword")}
+              name="confirmPassword"
               placeholder="Confirm Password"
               id="confirmPassword"
               type="password"
               className="tw-py-1.5 tw-px-2.5 lg:tw-px-7.5 tw-rounded-[20px] lg:tw-rounded-cardcustom tw-leading-6 tw-h-10 tw-border-solid tw-border tw-border-borderColor tw-block tw-w-full tw-outline-0"
             />
-            {errors.confirmPassword && (
-              <p className="tw-text-[#f00] tw-text-sm tw-mt-1">
-                {errors.confirmPassword.message}
-              </p>
-            )}
+            <FormErrorMessage error={getFieldError("confirmPassword")} />
           </div>
         </div>
       </fieldset>
@@ -155,7 +112,7 @@ const Registration = () => {
             htmlFor="newsletter-yes"
           >
             <input
-              {...register("newsletter")}
+              name="newsletter"
               id="newsletter-yes"
               type="radio"
               value="yes"
@@ -170,7 +127,7 @@ const Registration = () => {
             htmlFor="newsletter-no"
           >
             <input
-              {...register("newsletter")}
+              name="newsletter"
               id="newsletter-no"
               type="radio"
               value="no"
@@ -178,11 +135,6 @@ const Registration = () => {
             />
             No
           </label>
-          {errors.newsletter && (
-            <p className="tw-text-[#f00] tw-text-sm tw-mt-1">
-              {errors.newsletter.message}
-            </p>
-          )}
         </div>
       </fieldset>
       <div id="submitbutton" className="tw-my-3.5 tw-block">
@@ -194,12 +146,8 @@ const Registration = () => {
           >
             Privacy Policy{" "}
           </Link>
-          <input {...register("agree")} type="checkbox" /> &nbsp;{" "}
-          {errors.agree && (
-            <p className="tw-text-[#f00] tw-text-sm tw-mt-1">
-              {errors.agree.message}
-            </p>
-          )}
+          <input name="agree" type="checkbox" defaultChecked={false} /> &nbsp;{" "}
+          <FormErrorMessage error={getFieldError("agree")} />
           <input
             type="submit"
             value="Continue"

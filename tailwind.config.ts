@@ -48,8 +48,13 @@ const config: Config = {
         "flash-slow": "flash 10s ease-in-out infinite",
         rightToLeft: "rightToLeft 5s ease-in-out infinite",
         topToBottom: "topToBottom 1s infinite",
+        "caret-blink": "caret-blink 1.25s ease-out infinite",
       },
       keyframes: {
+        "caret-blink": {
+          "0%,70%,100%": { opacity: "1" },
+          "20%,50%": { opacity: "0" },
+        },
         moveIt: {
           "0%, 100%": {
             transform: "rotate(40deg)",

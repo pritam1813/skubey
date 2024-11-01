@@ -31,6 +31,7 @@ export const RenderSubMenuContent = forwardRef<HTMLDivElement, MenuItem>(
           return <SubMenuDefault ref={ref} />;
       }
     }
+    return <div>Menu</div>;
 
     switch (submenuType) {
       case SubmenuType.one:

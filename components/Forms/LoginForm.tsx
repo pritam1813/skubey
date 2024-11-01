@@ -8,6 +8,7 @@ import * as z from "zod";
 import useSWRMutation from "swr/mutation";
 import { PostFetcher } from "@/app/utils/fetcherFunctions";
 import toast, { Toaster } from "react-hot-toast";
+import { useSearchParams } from "next/navigation";
 
 const schema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -32,6 +33,10 @@ const LoginForm = () => {
     },
   });
 
+  const searchParams = useSearchParams();
+  if (searchParams.get("emailverified") === "true") {
+    toast.success("Email Verified Successfully! Please Login");
+  }
   const { trigger, isMutating } = useSWRMutation("/api/user", PostFetcher);
 
   const onSubmit = async (formData: FormData) => {

@@ -11,7 +11,9 @@ import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 /* TO BE IMPROVED LATER */
 
 interface CarouselProps {
-  slides?: React.ReactNode[];
+  images?: string[];
+  alt?: string;
+  clickOnSlideEvent?: () => void;
   options?: EmblaOptionsType;
 }
 
@@ -61,7 +63,9 @@ const Sampleslides = [
 ];
 
 const CarouselWrapper: React.FC<CarouselProps> = ({
-  slides = Sampleslides,
+  images,
+  alt,
+  clickOnSlideEvent,
   options = { slidesToScroll: 1 },
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
@@ -95,9 +99,18 @@ const CarouselWrapper: React.FC<CarouselProps> = ({
     <div className="embla tw-relative">
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
-          {slides.map((slide, index) => (
-            <div className="embla__slide" key={index}>
-              {slide}
+          {images?.map((img, index) => (
+            <div
+              className="embla__slide"
+              key={index}
+              onClick={clickOnSlideEvent}
+            >
+              <Image
+                src={img}
+                alt={`${alt} image ${index + 1}`}
+                width={100}
+                height={50}
+              />
             </div>
           ))}
         </div>

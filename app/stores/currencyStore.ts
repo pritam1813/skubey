@@ -2,11 +2,12 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { fetchExchangeRates } from "../utils/fetchExchangeRates";
 import { CurrencyState, ExchangeRates } from "../types/currency";
+import { getBaseUrl } from "../utils/getBaseUrl";
 
 const defaultExchangeRates: ExchangeRates = {
-  USD: 1,
-  EUR: 0.9236,
-  INR: 84.1029,
+  USD: 0.01189,
+  EUR: 0.01095,
+  INR: 1,
 };
 
 const useCurrencyStore = create<CurrencyState>()(
@@ -21,7 +22,10 @@ const useCurrencyStore = create<CurrencyState>()(
         set({ isLoading: true, error: null });
 
         try {
-          const rates = await fetchExchangeRates();
+          const data = await fetch(`${getBaseUrl()}/api/exchangerate`);
+          const rates: ExchangeRates = await data.json();
+          console.log("Rates: ", rates);
+
           set({
             currency: newCurrency,
             exchangeRates: rates || defaultExchangeRates,

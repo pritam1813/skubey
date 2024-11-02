@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { use, useEffect, useRef, useState } from "react";
 
 import Slider from "react-slick";
 import ProductCard from "../ProductCard";
@@ -8,13 +8,19 @@ import useSWR from "swr";
 import { Product } from "@/app/types";
 import ProductSliderSkeleon from "./ProductSliderSkeleon";
 
-export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const tabs = [
+  { title: "Featured", url: "featured" },
+  { title: "Latest", url: "latest" },
+  { title: "Bestseller", url: "bestseller" },
+];
 
 const Products = () => {
-  const [activeTab, setActiveTab] = useState("Featured");
+  const [activeTab, setActiveTab] = useState<(typeof tabs)[0]>(tabs[0]);
   const sliderRef = useRef<Slider | null>(null);
+  const [ppp, setppp] = useState(null);
 
-  const { data, error, isLoading } = useSWR("/api/product", fetcher);
+  const { data, error, isLoading } = useSWR(`/api/category/${activeTab.url}`);
+
   if (error) return <div>failed to load</div>;
   if (isLoading) return <ProductSliderSkeleon />;
 
@@ -29,17 +35,11 @@ const Products = () => {
     }
   };
 
-  const tabs = [
-    { title: "Featured", url: "/featured" },
-    { title: "Latest", url: "/latest" },
-    { title: "Bestseller", url: "/bestseller" },
-  ];
+  // const filteredProducts = data.filter(
+  //   (product: Product) => product.categories[0].categoryName === activeTab
+  // );
 
-  const filteredProducts = data.filter(
-    (product: Product) => product.categories[0].categoryName === activeTab
-  );
-
-  let rowsCount = filteredProducts.length > 4 ? 2 : 1;
+  // let rowsCount = filteredProducts.length > 4 ? 2 : 1;
 
   let settings = {
     slidesToShow: 4,
@@ -67,7 +67,7 @@ const Products = () => {
         },
       },
     ],
-    rows: rowsCount,
+    rows: 2,
     centerPadding: "30px",
     // Todo Add ZoomIn animation on slide change
   };
@@ -94,9 +94,9 @@ const Products = () => {
                 {tabs.map((tab, index) => (
                   <li key={index}>
                     <button
-                      onClick={() => setActiveTab(tab.title)}
+                      onClick={() => setActiveTab(tab)}
                       className={`tw-text-primary hover:tw-bg-secondaryHover tw-no-underline tw-py-2 tw-px-[15px] tw-rounded-pillcustom tw-capitalize ${
-                        activeTab === tab.title ? "tw-bg-secondaryHover" : ""
+                        activeTab === tab ? "tw-bg-secondaryHover" : ""
                       }`}
                     >
                       {tab.title}
@@ -112,18 +112,19 @@ const Products = () => {
                   ref={sliderRef}
                   {...settings}
                   className="productslider"
-                  key={activeTab}
+                  key={activeTab.title}
                 >
-                  {filteredProducts.map((product: Product, index: number) => (
-                    <div key={index}>
-                      <div id="item">
-                        <ProductCard
-                          product={product}
-                          columnsStyle="col col-xs-12"
-                        />
+                  {data &&
+                    data.products.map((product: Product, index: number) => (
+                      <div key={index}>
+                        <div id="item">
+                          <ProductCard
+                            product={product}
+                            columnsStyle="col col-xs-12"
+                          />
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
                 </Slider>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { devtools, persist } from "zustand/middleware";
-import { CartItem, Product } from "../types";
+import { CartItem } from "../types";
+import { Product } from "../types/product";
 import { create } from "zustand";
 
 interface QuickViewState {
@@ -109,7 +110,8 @@ export const useCartStore = create<CartStoreState>()(
         getTotalPrice: () => {
           const { cart } = get();
           return cart.reduce(
-            (total, item) => total + item.price * item.quantity,
+            (total, item) =>
+              total + (item.price as unknown as number) * item.quantity,
             0
           );
         },

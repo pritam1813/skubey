@@ -27,8 +27,8 @@ const ProductCard = ({
           >
             <Link href={`/product/${id}`}>
               <Image
-                src={`${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID_DEV}/${images[0].url}`}
-                alt={images[0].alt}
+                src={`${images[0]}`}
+                alt={`${name} card image`}
                 className="img-fluid"
                 width={920}
                 height={1093}

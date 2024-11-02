@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { forwardRef, useEffect, useRef, useState } from "react";
 import { MenuItem, SubmenuType } from "./MenuItems";
 import AnimateHeight from "react-animate-height";
-import { CategoryWiseToys } from "@/data/categories";
+// import { CategoryWiseToys } from "@/data/categories";
 import {
   SubMenuOne,
   SubMenuTwo,
@@ -12,10 +12,27 @@ import {
   SubMenuDefault,
 } from "./SubMenus";
 import { useCategoryWiseProducts } from "@/app/hooks/CategoryWiseProducts";
+import useSWR from "swr";
+import { fetcher } from "@/app/utils/fetcherFunctions";
+
+const categorySlug = ["featured", "bestseller", "latest"];
 
 export const RenderSubMenuContent = forwardRef<HTMLDivElement, MenuItem>(
   ({ submenuType }, ref) => {
     const { data, isError, isLoading } = useCategoryWiseProducts("bestseller");
+
+    let toysInEachCategory: any[] = [];
+
+    categorySlug.forEach((slug) => {
+      const { data, error, isLoading } = useSWR(
+        `/api/category/${slug}`,
+        fetcher
+      );
+
+      if (data) {
+        toysInEachCategory.push(data);
+      }
+    });
 
     if (isError) return <div>failed to load</div>;
     if (isLoading) {
@@ -31,13 +48,18 @@ export const RenderSubMenuContent = forwardRef<HTMLDivElement, MenuItem>(
           return <SubMenuDefault ref={ref} />;
       }
     }
-    return <div>Menu</div>;
 
     switch (submenuType) {
       case SubmenuType.one:
-        return <SubMenuOne ref={ref} CategoryWiseToys={CategoryWiseToys} />;
+        return toysInEachCategory.length > 0 ? (
+          <SubMenuOne ref={ref} CategoryWiseToys={toysInEachCategory} />
+        ) : (
+          <div>error</div>
+        );
       case SubmenuType.two:
-        return <SubMenuTwo ref={ref} products={data.products} />;
+        return (
+          <SubMenuTwo ref={ref} products={toysInEachCategory[0].products} />
+        );
       case SubmenuType.three:
         return <SubMenuThree ref={ref} />;
       case SubmenuType.default:

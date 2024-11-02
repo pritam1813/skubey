@@ -15,7 +15,7 @@ interface SubmenuTwoProps {
   products: ProductThumbnailProps[];
   isLoading?: boolean;
 }
-const SECTIONS: string[] = ["featured", "bestseller"];
+const SECTIONS: string[] = ["latest", "bestseller"];
 
 const SubMenuTwo = forwardRef<HTMLDivElement, SubmenuTwoProps>(
   ({ products, isLoading = false }, ref) => {
@@ -58,7 +58,7 @@ const SubMenuTwo = forwardRef<HTMLDivElement, SubmenuTwoProps>(
               ) : results[0].data == null ? (
                 CategoryWiseToys[0].title
               ) : (
-                `${results[0].data.categoryName} Toys`
+                `${results[0].data.name} Toys`
               )}
             </span>
             <ul className="tw-m-0 tw-p-0">
@@ -109,7 +109,7 @@ const SubMenuTwo = forwardRef<HTMLDivElement, SubmenuTwoProps>(
               ) : results[1].data == null ? (
                 CategoryWiseToys[1].title
               ) : (
-                `${results[1].data.categoryName} Toys`
+                `${results[1].data.name} Toys`
               )}
             </span>
             <ul className="tw-m-0 tw-p-0">

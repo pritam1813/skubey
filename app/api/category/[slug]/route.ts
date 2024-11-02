@@ -8,11 +8,11 @@ const delay = (ms: number | undefined) =>
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { slug: string } }
 ) {
   try {
     const category = await prisma.category.findUnique({
-      where: { id: params.id },
+      where: { slug: params.slug },
       include: {
         children: true,
         parent: true,

@@ -4,20 +4,21 @@ import Link from "next/link";
 import { Product } from "@/app/types";
 import { Rating as ReactRating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import ProductPrice from "../ProductCard/ProductPrice";
 
 export type ProductThumbnailProps = Pick<
   Product,
-  "images" | "id" | "name" | "rating" | "price"
+  "images" | "id" | "name" | "rating" | "price" | "discount"
 >;
 
 const ProductsThumbnail = ({ product }: { product: ProductThumbnailProps }) => {
-  const { images, id, name, rating } = product;
+  const { images, id, name, rating, price, discount } = product;
   return (
     <div className="tw-flex tw-flex-row tw-space-x-3">
       <div className="tw-inline-block tw-float-none tw-border-2 tw-border-solid tw-border-primaryHover tw-rounded-md">
         <Image
-          src={`${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID_DEV}/${images[0].url}`}
-          alt={images[0].alt}
+          src={`${images[0]}`}
+          alt={`${name} Thumbnail`}
           width={60}
           height={71}
         />
@@ -36,7 +37,9 @@ const ProductsThumbnail = ({ product }: { product: ProductThumbnailProps }) => {
             <ReactRating style={{ maxWidth: 70 }} value={rating} readOnly />
           </div>
         </div>
-        <div>Rs. {product.price}</div>
+        <div>
+          <ProductPrice amount={price} discount={discount} />
+        </div>
       </div>
     </div>
   );

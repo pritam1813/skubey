@@ -1,17 +1,16 @@
 import React from "react";
-import { Product } from "@/app/types";
+import { Product } from "@/app/types/product";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/components/Breadcrumb";
-import ImageWithZoomWrapper from "@/components/ImageWithZoomWrapper";
-import ProductOptions from "@/components/Products/ProductOptions";
 import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil } from "@fortawesome/free-solid-svg-icons";
 import DescriptionAndReview from "@/components/Products/DescriptionAndReview";
-import CarouselWrapper from "@/components/Carousel/CarouselWrapper";
 import ProductReviewForm from "@/components/Products/ProductReviewForm";
 import { Rating } from "@smastrom/react-rating";
 import ProductPrice from "@/components/ProductCard/ProductPrice";
+import { getBaseUrl } from "@/app/utils/getBaseUrl";
+import ProductImageViewer from "@/components/Products/ProductImageViewer";
 
 interface ProductResult extends Product {
   error?: string;
@@ -27,9 +26,9 @@ interface ProductPageProps {
 }
 
 const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
-  const data = await fetch(`http://localhost:3000/api/product/${params.id}`);
+  const data = await fetch(`${getBaseUrl()}/api/products/${params.id}`);
+
   const product: ProductResult = await data.json();
-  //console.log(result);
 
   if (!product || product.error) notFound();
 
@@ -42,32 +41,21 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
             <div id="content" className="col-sm-12">
               <div id="productdetails" className="">
                 <div className="row">
-                  <div className="col-sm-6">
-                    <ImageWithZoomWrapper
-                      imageSrc={
-                        process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID_DEV +
-                        "/" +
-                        product.images[0].url
-                      }
-                      width={920}
-                      height={1093}
-                      alt={product.images[0].alt}
-                    />
-                    <div className="tw-w-1/2 tw-mx-auto">
-                      <CarouselWrapper />
-                    </div>
-                  </div>
+                  <ProductImageViewer
+                    images={product.images}
+                    name={product.name}
+                  />
                   <div className="col-sm-6">
                     <h1 className="tw-text-xl tw-leading-[1.1] tw-font-medium tw-capitalize tw-mt-2.5 tw-mb-[18px]">
                       {product.name}
                     </h1>
                     <div id="ratingDetails" className="tw-mb-2.5">
                       <span className="tw-max-w-16 tw-inline-flex tw-align-middle">
-                        <Rating readOnly value={product.rating} />
+                        <Rating readOnly value={product.avgRating} />
                       </span>
 
                       <span className="tw-ml-2 tw-text-xs tw-text-secondaryLight tw-mr-3.75">
-                        {product.rating}
+                        {product.avgRating}
                       </span>
                       <Link
                         href="/"
@@ -113,15 +101,15 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
                           availability:
                         </span>
                         <span className="tw-text-secondaryLight tw-no-underline tw-font-normal">
-                          {product.inStock ? "In Stock" : "Out of Stock"}
+                          {product.stock ? "In Stock" : "Out of Stock"}
                         </span>
                       </li>
                     </ul>
                     <hr className="tw-my-5" />
                     <ul className="tw-text-primary tw-p-0 tw-leading-6">
                       <ProductPrice
-                        amount={product.price}
-                        discount={product.discount}
+                        amount={product.price as unknown as number}
+                        discount={product.priceDiscount as unknown as number}
                       />
                       <li className="tw-text-sm tw-mt-1.2 tw-text-primary">
                         {" "}
@@ -129,7 +117,10 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
                         <span>
                           {" "}
                           {product?.price
-                            ? ((18 / 100) * product.price).toFixed(2)
+                            ? (
+                                (18 / 100) *
+                                (product.price as unknown as number)
+                              ).toFixed(2)
                             : 0}
                         </span>
                       </li>
@@ -137,7 +128,7 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
                     <hr />
 
                     {/* Product Options */}
-                    <ProductOptions product={product} />
+                    {/* <ProductOptions product={product} /> */}
                   </div>
                 </div>
               </div>

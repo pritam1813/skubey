@@ -26,7 +26,12 @@ const verifyEmailOtpFormSchema = z.object({
   otp: z.string().min(6).max(6),
 });
 
+const LoginSchema = z.object({
+  email: z.string().email({ message: "Invalid email address" }),
+  password: z.string().min(8, { message: "Password is required" }),
+});
+
 type RegistrationData = z.infer<typeof RegistrationSchema>;
 
 export type { RegistrationData };
-export { RegistrationSchema, verifyEmailOtpFormSchema };
+export { RegistrationSchema, verifyEmailOtpFormSchema, LoginSchema };

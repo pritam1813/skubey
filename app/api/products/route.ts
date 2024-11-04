@@ -70,7 +70,7 @@ export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const page = parseInt(searchParams.get("page") ?? "1");
-    const limit = parseInt(searchParams.get("limit") ?? "10");
+    const limit = parseInt(searchParams.get("limit") ?? "9");
     const search = searchParams.get("search");
     const categoryId = searchParams.get("categoryId");
     const minPrice = searchParams.get("minPrice");

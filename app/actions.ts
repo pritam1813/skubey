@@ -2,12 +2,14 @@
 
 import { FormState } from "./hooks/useFormErrors";
 import {
+  LoginSchema,
   RegistrationSchema,
   verifyEmailOtpFormSchema,
 } from "./types/formSchema";
 import { getBaseUrl } from "./utils/getBaseUrl";
 import { redirect } from "next/navigation";
 import { createClient } from "./utils/supabase/server";
+import { revalidatePath } from "next/cache";
 
 export async function createUser(
   prevState: any,
@@ -91,7 +93,8 @@ export async function verifyEmailOTP(prevState: any, formData: FormData) {
       message: "Something went wrong",
     };
   }
-  redirect("/dashboard");
+  revalidatePath("/", "layout");
+  redirect("/user");
 }
 
 export async function resendVerification(formData: FormData) {
@@ -121,4 +124,44 @@ export async function resendVerification(formData: FormData) {
     success: true,
     message: "Verification email resent successfully",
   };
+}
+
+// Login
+export async function login(
+  prevState: any,
+  formData: FormData
+): Promise<FormState> {
+  const formValues = Object.fromEntries(formData);
+  const result = LoginSchema.safeParse(formValues);
+
+  if (!result.success) {
+    return {
+      errors: result.error.errors,
+      success: false,
+      code: "field",
+    };
+  }
+
+  try {
+    const supabase = await createClient();
+
+    const { data, error } = await supabase.auth.signInWithPassword(result.data);
+    console.log("data: ", data);
+
+    if (error) {
+      return {
+        success: false,
+        code: "api",
+        message: error.message || "Something went wrong",
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      code: "api",
+    };
+  }
+  revalidatePath("/", "layout");
+  redirect("/user");
 }

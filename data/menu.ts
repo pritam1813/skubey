@@ -57,3 +57,100 @@ export const Menu = [
     submenuType: 4,
   },
 ];
+
+export const MiscMenu = [
+  {
+    id: 1,
+    title: "About Us",
+    path: "/about",
+  },
+  {
+    id: 2,
+    title: "Contact Us",
+    path: "/contact",
+  },
+  {
+    id: 3,
+    title: "FAQs",
+    path: "/faqs",
+  },
+  {
+    id: 4,
+    title: "Privacy Policy",
+    path: "/privacy",
+  },
+  {
+    id: 5,
+    title: "Terms & Conditions",
+    path: "/terms",
+  },
+];
+
+export const AuthMenu = [
+  {
+    title: "Login",
+    path: "/login",
+    isAuthRequired: false,
+    showAfterAuth: false,
+  },
+  {
+    title: "Register",
+    path: "/signup",
+    isAuthRequired: false,
+    showAfterAuth: false,
+  },
+  {
+    title: "Forgot Password",
+    path: "/forgotpassword",
+    isAuthRequired: false,
+    showAfterAuth: false,
+  },
+  {
+    title: "My Account",
+    path: "/user",
+    isAuthRequired: true,
+    showAfterAuth: true,
+  },
+  {
+    title: "Address Book",
+    path: "/addressbook",
+    isAuthRequired: true,
+    showAfterAuth: true,
+  },
+  {
+    title: "Wish List",
+    path: "/wishlist",
+    isAuthRequired: true,
+    showAfterAuth: true,
+  },
+  {
+    title: "Order History",
+    path: "/orderhistory",
+    isAuthRequired: true,
+    showAfterAuth: true,
+  },
+  {
+    title: "Returns",
+    path: "/returns",
+    isAuthRequired: true,
+    showAfterAuth: true,
+  },
+  {
+    title: "Transactions",
+    path: "/transactions",
+    isAuthRequired: true,
+    showAfterAuth: true,
+  },
+  {
+    title: "Newsletter",
+    path: "/newsletter",
+    isAuthRequired: false,
+    showAfterAuth: true,
+  },
+  {
+    title: "Logout",
+    path: "/logout",
+    isAuthRequired: true,
+    showAfterAuth: true,
+  },
+];

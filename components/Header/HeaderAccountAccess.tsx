@@ -57,7 +57,7 @@ const HeaderAccountAccess = () => {
             <li>
               <Link
                 className="tw-text-left tw-block tw-w-full tw-clear-both tw-whitespace-nowrap tw-text-primary hover:tw-text-secondaryLight tw-no-underline tw-py-[7px] tw-px-3.75 tw-font-medium tw-text-sm/5"
-                href="/account/register"
+                href="/signup"
               >
                 Register
               </Link>
@@ -65,7 +65,7 @@ const HeaderAccountAccess = () => {
             <li>
               <Link
                 className="tw-text-left tw-block tw-w-full tw-clear-both tw-whitespace-nowrap tw-text-primary hover:tw-text-secondaryLight tw-no-underline tw-py-[7px] tw-px-3.75 tw-font-medium tw-text-sm/5"
-                href="/account/login"
+                href="/login"
               >
                 Login
               </Link>

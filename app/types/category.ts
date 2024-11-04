@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { Category } from "@prisma/client";
 
 // Validation schema for category
 export const CategorySchema = z.object({
@@ -39,3 +40,4 @@ export const createCategorySchema = z.object({
 });
 
 export type CreateCategoryInput = z.infer<typeof createCategorySchema>;
+export { Category };

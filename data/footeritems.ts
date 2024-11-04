@@ -42,7 +42,7 @@ export const FooterItems = [
   {
     title: "My Account",
     listItems: [
-      { link: "/account", itemName: "My Account" },
+      { link: "/user", itemName: "My Account" },
       { link: "/orderhistory", itemName: "Order History" },
       { link: "/wishlist", itemName: "Wish List" },
       { link: "/newsletter", itemName: "Newsletter" },

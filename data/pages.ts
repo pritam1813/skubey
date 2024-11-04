@@ -13,7 +13,7 @@ export const PagesSubmenu = [
   },
   {
     title: "My Account",
-    href: "/account",
+    href: "/user",
   },
   {
     title: "Order History",

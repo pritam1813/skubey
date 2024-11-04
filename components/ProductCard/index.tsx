@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import { Product } from "@/app/types";
+import { Product } from "@/app/types/product";
 
 import UtilityButtons from "./UtilityButtons";
 import { Rating } from "@smastrom/react-rating";
@@ -15,7 +15,7 @@ const ProductCard = ({
   product: Product;
   columnsStyle: string;
 }) => {
-  const { id, name, price, images, rating, discount } = product;
+  const { id, name, price, images, avgRating, priceDiscount } = product;
 
   return (
     <div className={columnsStyle}>
@@ -53,14 +53,17 @@ const ProductCard = ({
                 id="price"
                 className="tw-block xl:tw-inline-block tw-mt-[7px] xl:tw-mt-[10px] tw-text-sm xl:tw-text-[15px] tw-text-primary tw-font-medium"
               >
-                <ProductPrice amount={price} discount={discount} />
+                <ProductPrice
+                  amount={price as unknown as number}
+                  discount={priceDiscount as unknown as number}
+                />
               </div>
 
               <div
                 id="rating"
                 className="tw-block xl:tw-inline-block tw-float-none xl:tw-float-right tw-mt-[5px] xl:tw-mt-2 xl:tw-p-0 tw-space-x-1 tw-w-1/4"
               >
-                <Rating readOnly value={rating} />
+                <Rating readOnly value={avgRating} />
               </div>
             </div>
           </div>

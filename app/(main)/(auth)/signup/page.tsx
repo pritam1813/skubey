@@ -8,11 +8,10 @@ export default async function SignUp() {
   const supabase = await createClient();
   const {
     data: { user },
-    error,
   } = await supabase.auth.getUser();
 
   if (user) {
-    return redirect("/dashboard");
+    return redirect("/user");
   }
   return (
     <div

@@ -4,12 +4,42 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import AnimateHeight from "react-animate-height";
 import Link from "next/link";
+import { User } from "@supabase/supabase-js";
+import { useRouter } from "next/navigation";
+import { createClient } from "@/app/utils/supabase/client";
+import { AuthMenu } from "@/data/menu";
 
 const HeaderAccountAccess = () => {
   const [showAccountItems, setShowAccountItems] = useState(false);
   const [height, setHeight] = useState<string | number>(0);
+  const [user, setUser] = useState<User | null>(null);
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const router = useRouter();
+  const supabase = createClient();
+
+  useEffect(() => {
+    // Get initial session
+    const getInitialSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+      setUser(session?.user ?? null);
+    };
+
+    getInitialSession();
+
+    // Listen for auth changes
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,6 +64,15 @@ const HeaderAccountAccess = () => {
     setShowAccountItems(!showAccountItems);
     setHeight(height === 0 ? "auto" : 0);
   };
+
+  const handleSignOut = async () => {
+    await supabase.auth.signOut();
+
+    router.refresh();
+
+    setShowAccountItems(false);
+    setHeight(0);
+  };
   return (
     <div className="tw-mx-5 lg:tw-mx-7.5 tw-relative">
       <button
@@ -54,22 +93,28 @@ const HeaderAccountAccess = () => {
             ref={dropdownRef}
             className="tw-bg-secondary tw-px-0 tw-py-2 tw-min-w-40 tw-text-left tw-list-none tw-w-48 tw-shadow-headerItems  "
           >
-            <li>
-              <Link
-                className="tw-text-left tw-block tw-w-full tw-clear-both tw-whitespace-nowrap tw-text-primary hover:tw-text-secondaryLight tw-no-underline tw-py-[7px] tw-px-3.75 tw-font-medium tw-text-sm/5"
-                href="/signup"
-              >
-                Register
-              </Link>
-            </li>
-            <li>
-              <Link
-                className="tw-text-left tw-block tw-w-full tw-clear-both tw-whitespace-nowrap tw-text-primary hover:tw-text-secondaryLight tw-no-underline tw-py-[7px] tw-px-3.75 tw-font-medium tw-text-sm/5"
-                href="/login"
-              >
-                Login
-              </Link>
-            </li>
+            {AuthMenu.map((item) =>
+              (user && item.isAuthRequired && item.showOnHeader) ||
+              (!user && !item.showAfterAuth && item.showOnHeader) ? (
+                <li key={item.path}>
+                  {item.title === "Logout" ? (
+                    <span
+                      onClick={handleSignOut}
+                      className="tw-text-left tw-block tw-w-full tw-clear-both tw-whitespace-nowrap tw-text-primary hover:tw-text-secondaryLight tw-no-underline tw-py-[7px] tw-px-3.75 tw-font-medium tw-text-sm/5"
+                    >
+                      {item.title}
+                    </span>
+                  ) : (
+                    <Link
+                      className="tw-text-left tw-block tw-w-full tw-clear-both tw-whitespace-nowrap tw-text-primary hover:tw-text-secondaryLight tw-no-underline tw-py-[7px] tw-px-3.75 tw-font-medium tw-text-sm/5"
+                      href={item.path}
+                    >
+                      {item.title}
+                    </Link>
+                  )}
+                </li>
+              ) : null
+            )}
           </ul>
         </AnimateHeight>
       </button>

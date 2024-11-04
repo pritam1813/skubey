@@ -3,7 +3,12 @@ import React, { useEffect, useRef, useState } from "react";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AnimateHeight from "react-animate-height";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import {
+  redirect,
+  usePathname,
+  useRouter,
+  useSearchParams,
+} from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 
 const SearchItems = () => {
@@ -14,6 +19,10 @@ const SearchItems = () => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
+  const [searchTerm, setSearchTerm] = useState(
+    searchParams.get("search")?.toString() || ""
+  );
+  const isProductRoute = pathname === "/product";
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -51,6 +60,24 @@ const SearchItems = () => {
     replace(`${pathname}?${params.toString()}`);
   }, 1000);
 
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!isProductRoute && searchTerm) {
+      // Redirect to products page with search term
+      window.location.href = `/product?search=${encodeURIComponent(
+        searchTerm
+      )}`;
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const term = e.target.value;
+    setSearchTerm(term);
+    if (isProductRoute) {
+      handleSearch(term);
+    }
+  };
+
   return (
     <div className="tw-relative max-lg:tw-ml-5">
       <button
@@ -80,18 +107,21 @@ const SearchItems = () => {
           id="headersearch"
           className={`tw-shadow-headerItems`}
         >
-          <div className=" tw-w-60 tw-flex tw-rounded-none tw-border-0 ">
+          <form
+            onSubmit={handleSubmit}
+            className=" tw-w-60 tw-flex tw-rounded-none tw-border-0 "
+          >
             <input
+              name="search"
               type="text"
               placeholder="Search..."
               className="tw-py-1.2 tw-px-3.75 tw-border-none tw-shadow-none tw-bg-secondary tw-h-10 tw-text-primary tw-rounded-none tw-relative tw-flex-auto tw-w-[1%] tw-min-w-0 tw-outline-none tw-outline-0"
-              onChange={(e) => {
-                handleSearch(e.target.value);
-              }}
+              onChange={handleChange}
               defaultValue={searchParams.get("search")?.toString()}
             />
             <span className="">
               <button
+                type="submit"
                 onClick={handleSearchInputShow}
                 className="tw-p-[13px] tw-font-normal tw-m-0 tw-relative tw-z-[2] tw-bg-primary tw-text-secondary tw-leading-5 tw-outline-none tw-outline-0 hover:tw-bg-primaryHover hover:tw-text-primary tw-transition-colors tw-duration-500"
               >
@@ -101,7 +131,7 @@ const SearchItems = () => {
                 />
               </button>
             </span>
-          </div>
+          </form>
         </div>
       </AnimateHeight>
     </div>

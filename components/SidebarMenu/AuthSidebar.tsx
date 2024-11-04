@@ -3,6 +3,7 @@ import SidebarMenu from "@/components/SidebarMenu";
 import { AuthMenu } from "@/data/menu";
 import Link from "next/link";
 import { createClient } from "@/app/utils/supabase/server";
+import { logout } from "@/app/actions";
 
 const AuthSidebar = async () => {
   const supabase = await createClient();
@@ -20,14 +21,27 @@ const AuthSidebar = async () => {
         return (session && (showAfterAuth || isAuthRequired)) ||
           (!session && !isAuthRequired) ? (
           <li key={index}>
-            <Link
-              href={path}
-              className={`${
-                index === 0 ? "-tw-mt-1 tw-pb-2" : "tw-py-2"
-              } tw-no-underline tw-text-sm tw-capitalize tw-transition-all tw-duration-300 tw-text-secondaryLight hover:tw-text-primary tw-relative tw-block`}
-            >
-              {title}
-            </Link>
+            {path === "/logout" ? (
+              <form action={logout}>
+                <button
+                  type="submit"
+                  className={`${
+                    index === 0 ? "-tw-mt-1 tw-pb-2" : "tw-py-2"
+                  } tw-no-underline tw-text-sm tw-capitalize tw-transition-all tw-duration-300 tw-text-secondaryLight hover:tw-text-primary tw-relative tw-block`}
+                >
+                  {title}
+                </button>
+              </form>
+            ) : (
+              <Link
+                href={path}
+                className={`${
+                  index === 0 ? "-tw-mt-1 tw-pb-2" : "tw-py-2"
+                } tw-no-underline tw-text-sm tw-capitalize tw-transition-all tw-duration-300 tw-text-secondaryLight hover:tw-text-primary tw-relative tw-block`}
+              >
+                {title}
+              </Link>
+            )}
           </li>
         ) : null;
       })}

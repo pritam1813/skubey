@@ -74,8 +74,8 @@ export async function verifyEmailOTP(prevState: any, formData: FormData) {
       type: "signup",
     });
 
-    console.log("DAta After Otp: ", data);
-    console.log("Error after otp: ", error);
+    // console.log("DAta After Otp: ", data);
+    // console.log("Error after otp: ", error);
 
     if (error) {
       return {
@@ -111,8 +111,8 @@ export async function resendVerification(formData: FormData) {
       emailRedirectTo: `${getBaseUrl()}/auth/callback`,
     },
   });
-  console.log(error);
-  console.log(data);
+  // console.log(error);
+  // console.log(data);
 
   if (error) {
     return {
@@ -146,7 +146,7 @@ export async function login(
     const supabase = await createClient();
 
     const { data, error } = await supabase.auth.signInWithPassword(result.data);
-    console.log("data: ", data);
+    // console.log("data: ", data);
 
     if (error) {
       return {
@@ -164,4 +164,10 @@ export async function login(
   }
   revalidatePath("/", "layout");
   redirect("/user");
+}
+
+export async function logout() {
+  const supabase = await createClient();
+  await supabase.auth.signOut();
+  redirect("/login");
 }

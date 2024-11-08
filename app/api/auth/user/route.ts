@@ -1,10 +1,29 @@
 import { createClient } from "@/app/utils/supabase/server";
+import prisma from "@/prisma/db";
 import { NextResponse } from "next/server";
 
 export async function GET(request: Request) {
   const supabase = await createClient();
-  const { data } = await supabase.auth.getUser();
-  return new Response(JSON.stringify(data), { status: 200 });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    return NextResponse.json(
+      { success: false, message: "Unauthorized" },
+      { status: 401 }
+    );
+  }
+  const result = await prisma.user.findUnique({
+    where: {
+      id: user.id,
+    },
+    include: {
+      profile: true,
+    },
+  });
+
+  return NextResponse.json({ success: true, result }, { status: 200 });
 }
 
 export async function PATCH(request: Request) {

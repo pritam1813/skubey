@@ -123,6 +123,13 @@ export const AuthMenu = [
     showAfterAuth: true,
   },
   {
+    title: "Change Password",
+    path: "/user/changepassword",
+    isAuthRequired: true,
+    showOnHeader: false,
+    showAfterAuth: true,
+  },
+  {
     title: "Wish List",
     path: "/user/wishlist",
     isAuthRequired: true,

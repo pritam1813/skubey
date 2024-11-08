@@ -36,6 +36,9 @@ export default function Bradcrumb() {
       case "user":
         label = "Account";
         break;
+      case "changepassword":
+        label = "Change Password";
+        break;
     }
     return { href, label };
   });

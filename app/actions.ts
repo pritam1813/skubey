@@ -5,6 +5,7 @@ import {
   AddressBookSchema,
   LoginSchema,
   RegistrationSchema,
+  UpdatePasswordSchema,
   verifyEmailOtpFormSchema,
 } from "./types/formSchema";
 import { getBaseUrl } from "./utils/getBaseUrl";
@@ -280,4 +281,44 @@ export async function updateAddress(
     message: "Address Updated successfully",
     code: "api",
   };
+}
+
+//User's Data
+export async function updatePassword(
+  prevState: any,
+  formData: FormData
+): Promise<FormState> {
+  const formValues = Object.fromEntries(formData);
+  const result = UpdatePasswordSchema.safeParse(formValues);
+
+  if (!result.success) {
+    return {
+      errors: result.error.errors,
+      success: false,
+      code: "field",
+    };
+  }
+  try {
+    const supabase = await createClient();
+    const { error } = await supabase.auth.updateUser({
+      password: result.data.newPassword,
+    });
+    if (error) {
+      return {
+        success: false,
+        code: "api",
+        message: error.message,
+      };
+    }
+    return {
+      success: true,
+      message: "Password Updated successfully",
+      code: "api",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      code: "api",
+    };
+  }
 }

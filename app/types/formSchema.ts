@@ -49,6 +49,18 @@ const AddressBookSchema = z.object({
   isDefault: z.enum(["yes", "no"]).default("yes"),
 });
 
+const UpdatePasswordSchema = z
+  .object({
+    newPassword: z
+      .string()
+      .min(8, { message: "Password must be at least 8 characters" }),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"],
+  });
+
 type RegistrationData = z.infer<typeof RegistrationSchema>;
 type AddressData = z.infer<typeof AddressBookSchema>;
 
@@ -58,4 +70,5 @@ export {
   verifyEmailOtpFormSchema,
   LoginSchema,
   AddressBookSchema,
+  UpdatePasswordSchema,
 };

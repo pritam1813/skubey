@@ -2,6 +2,7 @@
 
 import { FormState } from "./hooks/useFormErrors";
 import {
+  AddressBookSchema,
   LoginSchema,
   RegistrationSchema,
   verifyEmailOtpFormSchema,
@@ -10,6 +11,7 @@ import { getBaseUrl } from "./utils/getBaseUrl";
 import { redirect } from "next/navigation";
 import { createClient } from "./utils/supabase/server";
 import { revalidatePath } from "next/cache";
+import { headers } from "next/headers";
 
 export async function createUser(
   prevState: any,
@@ -170,4 +172,112 @@ export async function logout() {
   const supabase = await createClient();
   await supabase.auth.signOut();
   redirect("/login");
+}
+
+// User's Address
+export async function addAddress(
+  prevState: any,
+  formData: FormData
+): Promise<FormState> {
+  const formValues = Object.fromEntries(formData);
+  const result = AddressBookSchema.safeParse(formValues);
+  // console.log("add address data: ", result.data);
+  if (!result.success) {
+    return {
+      errors: result.error.errors,
+      success: false,
+      code: "field",
+    };
+  }
+
+  try {
+    const headersList = headers();
+    const cookie = headersList.get("cookie");
+
+    const addaddress = await fetch(`${getBaseUrl()}/api/auth/user/address`, {
+      method: "POST",
+      body: JSON.stringify(result.data),
+      headers: {
+        "Content-Type": "application/json",
+        cookie: cookie || "",
+      },
+    });
+
+    const res = await addaddress.json();
+
+    if (!res.success) {
+      return {
+        success: false,
+        code: "api",
+        message: "ss",
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      code: "api",
+    };
+  }
+  revalidatePath("/user/address", "layout");
+  return {
+    success: true,
+    message: "Address added successfully",
+    code: "api",
+  };
+}
+
+export async function updateAddress(
+  prevState: any,
+  formData: FormData
+): Promise<FormState> {
+  const formValues = Object.fromEntries(formData);
+  const result = AddressBookSchema.safeParse(formValues);
+  //console.log(result.data);
+  if (!result.success) {
+    return {
+      errors: result.error.errors,
+      success: false,
+      code: "field",
+    };
+  }
+
+  try {
+    const headersList = headers();
+    const cookie = headersList.get("cookie");
+
+    const addaddress = await fetch(
+      `${getBaseUrl()}/api/auth/user/address/${formValues.addressId}`,
+      {
+        method: "PATCH",
+        body: JSON.stringify(result.data),
+        headers: {
+          "Content-Type": "application/json",
+          cookie: cookie || "",
+        },
+      }
+    );
+
+    const res = await addaddress.json();
+
+    if (!res.success) {
+      return {
+        success: false,
+        code: "api",
+        message: "ss",
+      };
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      code: "api",
+    };
+  }
+  revalidatePath("/user/address", "layout");
+  return {
+    success: true,
+    message: "Address Updated successfully",
+    code: "api",
+  };
 }

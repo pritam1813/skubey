@@ -7,9 +7,7 @@ export default async function User() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user) {
-    redirect("/login");
-  }
+
   return (
     <div id="content" className="col-sm-6 tw-order-1 lg:tw-order-2 tw-mx-auto">
       Account : {user?.email}

@@ -23,11 +23,20 @@ export default function Bradcrumb() {
   )
     return null;
 
+  if (allsegments.includes("edit")) {
+    allsegments.splice(-1);
+  }
+
   const segments = allsegments.filter((segment) => !segment.startsWith("("));
 
   const breadcrumbs = segments.map((segment: string, index: number) => {
     const href = `/${segments.slice(0, index + 1).join("/")}`;
-    const label = segment.charAt(0).toUpperCase() + segment.slice(1);
+    let label = segment.charAt(0).toUpperCase() + segment.slice(1);
+    switch (segment) {
+      case "user":
+        label = "Account";
+        break;
+    }
     return { href, label };
   });
 

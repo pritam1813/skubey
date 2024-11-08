@@ -1,6 +1,6 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch"]
+  previewFeatures = ["fullTextSearch", "omitApi"]
 }
 
 datasource db {
@@ -213,16 +213,21 @@ model WishlistItem {
 }
 
 model Address {
-  id         String  @id @default(cuid())
-  userId     String
-  user       User    @relation(fields: [userId], references: [id])
-  street     String
-  city       String
-  state      String
-  country    String
-  postalCode String
-  isDefault  Boolean @default(false)
-  orders     Order[]
+  id          String  @id @default(cuid())
+  userId      String
+  user        User    @relation(fields: [userId], references: [id])
+  firstName   String
+  lastName    String
+  phoneNumber String
+  addressOne  String
+  addressTwo  String?
+  company     String?
+  city        String
+  state       String
+  country     String
+  postalCode  String
+  isDefault   Boolean @default(false)
+  orders      Order[]
 
   @@map("addresses")
 }

@@ -80,7 +80,7 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    return NextResponse.json({ message: "Success", data }, { status: 201 });
+    return NextResponse.json({ message: "Success", user }, { status: 201 });
   } catch (error) {
     console.log("Server Side Error : ", error);
     return NextResponse.json(

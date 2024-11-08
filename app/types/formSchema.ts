@@ -31,7 +31,31 @@ const LoginSchema = z.object({
   password: z.string().min(8, { message: "Password is required" }),
 });
 
-type RegistrationData = z.infer<typeof RegistrationSchema>;
+const AddressBookSchema = z.object({
+  firstName: z.string().min(1, { message: "First name is required" }),
+  lastName: z.string().min(1, { message: "Last name is required" }),
+  company: z.string().optional(),
+  phoneNumber: z
+    .string()
+    .regex(/^\d{10}$/, { message: "Phone number must be 10 digits" }),
+  addressOne: z.string().min(1, { message: "Address is required" }),
+  addressTwo: z.string().optional(),
+  city: z.string().min(1, { message: "City is required" }),
+  postalCode: z
+    .string()
+    .regex(/^\d{6}$/, { message: "Post Code must be 6 digits" }),
+  country: z.string().min(1, { message: "Country is required" }),
+  state: z.string().min(1, { message: "Region / State is required" }),
+  isDefault: z.enum(["yes", "no"]).default("yes"),
+});
 
-export type { RegistrationData };
-export { RegistrationSchema, verifyEmailOtpFormSchema, LoginSchema };
+type RegistrationData = z.infer<typeof RegistrationSchema>;
+type AddressData = z.infer<typeof AddressBookSchema>;
+
+export type { RegistrationData, AddressData };
+export {
+  RegistrationSchema,
+  verifyEmailOtpFormSchema,
+  LoginSchema,
+  AddressBookSchema,
+};

@@ -322,3 +322,49 @@ export async function updatePassword(
     };
   }
 }
+
+//Coupon
+export async function validateCoupon(
+  prevState: { message: string; success: boolean },
+  formData: FormData
+): Promise<{ message: string; success: boolean }> {
+  const couponCode = formData.get("coupon");
+  const headersList = headers();
+  const cookie = headersList.get("cookie");
+
+  if (!couponCode) {
+    return {
+      message: "Please enter a coupon code",
+      success: false,
+    };
+  }
+  try {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    const validateCoupon = await fetch(
+      `${getBaseUrl()}/api/auth/user/coupon/${couponCode}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          cookie: cookie || "",
+        },
+      }
+    );
+    const res = await validateCoupon.json();
+    if (res.error) {
+      return {
+        message: res.message,
+        success: false,
+      };
+    }
+  } catch (error) {
+    return {
+      message: "Something went wrong",
+      success: false,
+    };
+  }
+  return {
+    message: "Coupon Applied",
+    success: true,
+  };
+}

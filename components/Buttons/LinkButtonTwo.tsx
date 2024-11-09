@@ -21,7 +21,7 @@ const LinkButtonTwo = ({
       href={href}
       className={`tw-text-sm tw-capitalize tw-no-underline tw-py-2.5 tw-px-7.5 tw-rounded-pillcustom ${
         varient === "primary"
-          ? "tw-bg-primary hover:tw-bg-primaryHover tw-text-secondary hover:tw-text-primary"
+          ? "tw-bg-primary hover:tw-bg-primaryHover tw-text-secondary hover:tw-text-primary tw-transition-all tw-duration-500 tw-ease-in-out"
           : "tw-text-secondary tw-bg-[#da4f49] tw-bg-gradient-to-b tw-from-[#ee5f5b] tw-to-[#bd362f]"
       }`}
     >

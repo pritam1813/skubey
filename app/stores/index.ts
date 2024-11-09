@@ -16,6 +16,7 @@ interface CartStoreState {
   setQuickViewProduct: (product: Product | null) => void;
   toggleQuickView: (isOpen: boolean) => void;
   addToCart: (product: Product, quantity?: number) => void;
+  updateQuantity: (productId: string, quantity: number) => void;
   addToWishlist: (product: Product) => void;
   addToCompare: (product: Product) => void;
   removeFromCart: (productId: string) => void;
@@ -71,6 +72,20 @@ export const useCartStore = create<CartStoreState>()(
 
             return {
               cart: [...state.cart, { ...product, quantity }],
+            };
+          }),
+
+        updateQuantity: (productId, quantity) =>
+          set((state) => {
+            if (quantity <= 0) {
+              return {
+                cart: state.cart.filter((item) => item.id !== productId),
+              };
+            }
+            return {
+              cart: state.cart.map((item) =>
+                item.id === productId ? { ...item, quantity } : item
+              ),
             };
           }),
 

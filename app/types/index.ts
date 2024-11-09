@@ -22,3 +22,5 @@ export interface CartItem extends Product {
 export type TitleMapping = {
   [key: string]: string;
 };
+
+export type { Product };

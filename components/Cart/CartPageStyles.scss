@@ -1,0 +1,13 @@
+details {
+  box-shadow: 0 0px 2px 0 rgb(0 0 0 / 10%);
+  summary {
+    list-style: none;
+    padding: 13px 15px;
+    color: #333;
+    border-color: #ddd;
+    background: #ccf7ff;
+    ::-webkit-details-marker {
+      display: none;
+    }
+  }
+}

@@ -1,0 +1,25 @@
+.radio {
+  padding: 7px 0;
+  min-height: 27px;
+  position: relative;
+  display: block;
+  font-size: 14px;
+  line-height: 20px;
+  color: #3c3e3d;
+
+  label {
+    min-height: 20px;
+    padding-left: 20px;
+    margin-bottom: 0;
+    font-weight: 400;
+    cursor: pointer;
+    display: inline-block;
+    max-width: 100%;
+  }
+
+  input[type="radio"] {
+    position: absolute;
+    margin-left: -20px;
+    margin-top: 4px;
+  }
+}

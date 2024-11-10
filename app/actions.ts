@@ -368,3 +368,25 @@ export async function validateCoupon(
     success: true,
   };
 }
+
+//Checkoutpage
+
+export async function BillingAddress(
+  prevState: any,
+  formData: FormData
+): Promise<FormState> {
+  const formValues = Object.fromEntries(formData);
+  if (formValues.addressType === "existing") {
+    // call create order api with address id
+  }
+
+  // Create address and then call order api
+
+  console.log(formValues);
+
+  return {
+    success: true,
+    code: "api",
+    message: "ss",
+  };
+}

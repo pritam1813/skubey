@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest",
-    "postinstall": "prisma generate && pnpm dlx prisma db seed"
+    "test": "jest"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.6.0",

@@ -2,7 +2,7 @@ import React, { ReactNode } from "react";
 import Bradcrumb from "@/components/Breadcrumb/Bradcrumb";
 import ProductSidebar from "@/components/SidebarMenu/ProductSidebar";
 
-export default function MainLayout({ children }: { children: ReactNode }) {
+export default function CartLayout({ children }: { children: ReactNode }) {
   return (
     <main>
       <Bradcrumb />

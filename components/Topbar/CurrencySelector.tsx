@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import useCurrencyStore from "@/app/stores/currencyStore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,10 +21,10 @@ const CurrencySelector = () => {
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleDropdownShow = () => {
+  const handleDropdownShow = useCallback(() => {
     setDropdownShow(!dropdownShow);
     setHeight(height === 0 ? "auto" : 0);
-  };
+  }, [dropdownShow, height]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

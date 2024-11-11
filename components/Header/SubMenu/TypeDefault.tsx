@@ -1,13 +1,10 @@
-import React, { forwardRef } from "react";
+import React from "react";
 import { PagesSubmenu } from "@/data/pages";
 import Link from "next/link";
 
-const SubMenuDefault = forwardRef<HTMLDivElement>(({}, ref) => {
+const TypeDefault = () => {
   return (
-    <div
-      ref={ref}
-      className=" tw-bg-secondary lg:tw-p-5 max-lg:tw-pt-3 lg:tw-shadow-headerItems"
-    >
+    <div className=" tw-bg-secondary lg:tw-p-5 max-lg:tw-pt-3 lg:tw-shadow-headerItems">
       <ul className="tw-m-0 tw-p-0">
         {PagesSubmenu.map((page, index) => (
           <li key={index} className="tw-text-left tw-min-w-40">
@@ -22,8 +19,6 @@ const SubMenuDefault = forwardRef<HTMLDivElement>(({}, ref) => {
       </ul>
     </div>
   );
-});
+};
 
-SubMenuDefault.displayName = "SubMenuDefault";
-
-export default SubMenuDefault;
+export default TypeDefault;

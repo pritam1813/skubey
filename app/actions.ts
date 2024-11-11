@@ -327,13 +327,14 @@ export async function updatePassword(
 export async function validateCoupon(
   prevState: { message: string; success: boolean },
   formData: FormData
-): Promise<{ message: string; success: boolean }> {
+): Promise<{ error: boolean; message: string; success: boolean }> {
   const couponCode = formData.get("coupon");
   const headersList = headers();
   const cookie = headersList.get("cookie");
 
   if (!couponCode) {
     return {
+      error: true,
       message: "Please enter a coupon code",
       success: false,
     };
@@ -353,17 +354,20 @@ export async function validateCoupon(
     const res = await validateCoupon.json();
     if (res.error) {
       return {
+        error: true,
         message: res.message,
         success: false,
       };
     }
   } catch (error) {
     return {
+      error: true,
       message: "Something went wrong",
       success: false,
     };
   }
   return {
+    error: false,
     message: "Coupon Applied",
     success: true,
   };

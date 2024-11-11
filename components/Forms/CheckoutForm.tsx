@@ -2,13 +2,13 @@
 import React, { useEffect, useState } from "react";
 import CartAccordions, { useAccStore } from "../Cart/CartAccordions";
 import LinkButtonTwo from "../Buttons/LinkButtonTwo";
-import { CheckoutAddressData } from "@/app/(main)/(cart)/cart/checkout/page";
 import { useFormState } from "react-dom";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
 import { getCountries, getStates } from "@/app/utils/countries";
 import OrderReviewTable from "../Tables/OrderReviewTable";
 import { BillingAddress } from "@/app/actions";
 import FormErrorMessage from "./FormErrorMessage";
+import { CheckoutAddressData } from "@/app/types/formSchema";
 
 const personDetails = [
   { label: "First Name", name: "firstName", type: "text", required: true },
@@ -47,13 +47,13 @@ const CheckoutForm = ({ addresses }: { addresses: CheckoutAddressData[] }) => {
     getCountries().then((countries) => {
       setCountries(countries);
     });
-  }, [getCountries]);
+  }, []);
 
   useEffect(() => {
     if (state?.success) {
       inc();
     }
-  }, [state?.success]);
+  }, [state?.success, inc]);
 
   const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const countryCode = event.target.value;

@@ -4,13 +4,11 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu } from "@/data/menu";
 import SearchItems from "./SearchItems";
 import HeaderAccountAccess from "./HeaderAccountAccess";
 import HeaderCart from "./HeaderCart";
 import { usePathname } from "next/navigation";
 import MenuItems from "./MenuItems";
-import MobileSubmenu from "./MobileSubmenu";
 
 const Header = () => {
   const [showHeader, setShowHeader] = useState(false);
@@ -88,14 +86,15 @@ const Header = () => {
                   <div>
                     <div className="container w-auto p-0 tw-max-w-[1500px]">
                       <ul className="tw-m-0 tw-list-none tw-relative tw-p-0 tw-space-x-[25px]">
-                        {Menu.map((item, index) => (
+                        {/* {Menu.map((item, index) => (
                           <li
                             key={index}
                             className="tw-py-[25px] tw-inline-block"
                           >
                             <MenuItems item={item} />
                           </li>
-                        ))}
+                        ))} */}
+                        <MenuItems />
                       </ul>
                     </div>
                   </div>
@@ -140,11 +139,12 @@ const Header = () => {
                   <div>
                     <div className="container w-auto p-0 tw-max-w-[1500px]">
                       <ul className="tw-m-0 tw-list-none tw-relative tw-p-0 tw-space-x-[25px]">
-                        {Menu.map((item, index) => (
+                        {/* {Menu.map((item, index) => (
                           <li key={index} className="tw-inline-block">
                             <MenuItems item={item} />
                           </li>
-                        ))}
+                        ))} */}
+                        <MenuItems />
                       </ul>
                     </div>
                   </div>
@@ -183,14 +183,16 @@ const Header = () => {
                   <div>
                     <div className="container w-auto p-0 tw-max-w-[720px]">
                       <ul className="tw-m-0 tw-list-none tw-relative tw-p-0">
-                        {Menu.map((item, index) => (
+                        {/* {Menu.map((item, index) => (
                           <li
                             key={index}
                             className="tw-border-b tw-border-borderColor tw-border-solid tw-block tw-py-2.5 tw-px-3.75 tw-float-none tw-w-auto tw-relative -tw-ml-[1px]"
                           >
                             <MobileSubmenu item={item} />
                           </li>
-                        ))}
+                        ))} */}
+
+                        <MenuItems isMobileScreen={true} />
                       </ul>
                     </div>
                   </div>

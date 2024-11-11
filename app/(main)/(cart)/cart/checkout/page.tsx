@@ -1,11 +1,10 @@
 import React from "react";
-import CartAccordions from "@/components/Cart/CartAccordions";
-import { BillingForm } from "@/components/Forms/Checkout";
+
 import { headers } from "next/headers";
 import { getBaseUrl } from "@/app/utils/getBaseUrl";
 import { AddressData } from "@/app/types/formSchema";
 import "./checkout.scss";
-import OrderReviewTable from "@/components/Tables/OrderReviewTable";
+
 import CheckoutForm from "@/components/Forms/CheckoutForm";
 
 export interface CheckoutAddressData

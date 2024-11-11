@@ -73,16 +73,18 @@ const OrderReviewTable = () => {
             </tr>
             <tr>
               <td colSpan={3} className="tw-text-right">
-                Total:
+                <strong>Total:</strong>
               </td>
               <td className="tw-text-right">
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "INR",
-                }).format(
-                  (18 / 100) * Number(cartStore?.getTotalPrice()) +
-                    Number(cartStore?.getTotalPrice())
-                )}
+                <strong>
+                  {new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "INR",
+                  }).format(
+                    (18 / 100) * Number(cartStore?.getTotalPrice()) +
+                      Number(cartStore?.getTotalPrice())
+                  )}
+                </strong>
               </td>
             </tr>
           </tfoot>

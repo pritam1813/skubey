@@ -37,7 +37,7 @@ const CheckOutAddressForm = ({ state }: { state: FormState }) => {
     getCountries().then((countries) => {
       setCountries(countries);
     });
-  }, [getCountries]);
+  }, []);
 
   const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const countryCode = event.target.value;

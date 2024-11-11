@@ -46,7 +46,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       // Populate form fields
       form.setValue("name", categoryToEdit.name);
     }
-  }, [categoryToEdit]);
+  }, [categoryToEdit, form]);
 
   return (
     <div className="tw-w-full tw-mx-auto">

@@ -19,6 +19,7 @@ const SubmitButton = () => {
 };
 
 const initialState = {
+  error: false,
   message: "",
   success: false,
 };
@@ -28,7 +29,8 @@ const AddCouponForm = () => {
   useEffect(() => {
     if (state.success) {
       toast.success(state.message);
-    } else if (state.success === false) {
+    }
+    if (state.error) {
       toast.error(state.message);
     }
   }, [state]);

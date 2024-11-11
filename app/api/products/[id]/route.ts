@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 import { z } from "zod";
-import { ProductSchema } from "../route";
+import { ProductSchema } from "@/app/types/product";
 
 export async function GET(
   req: Request,
@@ -53,21 +53,16 @@ export async function PATCH(
 ) {
   try {
     const body = await req.json();
-    const validatedData = ProductSchema.partial().parse(body);
+    const validatedData = ProductSchema.parse(body);
 
     const product = await prisma.product.update({
       where: { id: params.id },
       data: {
         ...validatedData,
-        ...(validatedData.name && {
-          slug: validatedData.name.toLowerCase().replace(/\s+/g, "-"),
-        }),
-        ...(validatedData.attributes && {
-          attributes: {
-            deleteMany: {},
-            create: validatedData.attributes,
-          },
-        }),
+        slug: validatedData.name.toLowerCase().replace(/\s+/g, "-"),
+        attributes: {
+          create: validatedData.attributes,
+        },
       },
       include: {
         category: true,

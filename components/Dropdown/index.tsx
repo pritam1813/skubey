@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import AnimateHeight from "react-animate-height";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
@@ -16,10 +16,10 @@ const DropDown = ({ title, children }: DropDownProps) => {
   const dropdownRef = useRef<HTMLUListElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
-  const handleDropdownShow = () => {
+  const handleDropdownShow = useCallback(() => {
     setDropdownShow(!dropdownShow);
     setHeight(height === 0 ? "auto" : 0);
-  };
+  }, [dropdownShow, height]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

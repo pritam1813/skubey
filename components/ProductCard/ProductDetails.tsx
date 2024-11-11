@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import useSWR from "swr";
-import { fetcher } from "../Products";
+import { fetcher } from "@/app/utils/fetcherFunctions";
 
 const ProductDetails = ({ id }: { id: string }) => {
   const { data, isLoading, error } = useSWR(`/api/products/${id}`, fetcher);

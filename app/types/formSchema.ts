@@ -64,6 +64,11 @@ const UpdatePasswordSchema = z
 type RegistrationData = z.infer<typeof RegistrationSchema>;
 type AddressData = z.infer<typeof AddressBookSchema>;
 
+export interface CheckoutAddressData
+  extends Omit<AddressData, "phoneNumber" | "addressTwo" | "company"> {
+  id: string;
+}
+
 export type { RegistrationData, AddressData };
 export {
   RegistrationSchema,

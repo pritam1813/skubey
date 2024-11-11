@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import "./checkout.scss";
-import { CheckoutAddressData } from "@/app/(main)/(cart)/cart/checkout/page";
 import { useFormState } from "react-dom";
 import { BillingAddress } from "@/app/actions";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
@@ -9,6 +8,7 @@ import FormErrorMessage from "../FormErrorMessage";
 import { getCountries, getStates } from "@/app/utils/countries";
 import LinkButtonTwo from "@/components/Buttons/LinkButtonTwo";
 import { useAccStore } from "@/components/Cart/CartAccordions";
+import { CheckoutAddressData } from "@/app/types/formSchema";
 
 const personDetails = [
   { label: "First Name", name: "firstName", type: "text", required: true },
@@ -47,13 +47,13 @@ const BillingForm = ({ addresses }: { addresses: CheckoutAddressData[] }) => {
     getCountries().then((countries) => {
       setCountries(countries);
     });
-  }, [getCountries]);
+  }, []);
 
   useEffect(() => {
     if (state?.success) {
       inc();
     }
-  }, [state?.success]);
+  }, [state?.success, inc]);
 
   const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const countryCode = event.target.value;

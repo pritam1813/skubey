@@ -121,16 +121,8 @@ const QuickView = ({
                 <div id="productimage" className="tw-mb-5">
                   <Link href={quickView.product ? quickView.product.slug : "/"}>
                     <Image
-                      src={
-                        product
-                          ? `${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID_DEV}/${product.images[0].url}`
-                          : "/products/1.jpg"
-                      }
-                      alt={
-                        product
-                          ? `${process.env.NEXT_PUBLIC_SUPABASE_PROJECT_ID_DEV}/${product.images[0].alt}`
-                          : ""
-                      }
+                      src={product ? `${product.images[0]}` : "/products/1.jpg"}
+                      alt={product ? `${product.name}` : ""}
                       width={355}
                       height={421}
                       className="tw-w-full tw-h-auto"
@@ -182,7 +174,7 @@ const QuickView = ({
               </h2>
               <div id="ratingDetails">
                 {Array.from({ length: 5 }, (_, i) =>
-                  i < Math.floor(product?.rating || 0) ? (
+                  i < Math.floor(product?.avgRating || 0) ? (
                     <span key={i} className="tw-text-primaryHover">
                       &#9733;
                     </span>
@@ -192,7 +184,7 @@ const QuickView = ({
                     </span>
                   )
                 )}
-                <span className="tw-ml-2 tw-text-sm">{product?.rating}</span>
+                <span className="tw-ml-2 tw-text-sm">{product?.avgRating}</span>
               </div>
               <hr />
               <ul className="tw-p-0 tw-capitalize tw-text-sm/6 tw-font-medium">
@@ -203,20 +195,22 @@ const QuickView = ({
                     availability:
                   </span>{" "}
                   <span className="tw-text-secondaryLight">
-                    {product?.inStock ? "In Stock" : "Out of Stock"}
+                    {product?.stock > 0 ? "In Stock" : "Out of Stock"}
                   </span>
                 </li>
               </ul>
               <hr />
               <ul className="tw-text-primary tw-p-0 tw-leading-6">
-                <li>{quickView.product?.price}</li>
+                <li>{Number(quickView.product?.price)}</li>
                 <li className="tw-text-sm">
                   {" "}
                   GST / Tax:{" "}
                   <span className="tw-text-secondaryLight">
                     {" "}
                     {quickView.product?.price
-                      ? ((18 / 100) * quickView.product.price).toFixed(2)
+                      ? ((18 / 100) * Number(quickView.product.price)).toFixed(
+                          2
+                        )
                       : 0}
                   </span>
                 </li>

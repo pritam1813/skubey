@@ -1,14 +1,14 @@
 "use client";
+import React from "react";
 import { useCartStore } from "@/app/stores";
 import useCurrencyStore from "@/app/stores/currencyStore";
-import React from "react";
 import { useStore } from "zustand";
 
 const CartTotal = () => {
-  const state = useStore(useCartStore, (state) => state);
-  const currencyState = useStore(useCurrencyStore, (state) => state);
-  if (currencyState.isLoading) return null;
-  if (!state) return null;
+  const cartstate = useStore(useCartStore, (state) => state);
+  // const currencyState = useStore(useCurrencyStore, (state) => state);
+  // if (currencyState.isLoading) return null;
+  if (!cartstate) return null;
 
   return (
     <table className="table table-bordered">
@@ -18,8 +18,8 @@ const CartTotal = () => {
           <td className="tw-text-right">
             {new Intl.NumberFormat("en-US", {
               style: "currency",
-              currency: currencyState.currency,
-            }).format(state.getTotalPrice())}
+              currency: "INR",
+            }).format(cartstate.getTotalPrice())}
           </td>
         </tr>
         <tr>
@@ -27,8 +27,10 @@ const CartTotal = () => {
           <td className="tw-text-right">
             {new Intl.NumberFormat("en-US", {
               style: "currency",
-              currency: currencyState.currency,
-            }).format(Number(((18 / 100) * state.getTotalPrice()).toFixed(2)))}
+              currency: "INR",
+            }).format(
+              Number(((18 / 100) * cartstate.getTotalPrice()).toFixed(2))
+            )}
           </td>
         </tr>
         <tr>
@@ -36,9 +38,12 @@ const CartTotal = () => {
           <td className="tw-text-right">
             {new Intl.NumberFormat("en-US", {
               style: "currency",
-              currency: currencyState.currency,
+              currency: "INR",
             }).format(
-              Number(state.getTotalPrice() + (18 / 100) * state.getTotalPrice())
+              Number(
+                cartstate.getTotalPrice() +
+                  (18 / 100) * cartstate.getTotalPrice()
+              )
             )}
           </td>
         </tr>

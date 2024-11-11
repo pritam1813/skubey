@@ -3,12 +3,14 @@ import React from "react";
 import { useCartStore } from "@/app/stores";
 import Link from "next/link";
 import Image from "next/image";
-import useCurrencyStore from "@/app/stores/currencyStore";
+
 import CartTableActions from "./CartTableActions";
+import useStore from "@/app/stores/useStore";
+import useCurrencyStore from "@/app/stores/currencyStore";
 
 const CartItemsTable = () => {
-  const { cart } = useCartStore((state) => state);
-  const { currency } = useCurrencyStore();
+  const cartState = useStore(useCartStore, (state) => state);
+  //  const currency = useStore(useCurrencyStore, (state) => state.currency);
   return (
     <div className="table-responsive">
       <table className="table table-bordered">
@@ -22,7 +24,7 @@ const CartItemsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {cart.map((item) => (
+          {cartState?.cart.map((item) => (
             <tr key={item.id} className="[&>*]:tw-align-middle">
               <td className="text-center">
                 <Link href={`/product/${item.id}`} className="tw-no-underline">
@@ -54,13 +56,13 @@ const CartItemsTable = () => {
               <td>
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
-                  currency,
+                  currency: "INR",
                 }).format(Number(item.price))}
               </td>
               <td>
                 {new Intl.NumberFormat("en-US", {
                   style: "currency",
-                  currency,
+                  currency: "INR",
                 }).format(Number(item.price) * item.quantity)}
               </td>
             </tr>

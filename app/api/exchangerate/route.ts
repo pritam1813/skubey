@@ -18,6 +18,11 @@ export async function GET(req: Request) {
     return NextResponse.json(data.conversion_rates, { status: 200 });
   } catch (error) {
     console.error("Error fetching exchange rates:", error);
-    return null;
+    return NextResponse.json(
+      {
+        error: "Failed to fetch exchange rates",
+      },
+      { status: 500 }
+    );
   }
 }

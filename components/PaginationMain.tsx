@@ -6,11 +6,11 @@ import { usePathname, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 const PaginationMain = ({ totalPages }: { totalPages: number }) => {
-  if (totalPages === undefined) return null;
-
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page")) || 1;
+
+  if (totalPages === undefined) return null;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);

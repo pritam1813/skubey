@@ -1,7 +1,7 @@
 "use client";
 
-import { CheckoutAddressData } from "@/app/(main)/(cart)/cart/checkout/page";
-
+import React from "react";
+import { CheckoutAddressData } from "@/app/types/formSchema";
 import CartAccordions from "@/components/Cart/CartAccordions";
 import { useRouter } from "next/navigation";
 import { useState } from "react";

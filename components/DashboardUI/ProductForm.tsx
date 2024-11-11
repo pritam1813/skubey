@@ -53,6 +53,7 @@ import {
 } from "../ui/collapsible";
 
 import "./dashboard.scss";
+import Image from "next/image";
 
 // Initialize Supabase client
 const supabase = createClient(
@@ -430,7 +431,9 @@ const ProductForm = () => {
                 <div className="tw-grid tw-grid-cols-3 tw-gap-4 tw-mt-4">
                   {imagePreviewUrls.map((url, index) => (
                     <div key={index} className="tw-relative">
-                      <img
+                      <Image
+                        width={128}
+                        height={128}
                         src={url}
                         alt={`Preview ${index + 1}`}
                         className="tw-w-full tw-h-32 tw-object-cover tw-rounded-lg"

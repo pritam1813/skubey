@@ -120,7 +120,7 @@ const ProductEditModal = ({
         <DialogHeader>
           <DialogTitle>Edit Product</DialogTitle>
           <DialogDescription>
-            Make changes to the product here. Click save when you're done.
+            Make changes to the product here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

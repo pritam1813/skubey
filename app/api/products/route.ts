@@ -2,37 +2,35 @@ import { NextResponse } from "next/server";
 import prisma from "@/prisma/db";
 import { z } from "zod";
 import { Prisma } from "@prisma/client";
+import { ProductSchema } from "@/app/types/product";
 
-export const ProductSchema = z.object({
-  name: z.string().min(2).max(100),
-  description: z.string(),
-  price: z.number().positive(),
-  stock: z.number().int().min(0),
-  images: z.array(z.string()),
-  categoryId: z.string(),
-  isActive: z.boolean().optional(),
-  isPublished: z.boolean().optional(),
-  tags: z.array(z.string()).optional(),
-  brand: z.string().optional(),
-  weight: z.number().optional(),
-  dimensions: z.record(z.any()).optional(),
-  priceDiscount: z.number().optional(),
-  metadata: z.record(z.any()).optional(),
-  attributes: z
-    .array(
-      z.object({
-        name: z.string(),
-        value: z.string(),
-        isFilterable: z.boolean().optional(),
-        isSearchable: z.boolean().optional(),
-        displayOrder: z.number().optional(),
-      })
-    )
-    .optional(),
-});
-
-const delay = (ms: number | undefined) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+// export const ProductSchema = z.object({
+//   name: z.string().min(2).max(100),
+//   description: z.string(),
+//   price: z.number().positive(),
+//   stock: z.number().int().min(0),
+//   images: z.array(z.string()),
+//   categoryId: z.string(),
+//   isActive: z.boolean().optional(),
+//   isPublished: z.boolean().optional(),
+//   tags: z.array(z.string()).optional(),
+//   brand: z.string().optional(),
+//   weight: z.number().optional(),
+//   dimensions: z.record(z.any()).optional(),
+//   priceDiscount: z.number().optional(),
+//   metadata: z.record(z.any()).optional(),
+//   attributes: z
+//     .array(
+//       z.object({
+//         name: z.string(),
+//         value: z.string(),
+//         isFilterable: z.boolean().optional(),
+//         isSearchable: z.boolean().optional(),
+//         displayOrder: z.number().optional(),
+//       })
+//     )
+//     .optional(),
+// });
 
 export async function POST(req: Request) {
   try {

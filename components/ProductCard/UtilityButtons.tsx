@@ -11,22 +11,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useCartStore } from "@/app/stores/";
 import { Product } from "@/app/types";
-import Link from "next/link";
 
 const UtilityButtons = ({ product }: { product: Product }) => {
   const { addToCart, setQuickViewProduct } = useCartStore();
 
-  const {
-    id,
-    name,
-    price,
-    description,
-    categories,
-    inStock,
-    images,
-    rating,
-    discount,
-  } = product;
+  // const {
+  //   id,
+  //   name,
+  //   price,
+  //   description,
+  //   categoryId,
+  //   stock,
+  //   images,
+  //   avgRating,
+  //   priceDiscount,
+  // } = product;
 
   const utilityButtons = [
     {
@@ -53,18 +52,19 @@ const UtilityButtons = ({ product }: { product: Product }) => {
       title: "Quick View",
       link: "#",
       onClickHandler: () => {
-        setQuickViewProduct({
-          id,
-          name,
-          slug: `/product/${id}`,
-          description,
-          images,
-          price,
-          rating,
-          discount,
-          inStock,
-          categories,
-        });
+        // setQuickViewProduct({
+        //   id,
+        //   name,
+        //   slug: `/product/${id}`,
+        //   description,
+        //   images,
+        //   price,
+        //   avgRating,
+        //   priceDiscount,
+        //   stock,
+        //   categories,
+        // });
+        console.log(product.id);
       },
     },
     {

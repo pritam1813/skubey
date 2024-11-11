@@ -48,13 +48,13 @@ const AddressForm = ({ address }: { address?: EditAddressData }) => {
     getCountries().then((countries) => {
       setCountries(countries);
     });
-  }, [getCountries]);
+  }, []);
 
   useEffect(() => {
     if (state?.success && !address) {
       ref.current?.reset();
     }
-  }, [state?.success]);
+  }, [state?.success, address]);
 
   useEffect(() => {
     if (address) {

@@ -1,7 +1,7 @@
 import React from "react";
 import SidebarMenu from ".";
 import ProductsThumbnail from "../Products/ProductsThumbnail";
-import "@/app/(main)/(auth)/accountStyle.scss";
+import "./accountStyle.scss";
 import Image from "next/image";
 import { getBaseUrl } from "@/app/utils/getBaseUrl";
 import { Category } from "@/app/types/category";
@@ -14,6 +14,9 @@ interface CategoryMenu extends Category {
 
 const ProductSidebar = async () => {
   const res = await fetch(`${getBaseUrl()}/api/category`);
+  if (!res.ok) {
+    return <div>Failed to fetch data</div>;
+  }
   const { categories }: { categories: CategoryMenu[] } = await res.json();
 
   // Fetching Only 3 bestseller

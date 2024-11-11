@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
   const redirectTo = request.nextUrl.clone();
   redirectTo.pathname = next;
 
-  console.log("REdirext: ", redirectTo);
+  // console.log("REdirext: ", redirectTo);
 
   const supabase = await createClient();
 

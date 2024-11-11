@@ -2,7 +2,6 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createClient } from "@/app/utils/supabase/server";
 import prisma from "@/prisma/db";
 import { z } from "zod";
-import { getBaseUrl } from "@/app/utils/getBaseUrl";
 
 const PrismaUserSchema = z.object({
   id: z.string().uuid(),
@@ -39,9 +38,6 @@ export async function POST(request: NextRequest) {
     const supabase = await createClient();
     const { error, data } = await supabase.auth.signUp({
       ...supabaseUserData,
-      options: {
-        emailRedirectTo: `${getBaseUrl()}/api/auth/callback`,
-      },
     });
 
     // console.log(data);

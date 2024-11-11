@@ -9,6 +9,7 @@ export default async function User() {
     cache: "no-store",
   });
   const data = await response.json();
+  // console.log(data);
 
   return (
     <div id="content" className="col-sm-6 tw-order-1 lg:tw-order-2 tw-mx-auto">
@@ -44,7 +45,7 @@ export default async function User() {
       </div>
       <div className="tw-my-3.5 tw-justify-end tw-flex ">
         <div>
-          <ThemeButton href="/user/address/add" title="Edit Details" />
+          <ThemeButton href={`/user/edit`} title="Edit Details" />
         </div>
       </div>
     </div>

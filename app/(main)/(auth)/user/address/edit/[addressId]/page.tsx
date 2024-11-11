@@ -13,6 +13,7 @@ export default async function EditAddress({
   );
 
   const address = await data.json();
+  console.log(address);
 
   return (
     <div

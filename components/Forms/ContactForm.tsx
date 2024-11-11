@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { z } from "Zod";
+import { z } from "zod";
 
 const formSchema = z.object({
   name: z

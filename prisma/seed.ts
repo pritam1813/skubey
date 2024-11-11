@@ -3,8 +3,6 @@ import { ProductsSampleData } from "../data/products";
 
 const prisma = new PrismaClient();
 
-const productData: Prisma.ProductCreateInput[] = ProductsSampleData;
-
 const categoryData: Prisma.CategoryCreateInput[] = [
   {
     name: "Uncategorized",
@@ -26,16 +24,25 @@ const categoryData: Prisma.CategoryCreateInput[] = [
 
 async function main() {
   console.log(`Start seeding ...`);
-  for (const p of productData) {
-    const product = await prisma.product.create({
-      data: p,
-    });
-    console.log(`Created Product with id: ${product.id}`);
-  }
+  let i = 0;
   for (const c of categoryData) {
     const category = await prisma.category.create({
       data: c,
     });
+    if (c.name != "Uncategorized") {
+      while (i < ProductsSampleData.length) {
+        const product = await prisma.product.create({
+          data: {
+            ...ProductsSampleData[i],
+            category: {
+              connect: { id: category.id },
+            },
+          },
+        });
+        console.log(`Created Product with id: ${product.id}`);
+        i += 1;
+      }
+    }
     console.log(`Created Category with id: ${category.id}`);
   }
   console.log(`Seeding finished.`);

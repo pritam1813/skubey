@@ -1,11 +1,13 @@
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = ["fullTextSearch", "omitApi"]
+  previewFeatures = ["fullTextSearch", "omitApi", "multiSchema"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+  schemas   = ["public", "auth"]
 }
 
 // This model mirrors Supabase's auth.users table
@@ -26,6 +28,7 @@ model User {
   addresses     Address[]
 
   @@map("users")
+  @@schema("auth")
 }
 
 // Separate profile model for additional user information
@@ -41,11 +44,14 @@ model Profile {
   metadata    Json? // Additional profile data
 
   @@map("profiles")
+  @@schema("auth")
 }
 
 enum Role {
   ADMIN
   CUSTOMER
+
+  @@schema("auth")
 }
 
 model Product {
@@ -96,6 +102,7 @@ model Product {
   // Full-text search index (Postgres specific)
   @@index([searchVector], type: Gin)
   @@map("products")
+  @@schema("public")
 }
 
 model Category {
@@ -127,6 +134,7 @@ model Category {
   @@index([path])
   @@index([isActive])
   @@map("categories")
+  @@schema("public")
 }
 
 model ProductAttribute {
@@ -144,6 +152,7 @@ model ProductAttribute {
   @@index([name, value])
   @@index([productId])
   @@map("product_attributes")
+  @@schema("public")
 }
 
 model Order {
@@ -161,6 +170,7 @@ model Order {
   paymentId     String?
 
   @@map("orders")
+  @@schema("auth")
 }
 
 enum OrderStatus {
@@ -169,6 +179,8 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELLED
+
+  @@schema("auth")
 }
 
 enum PaymentStatus {
@@ -176,6 +188,8 @@ enum PaymentStatus {
   PAID
   FAILED
   REFUNDED
+
+  @@schema("auth")
 }
 
 model OrderItem {
@@ -188,6 +202,7 @@ model OrderItem {
   price     Decimal @db.Decimal(10, 2)
 
   @@map("order_items")
+  @@schema("auth")
 }
 
 model CartItem {
@@ -199,6 +214,7 @@ model CartItem {
   quantity  Int
 
   @@map("cart_items")
+  @@schema("auth")
 }
 
 model WishlistItem {
@@ -210,6 +226,7 @@ model WishlistItem {
   createdAt DateTime @default(now())
 
   @@map("wishlist_items")
+  @@schema("auth")
 }
 
 model Address {
@@ -230,6 +247,7 @@ model Address {
   orders      Order[]
 
   @@map("addresses")
+  @@schema("auth")
 }
 
 model Review {
@@ -244,4 +262,5 @@ model Review {
   updatedAt DateTime @updatedAt
 
   @@map("reviews")
+  @@schema("auth")
 }

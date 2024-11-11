@@ -8,7 +8,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "Stickley",
     stock: 20,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/20.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/4.jpg",
@@ -28,7 +27,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/8.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/14.jpg",
@@ -48,7 +46,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/19.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/20.jpg",
@@ -66,7 +63,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/12.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/5.jpg",
@@ -86,7 +82,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "La-Z-Boy",
     stock: 20,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/3.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/8.jpg",
@@ -105,7 +100,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/1.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/3.jpg",
@@ -127,7 +121,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/16.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/7.jpg",
@@ -144,7 +137,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/9.jpg",
     ],
@@ -160,7 +152,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/10.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/5.jpg",
@@ -180,7 +171,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/9.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/1.jpg",
@@ -202,7 +192,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2ooosk00003vu77b9x1vrk1" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/2.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/15.jpg",
@@ -220,7 +209,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/10.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/5.jpg",
@@ -240,7 +228,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/9.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/1.jpg",
@@ -262,7 +249,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/2.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/15.jpg",
@@ -280,7 +266,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/18.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/14.jpg",
@@ -298,7 +283,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/14.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/19.jpg",
@@ -321,7 +305,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/4.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/11.jpg",
@@ -341,7 +324,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 50,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/3.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/13.jpg",
@@ -359,7 +341,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 90,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/5.jpg",
     ],
@@ -375,7 +356,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 90,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/6.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/1.jpg",
@@ -397,7 +377,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 90,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/17.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/16.jpg",
@@ -417,7 +396,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2os70zz0011vu77sksjbx0c" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/7.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/2.jpg",
@@ -434,7 +412,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/8.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/14.jpg",
@@ -454,7 +431,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/19.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/20.jpg",
@@ -472,7 +448,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/12.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/5.jpg",
@@ -492,7 +467,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "La-Z-Boy",
     stock: 20,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/3.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/8.jpg",
@@ -511,7 +485,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/1.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/3.jpg",
@@ -533,7 +506,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 90,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/6.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/1.jpg",
@@ -555,7 +527,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 90,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/17.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/16.jpg",
@@ -575,7 +546,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 100,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/7.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/2.jpg",
@@ -592,7 +562,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/16.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/7.jpg",
@@ -609,7 +578,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/9.jpg",
     ],
@@ -625,7 +593,6 @@ export const ProductsSampleData = [
     isPublished: true,
     brand: "",
     stock: 20,
-    category: { connect: { id: "cm2pzrozy000byctqg2lvww9b" } },
     images: [
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/10.jpg",
       "http://127.0.0.1:54321/storage/v1/object/public/products/sample/5.jpg",

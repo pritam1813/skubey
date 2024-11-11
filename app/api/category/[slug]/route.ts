@@ -22,6 +22,7 @@ export async function GET(
             id: true,
             name: true,
             price: true,
+            priceDiscount: true,
             images: true,
           },
         },

@@ -6,6 +6,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useCartStore } from "@/app/stores/";
 import AnimateHeight from "react-animate-height";
+import useCurrencyStore from "@/app/stores/currencyStore";
+import { formatCurrency } from "@/app/utils/currency";
 
 const HeaderCart = () => {
   const [headerCartDropDown, setHeaderCartDropDown] = useState(false);
@@ -14,6 +16,7 @@ const HeaderCart = () => {
   const { cart, getTotalPrice, removeFromCart } = useCartStore(
     (state) => state
   );
+  const { currency, exchangeRates } = useCurrencyStore((state) => state);
   const fallbackImageUrl = "/products/1.jpg";
   const gstontotal = (18 / 100) * getTotalPrice();
   const dropdownRef = useRef<HTMLUListElement>(null);
@@ -107,7 +110,12 @@ const HeaderCart = () => {
                               </span>
                               <span className="tw-font-medium tw-text-secondaryLight">
                                 {" "}
-                                &#8377; {item.price as unknown as number}
+                                {new Intl.NumberFormat("en-US", {
+                                  style: "currency",
+                                  currency,
+                                }).format(
+                                  Number(item.price) * exchangeRates[currency]
+                                )}
                               </span>
                             </div>
                           </td>
@@ -131,19 +139,33 @@ const HeaderCart = () => {
                         <tr>
                           <td className="tw-text-left">Price</td>
                           <td className="tw-text-right">
-                            &#8377; {getTotalPrice().toFixed(2)}
+                            {/* &#8377; {getTotalPrice().toFixed(2)} */}
+                            {formatCurrency(
+                              getTotalPrice(),
+                              currency,
+                              exchangeRates[currency]
+                            )}
                           </td>
                         </tr>
                         <tr>
                           <td className="tw-text-left">GST{" (18%)"}</td>
                           <td className="tw-text-right">
-                            &#8377; {gstontotal.toFixed(2)}
+                            {/* &#8377; {gstontotal.toFixed(2)} */}
+                            {formatCurrency(
+                              gstontotal,
+                              currency,
+                              exchangeRates[currency]
+                            )}
                           </td>
                         </tr>
                         <tr>
                           <td className="tw-text-left">Subtotal</td>
                           <td className="tw-text-right">
-                            &#8377; {(getTotalPrice() + gstontotal).toFixed(2)}
+                            {formatCurrency(
+                              getTotalPrice() + gstontotal,
+                              currency,
+                              exchangeRates[currency]
+                            )}
                           </td>
                         </tr>
                       </tbody>
@@ -156,7 +178,7 @@ const HeaderCart = () => {
                         View Cart
                       </Link>
                       <Link
-                        href="/checkout"
+                        href="/cart/checkout"
                         className="tw-inline-block tw-text-secondary hover:tw-text-primary tw-no-underline tw-rounded-md tw-bg-primary hover:tw-bg-primaryHover tw-py-2.5 tw-px-6 tw-text-sm/5 tw-transition-all tw-duration-500"
                       >
                         Checkout

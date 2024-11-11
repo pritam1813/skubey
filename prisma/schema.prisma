@@ -78,9 +78,9 @@ model Product {
   totalReviews Int                      @default(0) // Count of reviews
 
   // Numeric fields for various filtering scenarios
-  priceDiscount Decimal? @db.Decimal(10, 2)
-  salesCount    Int      @default(0) // Number of times sold
-  viewCount     Int      @default(0) // Number of times viewed
+  priceDiscount Int? @default(0) //Discount in percentage
+  salesCount    Int  @default(0) // Number of times sold
+  viewCount     Int  @default(0) // Number of times viewed
 
   // Additional metadata for filtering
   metadata Json? // Flexible storage for additional attributes

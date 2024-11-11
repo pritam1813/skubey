@@ -1,12 +1,13 @@
 "use client";
-import React, { use, useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import Slider from "react-slick";
 import ProductCard from "../ProductCard";
 import SliderButton from "../Buttons/SliderButton";
 import useSWR from "swr";
 import { Product } from "@/app/types";
-import ProductSliderSkeleon from "./ProductSliderSkeleon";
+
+import { fetcher } from "@/app/utils/fetcherFunctions";
 
 const tabs = [
   { title: "Featured", url: "featured" },
@@ -17,12 +18,13 @@ const tabs = [
 const Products = () => {
   const [activeTab, setActiveTab] = useState<(typeof tabs)[0]>(tabs[0]);
   const sliderRef = useRef<Slider | null>(null);
-  const [ppp, setppp] = useState(null);
 
-  const { data, error, isLoading } = useSWR(`/api/category/${activeTab.url}`);
+  const { data, error, isLoading } = useSWR(
+    `/api/category/${activeTab.url}`,
+    fetcher
+  );
 
   if (error) return <div>failed to load</div>;
-  if (isLoading) return <ProductSliderSkeleon />;
 
   const next = () => {
     if (sliderRef.current) {
@@ -114,17 +116,28 @@ const Products = () => {
                   className="productslider"
                   key={activeTab.title}
                 >
-                  {data &&
-                    data.products.map((product: Product, index: number) => (
-                      <div key={index}>
-                        <div id="item">
-                          <ProductCard
-                            product={product}
-                            columnsStyle="col col-xs-12"
-                          />
+                  {isLoading
+                    ? Array.from({ length: 8 }).map((_, i) => (
+                        <div key={i}>
+                          <div id="item">
+                            <ProductCard
+                              isLoading
+                              columnsStyle="col col-xs-12"
+                            />
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    : data &&
+                      data.products.map((product: Product, index: number) => (
+                        <div key={index}>
+                          <div id="item">
+                            <ProductCard
+                              product={product}
+                              columnsStyle="col col-xs-12"
+                            />
+                          </div>
+                        </div>
+                      ))}
                 </Slider>
               </div>
             </div>

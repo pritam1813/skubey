@@ -2,13 +2,20 @@
 import React from "react";
 import { useCartStore } from "@/app/stores";
 import useCurrencyStore from "@/app/stores/currencyStore";
-import { useStore } from "zustand";
+import useStore from "@/app/stores/useStore";
+import { formatCurrency } from "@/app/utils/currency";
 
 const CartTotal = () => {
   const cartstate = useStore(useCartStore, (state) => state);
-  // const currencyState = useStore(useCurrencyStore, (state) => state);
-  // if (currencyState.isLoading) return null;
-  if (!cartstate) return null;
+  const currencyState = useStore(useCurrencyStore, (state) => state);
+
+  if (!cartstate || !currencyState) return null;
+
+  const { currency, exchangeRates } = currencyState;
+  const exchangeRate = exchangeRates[currency];
+  const subtotal = cartstate.getTotalPrice();
+  const gst = Number((18 / 100) * subtotal);
+  const total = subtotal + gst;
 
   return (
     <table className="table table-bordered">
@@ -16,35 +23,19 @@ const CartTotal = () => {
         <tr>
           <td className="">Sub-Total</td>
           <td className="tw-text-right">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "INR",
-            }).format(cartstate.getTotalPrice())}
+            {formatCurrency(subtotal, currency, exchangeRate)}
           </td>
         </tr>
         <tr>
           <td className="">GST</td>
           <td className="tw-text-right">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "INR",
-            }).format(
-              Number(((18 / 100) * cartstate.getTotalPrice()).toFixed(2))
-            )}
+            {formatCurrency(gst, currency, exchangeRate)}
           </td>
         </tr>
         <tr>
           <td className="">Total</td>
           <td className="tw-text-right">
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "INR",
-            }).format(
-              Number(
-                cartstate.getTotalPrice() +
-                  (18 / 100) * cartstate.getTotalPrice()
-              )
-            )}
+            {formatCurrency(total, currency, exchangeRate)}
           </td>
         </tr>
       </tbody>

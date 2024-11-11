@@ -7,15 +7,20 @@ import { Product } from "@/app/types/product";
 import UtilityButtons from "./UtilityButtons";
 import { Rating } from "@smastrom/react-rating";
 import ProductPrice from "./ProductPrice";
+import Skeleton from "react-loading-skeleton";
 
 const ProductCard = ({
   product,
   columnsStyle,
+  isLoading,
 }: {
-  product: Product;
+  product?: Product;
   columnsStyle: string;
+  isLoading?: boolean;
 }) => {
-  const { id, name, price, images, avgRating, priceDiscount } = product;
+  // console.log(
+  //   `Product: ${product?.name} Discount: ${Number(product?.priceDiscount)}`
+  // );
 
   return (
     <div className={columnsStyle}>
@@ -25,7 +30,7 @@ const ProductCard = ({
             id="imageSection"
             className="tw-bg-backgroundColor tw-relative tw-text-center tw-overflow-hidden tw-rounded-tl-cardcustom tw-rounded-tr-cardcustom tw-border-8 tw-border-solid tw-border-secondary tw-transition-all tw-duration-500 group-hover:tw-border-secondaryHover"
           >
-            <Link href={`/product/${id}`}>
+            {/* <Link href={`/product/${id}`}>
               <Image
                 src={`${images[0]}`}
                 alt={`${name} card image`}
@@ -33,7 +38,20 @@ const ProductCard = ({
                 width={920}
                 height={1093}
               />
-            </Link>
+            </Link> */}
+            {isLoading ? (
+              <Skeleton height={300} />
+            ) : (
+              <Link href={`/product/${product?.id}`}>
+                <Image
+                  src={`${product?.images[0]}`}
+                  alt={`${product?.name} card image`}
+                  className="img-fluid"
+                  width={920}
+                  height={1093}
+                />
+              </Link>
+            )}
           </div>
 
           <div
@@ -41,11 +59,15 @@ const ProductCard = ({
             className="tw-relative tw-px-[10px] tw-pt-[14px] tw-pb-[15px] lg:tw-px-[15px] lg:tw-pb-[25px] tw-bg-secondary tw-transition-all tw-duration-500 group-hover:tw-bg-secondaryHover tw-rounded-br-cardcustom tw-rounded-bl-cardcustom"
           >
             <div id="caption" className="max-xl:tw-text-center">
-              <UtilityButtons product={product} />
+              {isLoading ? (
+                <Skeleton count={3} />
+              ) : (
+                product && <UtilityButtons product={product} />
+              )}
 
               <div id="producttitle">
                 <h4 className="tw-text-base/5 tw-mt-[3px] tw-mb-0 tw-text-primary hover:tw-text-secondaryLight tw-font-medium">
-                  {name}
+                  {isLoading ? <Skeleton /> : product?.name}
                 </h4>
               </div>
 
@@ -53,17 +75,31 @@ const ProductCard = ({
                 id="price"
                 className="tw-block xl:tw-inline-block tw-mt-[7px] xl:tw-mt-[10px] tw-text-sm xl:tw-text-[15px] tw-text-primary tw-font-medium"
               >
-                <ProductPrice
-                  amount={price as unknown as number}
-                  discount={priceDiscount as unknown as number}
-                />
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  product && (
+                    <ProductPrice
+                      amount={Number(product.price)}
+                      discount={
+                        product.priceDiscount
+                          ? Number(product.priceDiscount)
+                          : 0
+                      }
+                    />
+                  )
+                )}
               </div>
 
               <div
                 id="rating"
                 className="tw-block xl:tw-inline-block tw-float-none xl:tw-float-right tw-mt-[5px] xl:tw-mt-2 xl:tw-p-0 tw-space-x-1 tw-w-1/4"
               >
-                <Rating readOnly value={avgRating} />
+                {isLoading ? (
+                  <Skeleton />
+                ) : (
+                  product && <Rating readOnly value={product.avgRating} />
+                )}
               </div>
             </div>
           </div>

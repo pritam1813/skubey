@@ -39,8 +39,8 @@ const ProductsThumbnail = ({ product }: { product: ProductThumbnailProps }) => {
         </div>
         <div>
           <ProductPrice
-            amount={price as unknown as number}
-            discount={priceDiscount as unknown as number}
+            amount={Number(price)}
+            discount={priceDiscount ? Number(priceDiscount) : 0}
           />
         </div>
       </div>

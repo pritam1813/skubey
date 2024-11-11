@@ -6,11 +6,17 @@ import Image from "next/image";
 
 import CartTableActions from "./CartTableActions";
 import useStore from "@/app/stores/useStore";
-import useCurrencyStore from "@/app/stores/currencyStore";
+import useCurrencyStore, {
+  defaultExchangeRates,
+} from "@/app/stores/currencyStore";
+import { formatCurrency } from "@/app/utils/currency";
 
 const CartItemsTable = () => {
   const cartState = useStore(useCartStore, (state) => state);
-  //  const currency = useStore(useCurrencyStore, (state) => state.currency);
+
+  const currencyState = useStore(useCurrencyStore, (state) => state);
+  let currency = currencyState?.currency || "INR";
+  let exchangeRates = currencyState?.exchangeRates || defaultExchangeRates;
   return (
     <div className="table-responsive">
       <table className="table table-bordered">
@@ -25,8 +31,11 @@ const CartItemsTable = () => {
         </thead>
         <tbody>
           {cartState?.cart.map((item) => (
-            <tr key={item.id} className="[&>*]:tw-align-middle">
-              <td className="text-center">
+            <tr
+              key={item.id}
+              className="[&>*]:tw-align-middle [&>*]:tw-text-center"
+            >
+              <td>
                 <Link href={`/product/${item.id}`} className="tw-no-underline">
                   <Image
                     src={item.images[0]}
@@ -46,7 +55,7 @@ const CartItemsTable = () => {
                 </Link>
               </td>
               <td>
-                <div className="tw-relative tw-table tw-border-separate tw-w-full tw-max-w-52">
+                <div className="tw-relative tw-table tw-border-separate tw-w-full tw-max-w-52 tw-mx-auto">
                   <CartTableActions
                     initialQuantity={item.quantity}
                     product={item}
@@ -54,16 +63,18 @@ const CartItemsTable = () => {
                 </div>
               </td>
               <td>
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "INR",
-                }).format(Number(item.price))}
+                {formatCurrency(
+                  Number(item.price),
+                  currency,
+                  exchangeRates[currency]
+                )}
               </td>
               <td>
-                {new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "INR",
-                }).format(Number(item.price) * item.quantity)}
+                {formatCurrency(
+                  Number(item.price) * Number(item.quantity),
+                  currency,
+                  exchangeRates[currency]
+                )}
               </td>
             </tr>
           ))}

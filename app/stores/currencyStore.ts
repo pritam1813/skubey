@@ -4,7 +4,7 @@ import { fetchExchangeRates } from "../utils/fetchExchangeRates";
 import { CurrencyState, ExchangeRates } from "../types/currency";
 import { getBaseUrl } from "../utils/getBaseUrl";
 
-const defaultExchangeRates: ExchangeRates = {
+export const defaultExchangeRates: ExchangeRates = {
   USD: 0.01189,
   EUR: 0.01095,
   INR: 1,
@@ -58,6 +58,18 @@ const useCurrencyStore = create<CurrencyState>()(
             isLoading: false,
           });
         }
+      },
+
+      getFormattedPrice: (price: number) => {
+        const currency = get().currency;
+        const exchangeRate = get().exchangeRates[currency];
+        const convertedPrice = price * exchangeRate;
+
+        // Format the converted price
+        return new Intl.NumberFormat("en-US", {
+          style: "currency",
+          currency,
+        }).format(convertedPrice);
       },
     }),
     {

@@ -10,6 +10,7 @@ import {
   faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import toast, { Toaster } from "react-hot-toast";
 
 interface QuantityInputProps {
   initialValue?: number;
@@ -30,6 +31,7 @@ const ProductOptions = ({
   const handleAddToCart = () => {
     if (quantity > 0) {
       addToCart(product, quantity);
+      toast.success(`Added ${quantity} ${product.name} to cart`);
     }
   };
 
@@ -73,6 +75,7 @@ const ProductOptions = ({
 
   return (
     <div id="productOptions" className="tw-leading-5">
+      <Toaster position="top-center" />
       <div className="tw-mb-3.75 tw-inline-block">
         <div
           id="qty"

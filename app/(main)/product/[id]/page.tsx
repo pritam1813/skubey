@@ -11,6 +11,7 @@ import { Rating } from "@smastrom/react-rating";
 import ProductPrice from "@/components/ProductCard/ProductPrice";
 import { getBaseUrl } from "@/app/utils/getBaseUrl";
 import ProductImageViewer from "@/components/Products/ProductImageViewer";
+import ProductOptions from "@/components/Products/ProductOptions";
 
 interface ProductResult extends Product {
   error?: string;
@@ -108,27 +109,27 @@ const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
                     <hr className="tw-my-5" />
                     <ul className="tw-text-primary tw-p-0 tw-leading-6">
                       <ProductPrice
-                        amount={product.price as unknown as number}
-                        discount={product.priceDiscount as unknown as number}
+                        amount={Number(product.price)}
+                        discount={
+                          product.priceDiscount
+                            ? Number(product.priceDiscount)
+                            : 0
+                        }
                       />
                       <li className="tw-text-sm tw-mt-1.2 tw-text-primary">
                         {" "}
                         GST / Tax:{" "}
                         <span>
-                          {" "}
-                          {product?.price
-                            ? (
-                                (18 / 100) *
-                                (product.price as unknown as number)
-                              ).toFixed(2)
-                            : 0}
+                          <ProductPrice
+                            amount={(18 / 100) * Number(product.price)}
+                          />
                         </span>
                       </li>
                     </ul>
                     <hr />
 
                     {/* Product Options */}
-                    {/* <ProductOptions product={product} /> */}
+                    <ProductOptions product={product} />
                   </div>
                 </div>
               </div>

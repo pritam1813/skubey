@@ -32,6 +32,12 @@ async function main() {
     });
     console.log(`Created Product with id: ${product.id}`);
   }
+  for (const c of categoryData) {
+    const category = await prisma.category.create({
+      data: c,
+    });
+    console.log(`Created Category with id: ${category.id}`);
+  }
   console.log(`Seeding finished.`);
 }
 

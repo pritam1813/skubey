@@ -1,4 +1,3 @@
-import { Decimal } from "@prisma/client/runtime/library";
 import { z } from "zod";
 
 // Base Types
@@ -32,7 +31,7 @@ interface Product {
   id: string;
   name: string;
   description: string;
-  price: Decimal;
+  price: number;
   stock: number;
   images: string[];
   categoryId: string;
@@ -54,7 +53,7 @@ interface Product {
   } | null;
   avgRating: number;
   totalReviews: number;
-  priceDiscount: Decimal | null;
+  priceDiscount: number | null;
   salesCount: number;
   viewCount: number;
   metadata: Record<string, any> | null;

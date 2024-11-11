@@ -1,5 +1,5 @@
-import type { Product } from "@prisma/client";
 import { z } from "zod";
+import { Product } from "./productmodify";
 
 export const ProductSchema = z
   .object({
@@ -48,4 +48,4 @@ export const ProductSchema = z
 
 export type ProductFormData = z.infer<typeof ProductSchema>;
 
-export { Product };
+export type { Product };

@@ -1,4 +1,5 @@
 name: Tests and Deploy for Skubey
+name: Tests and Deploy for Skubey
 
 on:
   pull_request:
@@ -7,9 +8,13 @@ on:
   push:
     branches:
       - main
+  push:
+    branches:
+      - main
 
 jobs:
   NextJS-Tests:
+    name: Tests for Skubey
     name: Tests for Skubey
     runs-on: ubuntu-latest
     

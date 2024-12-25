@@ -25,12 +25,17 @@ const categoryData: Prisma.CategoryCreateInput[] = [
 async function main() {
   console.log(`Start seeding ...`);
   let i = 0;
-  for (const c of categoryData) {
+  for (let c of categoryData) {
+    let count = 0;
     const category = await prisma.category.create({
       data: c,
     });
+    console.log(`Products Under Category ${c.name} (id: ${category.id}):-`);
+    console.log("****************Start********************");
+
     if (c.name != "Uncategorized") {
       while (i < ProductsSampleData.length) {
+        if (count >= 11) break;
         const product = await prisma.product.create({
           data: {
             ...ProductsSampleData[i],
@@ -39,11 +44,14 @@ async function main() {
             },
           },
         });
-        console.log(`Created Product with id: ${product.id}`);
+        console.log(
+          `Created Product ${ProductsSampleData[i].name} with id: ${product.id}`
+        );
+        count++;
         i += 1;
       }
+      console.log("****************End********************");
     }
-    console.log(`Created Category with id: ${category.id}`);
   }
   console.log(`Seeding finished.`);
 }

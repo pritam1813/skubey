@@ -24,7 +24,7 @@ const Products = () => {
     fetcher
   );
 
-  if (error) return <div>failed to load</div>;
+  if (error) return <div className="tw-mx-auto">failed to load</div>;
 
   const next = () => {
     if (sliderRef.current) {

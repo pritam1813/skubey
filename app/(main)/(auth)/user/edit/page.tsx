@@ -5,7 +5,7 @@ import React from "react";
 
 export default async function UserEdit() {
   const response = await fetch(`${getBaseUrl()}/api/auth/user`, {
-    headers: headers(),
+    headers: await headers(),
     cache: "no-store",
   });
   const data = await response.json();

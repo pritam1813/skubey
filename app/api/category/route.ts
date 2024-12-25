@@ -94,6 +94,8 @@ export async function GET(req: Request) {
       pages: Math.ceil(total / limit),
     });
   } catch (error) {
+    console.log("Error fetching categories:", error);
+
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

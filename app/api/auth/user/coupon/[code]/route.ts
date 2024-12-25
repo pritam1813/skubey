@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(
-  request: NextRequest,
-  { params }: { params: { code: string } }
-) {
+export async function POST(request: NextRequest, props: { params: Promise<{ code: string }> }) {
+  const params = await props.params;
   try {
     if (params.code === "SKUBEYNEWUSER" || params.code === "skubeynewuser") {
       return NextResponse.json(

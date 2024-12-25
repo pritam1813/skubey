@@ -1,8 +1,7 @@
 "use client";
-import React from "react";
+import React, { useActionState } from "react";
 import Link from "next/link";
 import { createUser } from "@/app/actions";
-import { useFormState } from "react-dom";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
 import FormErrorMessage from "./FormErrorMessage";
 import { Toaster } from "react-hot-toast";
@@ -19,7 +18,7 @@ const personalDetails = [
   { label: "Phone", name: "phone", type: "tel" },
 ];
 const ProfileUpdateForm = ({ id }: { id: string }) => {
-  const [state, formAction] = useFormState(createUser, initialState);
+  const [state, formAction] = useActionState(createUser, initialState);
   const { getFieldError } = useFormErrors(state);
 
   // console.log(state);

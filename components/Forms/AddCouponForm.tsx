@@ -1,8 +1,8 @@
 "use client";
 import { validateCoupon } from "@/app/actions";
 
-import React, { useEffect } from "react";
-import { useFormState, useFormStatus } from "react-dom";
+import React, { useEffect, useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import toast, { Toaster } from "react-hot-toast";
 
 const SubmitButton = () => {
@@ -24,7 +24,7 @@ const initialState = {
   success: false,
 };
 const AddCouponForm = () => {
-  const [state, formAction] = useFormState(validateCoupon, initialState);
+  const [state, formAction] = useActionState(validateCoupon, initialState);
 
   useEffect(() => {
     if (state.success) {

@@ -6,14 +6,13 @@ import { z } from "zod";
 
 export async function GET(
   req: NextRequest,
-  {
-    params,
-  }: {
-    params: {
+  props: {
+    params: Promise<{
       addressId: string;
-    };
+    }>;
   }
 ) {
+  const params = await props.params;
   try {
     const address = await prisma.address.findUnique({
       omit: {
@@ -36,14 +35,13 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  {
-    params,
-  }: {
-    params: {
+  props: {
+    params: Promise<{
       addressId: string;
-    };
+    }>;
   }
 ) {
+  const params = await props.params;
   const supabase = await createClient();
   const {
     data: { user },
@@ -119,14 +117,13 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  {
-    params,
-  }: {
-    params: {
+  props: {
+    params: Promise<{
       addressId: string;
-    };
+    }>;
   }
 ) {
+  const params = await props.params;
   try {
     const result = await prisma.address.findUnique({
       where: {

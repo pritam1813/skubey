@@ -128,7 +128,7 @@ export async function updateSession(request: NextRequest) {
   if (user) {
     // Get user's profile with role information
     const response = await fetch(`${getBaseUrl()}/api/auth/user`, {
-      headers: headers(),
+      headers: await headers(),
       cache: "no-store",
     });
     const data = await response.json();

@@ -1,11 +1,12 @@
 import React from "react";
 import { ResendVerifyForm, VerifyEmailForm } from "@/components/Forms";
 
-export default function VerifyEmail({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string };
-}) {
+export default async function VerifyEmail(
+  props: {
+    searchParams: Promise<{ [key: string]: string }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const { email } = searchParams;
 
   return (

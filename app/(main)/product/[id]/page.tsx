@@ -18,15 +18,16 @@ interface ProductResult extends Product {
 }
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined;
-  };
+  }>;
 }
 
-const ProductPage = async ({ params, searchParams }: ProductPageProps) => {
+const ProductPage = async (props: ProductPageProps) => {
+  const params = await props.params;
   const data = await fetch(`${getBaseUrl()}/api/products/${params.id}`);
 
   const product: ProductResult = await data.json();

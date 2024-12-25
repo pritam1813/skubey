@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useActionState } from "react";
 import { getCountries, getStates } from "@/app/utils/countries";
-import { useFormState } from "react-dom";
 import { addAddress, updateAddress } from "@/app/actions";
 import FormErrorMessage from "./FormErrorMessage";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
@@ -37,7 +36,7 @@ interface EditAddressData extends AddressData {
 const AddressForm = ({ address }: { address?: EditAddressData }) => {
   const [countries, setCountries] = useState<CountryState[]>([]);
   const [region, setRegion] = useState<CountryState[]>([]);
-  const [state, formAction] = useFormState(
+  const [state, formAction] = useActionState(
     address ? updateAddress : addAddress,
     initialState
   );

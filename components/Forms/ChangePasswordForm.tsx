@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useActionState } from "react";
 import { updatePassword } from "@/app/actions";
-import { useFormState } from "react-dom";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
 import FormErrorMessage from "./FormErrorMessage";
 import { Toaster } from "react-hot-toast";
@@ -13,7 +12,7 @@ const initialState = {
 };
 
 const ChangePasswordForm = () => {
-  const [state, formAction] = useFormState(updatePassword, initialState);
+  const [state, formAction] = useActionState(updatePassword, initialState);
   const { getFieldError } = useFormErrors(state);
   const formRef = useRef<HTMLFormElement>(null);
   useEffect(() => {

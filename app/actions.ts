@@ -192,7 +192,7 @@ export async function addAddress(
   }
 
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const cookie = headersList.get("cookie");
 
     const addaddress = await fetch(`${getBaseUrl()}/api/auth/user/address`, {
@@ -244,7 +244,7 @@ export async function updateAddress(
   }
 
   try {
-    const headersList = headers();
+    const headersList = await headers();
     const cookie = headersList.get("cookie");
 
     const addaddress = await fetch(
@@ -329,7 +329,7 @@ export async function validateCoupon(
   formData: FormData
 ): Promise<{ error: boolean; message: string; success: boolean }> {
   const couponCode = formData.get("coupon");
-  const headersList = headers();
+  const headersList = await headers();
   const cookie = headersList.get("cookie");
 
   if (!couponCode) {

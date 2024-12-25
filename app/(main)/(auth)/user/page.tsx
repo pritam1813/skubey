@@ -5,7 +5,7 @@ import ThemeButton from "@/components/Buttons/ThemeLinkButton";
 
 export default async function User() {
   const response = await fetch(`${getBaseUrl()}/api/auth/user`, {
-    headers: headers(),
+    headers: await headers(),
     cache: "no-store",
   });
   const data = await response.json();

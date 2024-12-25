@@ -14,7 +14,7 @@ export interface CheckoutAddressData
 
 export default async function CheckOut() {
   const response = await fetch(`${getBaseUrl()}/api/auth/user/address`, {
-    headers: headers(),
+    headers: await headers(),
   });
   const data: CheckoutAddressData[] = await response.json();
 

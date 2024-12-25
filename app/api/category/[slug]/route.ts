@@ -8,8 +8,9 @@ const delay = (ms: number | undefined) =>
 
 export async function GET(
   req: Request,
-  { params }: { params: { slug: string } }
+  props: { params: Promise<{ slug: string }> }
 ) {
+  const params = await props.params;
   try {
     const category = await prisma.category.findUnique({
       where: { slug: params.slug },
@@ -38,6 +39,8 @@ export async function GET(
 
     return NextResponse.json(category);
   } catch (error) {
+    console.log("Error fetching this category:", error);
+
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }
@@ -47,8 +50,9 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     const body = await req.json();
     const validatedData = CategorySchema.partial().parse(body);
@@ -77,8 +81,9 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  props: { params: Promise<{ id: string }> }
 ) {
+  const params = await props.params;
   try {
     // Check if category has children or products
     const category = await prisma.category.findUnique({

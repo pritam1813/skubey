@@ -23,11 +23,12 @@ const limitOptions = [
   { text: "36", value: "36" },
 ];
 
-export default async function Products({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+export default async function Products(
+  props: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const queryString = new URLSearchParams();
   const currentPage = Number(searchParams?.page) || 1;
   const currentLimit = Number(searchParams?.limit) || 9;

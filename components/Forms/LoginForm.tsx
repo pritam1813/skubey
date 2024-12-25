@@ -1,7 +1,6 @@
 "use client";
-import React from "react";
+import React, { useActionState } from "react";
 import Link from "next/link";
-import { useFormState } from "react-dom";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
 import { login } from "@/app/actions";
 import FormErrorMessage from "./FormErrorMessage";
@@ -14,7 +13,7 @@ const initialState = {
 };
 
 const LoginForm = () => {
-  const [state, formAction] = useFormState(login, initialState);
+  const [state, formAction] = useActionState(login, initialState);
   const { getFieldError } = useFormErrors(state);
 
   return (

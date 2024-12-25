@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useActionState } from "react";
 
 import {
   InputOTP,
@@ -9,7 +9,6 @@ import {
 } from "../ui/input-otp";
 import { verifyEmailOTP } from "@/app/actions";
 import { Toaster } from "react-hot-toast";
-import { useFormState } from "react-dom";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
 import { useSearchParams } from "next/navigation";
 
@@ -19,7 +18,7 @@ const initialState = {
 };
 
 const VerifyEmailForm = () => {
-  const [state, formAction] = useFormState(verifyEmailOTP, initialState);
+  const [state, formAction] = useActionState(verifyEmailOTP, initialState);
   useFormErrors(state);
 
   const searchParams = useSearchParams();

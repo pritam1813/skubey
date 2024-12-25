@@ -1,7 +1,6 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useActionState } from "react";
 import "./checkout.scss";
-import { useFormState } from "react-dom";
 import { BillingAddress } from "@/app/actions";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
 import FormErrorMessage from "../FormErrorMessage";
@@ -40,7 +39,7 @@ const BillingForm = ({ addresses }: { addresses: CheckoutAddressData[] }) => {
   const [region, setRegion] = useState<CountryState[]>([]);
   const { inc } = useAccStore((state) => state);
 
-  const [state, formAction] = useFormState(BillingAddress, initialState);
+  const [state, formAction] = useActionState(BillingAddress, initialState);
   const { getFieldError } = useFormErrors(state);
 
   useEffect(() => {

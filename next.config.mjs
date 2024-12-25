@@ -23,7 +23,10 @@ const nextConfig = {
         ],
         // loader: 'custom',
         // loaderFile: './supabase-image-loader.ts',
-    }
+    },
+    sassOptions: {
+        quietDeps: true, // This will silence the deprecation warnings
+      },
 };
 
 export default nextConfig;

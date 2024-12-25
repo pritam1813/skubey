@@ -23,6 +23,13 @@ const AboutUs = async () => {
         width={500}
         height={500}
       />
+      <h2>Local Image</h2>
+      <Image
+        src="/images/banners/banner3.png"
+        alt="Image"
+        width={500}
+        height={500}
+      />
     </div>
   );
 };

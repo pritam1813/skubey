@@ -13,7 +13,7 @@ interface EditAddressProps extends AddressData {
 
 export default async function AddressBook() {
   const response = await fetch(`${getBaseUrl()}/api/auth/user/address`, {
-    headers: headers(),
+    headers: await headers(),
     cache: "no-store",
   });
   const data: EditAddressProps[] = await response.json();

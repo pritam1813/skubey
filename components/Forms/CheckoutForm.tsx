@@ -1,8 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useActionState } from "react";
 import CartAccordions, { useAccStore } from "../Cart/CartAccordions";
 import LinkButtonTwo from "../Buttons/LinkButtonTwo";
-import { useFormState } from "react-dom";
 import { useFormErrors } from "@/app/hooks/useFormErrors";
 import { getCountries, getStates } from "@/app/utils/countries";
 import OrderReviewTable from "../Tables/OrderReviewTable";
@@ -40,7 +39,7 @@ const CheckoutForm = ({ addresses }: { addresses: CheckoutAddressData[] }) => {
   const [region, setRegion] = useState<CountryState[]>([]);
   const { inc } = useAccStore((state) => state);
 
-  const [state, formAction] = useFormState(BillingAddress, initialState);
+  const [state, formAction] = useActionState(BillingAddress, initialState);
   const { getFieldError } = useFormErrors(state);
 
   useEffect(() => {

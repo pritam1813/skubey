@@ -7,6 +7,7 @@ import Image from "next/image";
 import "../Carousel/CarouselStyle.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import supabaseLoader from "@/supabase-image-loader";
 
 const ProductImageViewer = ({
   images,
@@ -47,8 +48,12 @@ const ProductImageViewer = ({
   return (
     <div className="col-sm-6">
       <InnerImageZoom
-        src={mainImage}
-        zoomSrc={mainImage}
+        src={supabaseLoader({
+          src: `products/${mainImage}` || "/products/1.jpg",
+        })}
+        zoomSrc={supabaseLoader({
+          src: `products/${mainImage}` || "/products/1.jpg",
+        })}
         width={920}
         height={1093}
         imgAttributes={{ alt }}
@@ -70,7 +75,9 @@ const ProductImageViewer = ({
                   }}
                 >
                   <Image
-                    src={img}
+                    src={supabaseLoader({
+                      src: `products/${img}` || "/products/1.jpg",
+                    })}
                     alt={`${name} image ${index + 1}`}
                     width={100}
                     height={50}

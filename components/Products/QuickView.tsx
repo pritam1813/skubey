@@ -15,6 +15,7 @@ import { useCartStore } from "@/app/stores/";
 import Link from "next/link";
 import Image from "next/image";
 import Slider from "react-slick";
+import supabaseLoader from "@/supabase-image-loader";
 
 interface QuantityInputProps {
   initialValue?: number;
@@ -120,13 +121,13 @@ const QuickView = ({
               <div id="thumbnail">
                 <div id="productimage" className="tw-mb-5">
                   <Link href={quickView.product ? quickView.product.slug : "/"}>
-                    <Image
+                    {/* <Image
                       src={product ? `${product.images[0]}` : "/products/1.jpg"}
                       alt={product ? `${product.name}` : ""}
                       width={355}
                       height={421}
                       className="tw-w-full tw-h-auto"
-                    />
+                    /> */}
                   </Link>
                 </div>
 
@@ -147,7 +148,10 @@ const QuickView = ({
                     {Array.from({ length: 5 }, (_, i) => (
                       <div key={i}>
                         <Image
-                          src={`/products/${i + 1}.jpg`}
+                          src={supabaseLoader({
+                            src: `products/${i}.jpg` || "/products/1.jpg",
+                          })}
+                          //src={`/products/${i + 1}.jpg`}
                           alt={`Product ${i + 1} `}
                           width={66}
                           height={79}

@@ -5,6 +5,7 @@ import { Product } from "@/app/types/product";
 import { Rating as ReactRating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import ProductPrice from "../ProductCard/ProductPrice";
+import supabaseLoader from "@/supabase-image-loader";
 
 export type ProductThumbnailProps = Pick<
   Product,
@@ -17,7 +18,9 @@ const ProductsThumbnail = ({ product }: { product: ProductThumbnailProps }) => {
     <div className="tw-flex tw-flex-row tw-space-x-3">
       <div className="tw-inline-block tw-float-none tw-border-2 tw-border-solid tw-border-primaryHover tw-rounded-md">
         <Image
-          src={`${images[0]}`}
+          src={supabaseLoader({
+            src: `products/${images[0]}` || "/products/1.jpg",
+          })}
           alt={`${name} Thumbnail`}
           width={60}
           height={71}

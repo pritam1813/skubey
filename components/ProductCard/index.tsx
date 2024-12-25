@@ -8,6 +8,7 @@ import UtilityButtons from "./UtilityButtons";
 import { Rating } from "@smastrom/react-rating";
 import ProductPrice from "./ProductPrice";
 import Skeleton from "react-loading-skeleton";
+import supabaseLoader from "@/supabase-image-loader";
 
 const ProductCard = ({
   product,
@@ -44,11 +45,14 @@ const ProductCard = ({
             ) : (
               <Link href={`/product/${product?.id}`}>
                 <Image
-                  src={`${product?.images[0]}`}
+                  src={supabaseLoader({
+                    src: `products/${product?.images[0]}` || "/products/1.jpg",
+                  })}
                   alt={`${product?.name} card image`}
                   className="img-fluid"
                   width={920}
                   height={1093}
+                  loading="lazy"
                 />
               </Link>
             )}

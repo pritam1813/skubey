@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import Image from "next/image";
-import { getBaseUrl } from "@/app/utils/getBaseUrl";
 import supabaseLoader from "@/supabase-image-loader";
 
 export const metadata: Metadata = {
@@ -19,7 +18,7 @@ const AboutUs = async () => {
     <div>
       AboutUs
       <Image
-        src={supabaseLoader({ src: "products/2.jpg" })}
+        src={supabaseLoader({ src: "products/19.jpg" })}
         alt="Image"
         width={500}
         height={500}

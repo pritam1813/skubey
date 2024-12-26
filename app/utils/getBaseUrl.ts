@@ -4,9 +4,9 @@ export function getBaseUrl(): string {
     return "";
   }
 
-  if (process.env.VERCEL_URL) {
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
     // Reference: https://vercel.com/docs/environment-variables
-    return `https://${process.env.VERCEL_URL}`;
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
   }
 
   // Development environment

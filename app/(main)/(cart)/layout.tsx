@@ -8,7 +8,7 @@ export default function CartLayout({ children }: { children: ReactNode }) {
       <Bradcrumb />
       <div className="container">
         <div className="row">
-          <ProductSidebar />
+          {/* <ProductSidebar /> */}
           {children}
         </div>
       </div>

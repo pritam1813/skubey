@@ -98,7 +98,7 @@ const ProductTable = () => {
     fetcher
   );
 
-  console.log("Products: ", data);
+  console.log("Products on Products Table: ", data);
 
   // Fetch categories for the form
   const { data: categoriesData } = useSWR<CategoriesApiResponse>(

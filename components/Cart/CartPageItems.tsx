@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useCartStore } from "@/app/stores";
+import { useCartStore } from "@/app/stores/cartStore";
 import useStore from "@/app/stores/useStore";
 import CartItemsTable from "@/components/Cart/CartItemsTable";
 import CartAccordions from "@/components/Cart/CartAccordions";
@@ -9,7 +9,7 @@ import CartTotal from "@/components/Cart/CartTotal";
 import LinkButtonTwo from "@/components/Buttons/LinkButtonTwo";
 
 const CartPageItems = () => {
-  const cart = useStore(useCartStore, (state) => state.cart);
+  const cart = useStore(useCartStore, (state) => state.items);
 
   return (
     <>

@@ -9,11 +9,11 @@ import {
   faHeart,
   faShuffle,
 } from "@fortawesome/free-solid-svg-icons";
-import { useCartStore } from "@/app/stores/";
+import { useCartStore } from "@/app/stores/cartStore";
 import { Product } from "@/app/types";
 
 const UtilityButtons = ({ product }: { product: Product }) => {
-  const { addToCart, setQuickViewProduct } = useCartStore();
+  const addToCart = useCartStore((state) => state.addItem);
 
   // const {
   //   id,
@@ -32,16 +32,17 @@ const UtilityButtons = ({ product }: { product: Product }) => {
       id: 1,
       icon: faBagShopping,
       title: "Add to Cart",
-      link: "#",
+
       onClickHandler: () => {
-        addToCart(product);
+        //addToCart(product);
+        addToCart({ ...product, imageUrl: product.images[0] });
       },
     },
     {
       id: 2,
       icon: faHeart,
       title: "Add to Wishlist",
-      link: "#",
+
       onClickHandler: () => {
         console.log("Add to Wishlist");
       },
@@ -50,7 +51,7 @@ const UtilityButtons = ({ product }: { product: Product }) => {
       id: 3,
       icon: faEye,
       title: "Quick View",
-      link: "#",
+
       onClickHandler: () => {
         // setQuickViewProduct({
         //   id,
@@ -71,7 +72,7 @@ const UtilityButtons = ({ product }: { product: Product }) => {
       id: 4,
       icon: faShuffle,
       title: "Compare",
-      link: "#",
+
       onClickHandler: () => {
         console.log("compare");
       },
@@ -93,6 +94,7 @@ const UtilityButtons = ({ product }: { product: Product }) => {
           <FontAwesomeIcon icon={button.icon} />
         </button>
       ))}
+
       {/* <Link
         href={`/product/${id}`}
         className="tw-w-7.5 tw-h-7.5 lg:tw-w-10 lg:tw-h-10 xl:tw-h-[38px] xl:tw-w-[38px] tw-px-2.5 tw-py-2 tw-text-sm lg:tw-text-base tw-bg-secondary hover:tw-bg-primaryHover tw-text-primary tw-rounded-full tw-ease-linear tw-duration-500 tw-transition tw-shadow-card"

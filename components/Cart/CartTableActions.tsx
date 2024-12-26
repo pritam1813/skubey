@@ -9,19 +9,19 @@ import {
   TooltipTrigger,
 } from "../ui/tooltip";
 import { TooltipArrow } from "@radix-ui/react-tooltip";
-import { useCartStore } from "@/app/stores";
-import type { Product } from "@/app/types";
+import { CartItem, useCartStore } from "@/app/stores/cartStore";
 import toast, { Toaster } from "react-hot-toast";
 
 const CartTableActions = ({
   product,
   initialQuantity,
 }: {
-  product: Product;
+  product: CartItem;
   initialQuantity: number;
 }) => {
   const [quantity, setQuantity] = useState(initialQuantity);
-  const { updateQuantity, removeFromCart } = useCartStore((state) => state);
+  const removeFromCart = useCartStore((state) => state.removeItem);
+  const updateQuantity = useCartStore((state) => state.updateQuantity);
   let minValue = 0;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

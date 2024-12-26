@@ -4,18 +4,18 @@ import { faCartShopping, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Image from "next/image";
-import { useCartStore } from "@/app/stores/";
+import { useCartStore } from "@/app/stores/cartStore";
 import AnimateHeight from "react-animate-height";
 import useCurrencyStore from "@/app/stores/currencyStore";
 import { formatCurrency } from "@/app/utils/currency";
+import supabaseLoader from "@/supabase-image-loader";
 
 const HeaderCart = () => {
   const [headerCartDropDown, setHeaderCartDropDown] = useState(false);
   const [height, setHeight] = useState<string | number>(0);
-  //const { items, removeItem, getTotalPrice } = useCartStore((state) => state);
-  const { cart, getTotalPrice, removeFromCart } = useCartStore(
-    (state) => state
-  );
+  const cart = useCartStore((state) => state.items);
+  const removeFromCart = useCartStore((state) => state.removeItem);
+  const getTotalPrice = useCartStore((state) => state.getTotalPrice);
   const { currency, exchangeRates } = useCurrencyStore((state) => state);
   const fallbackImageUrl = "/products/1.jpg";
   const gstontotal = (18 / 100) * getTotalPrice();
@@ -89,7 +89,11 @@ const HeaderCart = () => {
                           <td className="tw-p-0 tw-w-[70px]">
                             <Link href={`product/${item.id}`}>
                               <Image
-                                src={item.images[0] || fallbackImageUrl}
+                                src={supabaseLoader({
+                                  src:
+                                    `products/${item.imageUrl}` ||
+                                    fallbackImageUrl,
+                                })}
                                 alt={`${item.name} + thumbnail image`}
                                 width={60}
                                 height={71}

@@ -28,11 +28,19 @@ interface ProductPageProps {
 
 const ProductPage = async (props: ProductPageProps) => {
   const params = await props.params;
+  if (process.env.NODE_ENV === "production")
+    console.log("production params: ", params);
+  if (process.env.NODE_ENV === "development")
+    console.log("development params: ", params);
+
+  console.log("Base URL: ", getBaseUrl());
+
   const data = await fetch(`${getBaseUrl()}/api/products/${params.id}`);
 
   const product: ProductResult = await data.json();
+  // console.log("product", product);
 
-  if (!product || product.error) notFound();
+  // if (!product || product.error) notFound();
 
   return (
     <>
@@ -103,7 +111,7 @@ const ProductPage = async (props: ProductPageProps) => {
                           availability:
                         </span>
                         <span className="tw-text-secondaryLight tw-no-underline tw-font-normal">
-                          {product.stock ? "In Stock" : "Out of Stock"}
+                          {/* {product.stock ? "In Stock" : "Out of Stock"} */}
                         </span>
                       </li>
                     </ul>

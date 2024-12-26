@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { type Product } from "@/app/types/product";
+import { Product } from "@/app/types/product";
 import { getBaseUrl } from "@/app/utils/getBaseUrl";
 import Breadcrumb from "@/components/Breadcrumb";
 import ProductSidebar from "@/components/SidebarMenu/ProductSidebar";
@@ -8,6 +8,7 @@ import { faList, faTh } from "@fortawesome/free-solid-svg-icons";
 import CustomSelect from "@/components/Dropdown/CustomSelect";
 import ProductCard from "@/components/ProductCard";
 import PaginationMain from "@/components/PaginationMain";
+import { notFound } from "next/navigation";
 
 const sortOptions = [
   { text: "Price: Low to High", value: ["price", "asc"] },
@@ -22,7 +23,7 @@ const limitOptions = [
   { text: "36", value: "36" },
 ];
 
-export default async function Product(props: {
+export default async function Products(props: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const searchParams = await props.searchParams;
@@ -42,6 +43,13 @@ export default async function Product(props: {
   const response = await fetch(
     `${getBaseUrl()}/api/products?${queryString.toString()}`
   );
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    console.log("Error", error);
+
+    notFound();
+  }
 
   const data: {
     products: Product[];
@@ -120,11 +128,6 @@ export default async function Product(props: {
               fallback={<div>loading</div>}
             >
               <div id="category_row" className="row">
-                {data.products.length === 0 && (
-                  <div className="tw-text-center tw-mb-4">
-                    Product not found
-                  </div>
-                )}
                 {data.products.map((product, index) => (
                   <ProductCard
                     product={product}

@@ -14,15 +14,16 @@ const AboutUs = async () => {
 
   // const { data } = await respose.json();
   // console.log(data);
+
+  // let imageSrc = supabaseLoader({
+  //   src: `products/${product?.images[0]}`,
+  // });
+
+  let imageSrc = "/products/1.jpg";
   return (
     <div>
       AboutUs
-      <Image
-        src={supabaseLoader({ src: "products/19.jpg" })}
-        alt="Image"
-        width={500}
-        height={500}
-      />
+      <Image src={imageSrc} alt="Image" width={500} height={500} />
       <h2>Local Image</h2>
       <Image
         src="/images/banners/banner3.png"

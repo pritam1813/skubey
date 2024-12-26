@@ -9,7 +9,7 @@ import QuickView from "@/components/Products/QuickView";
 
 export default function Home() {
   return (
-    <main>
+    <main id="Home Page Main">
       <Carousel />
       <ServiceBox />
       <Products />

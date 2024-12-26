@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { useCartStore } from "@/app/stores";
+import { useCartStore } from "@/app/stores/cartStore";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -10,9 +10,10 @@ import useCurrencyStore, {
   defaultExchangeRates,
 } from "@/app/stores/currencyStore";
 import { formatCurrency } from "@/app/utils/currency";
+import supabaseLoader from "@/supabase-image-loader";
 
 const CartItemsTable = () => {
-  const cartState = useStore(useCartStore, (state) => state);
+  const items = useCartStore((state) => state.items);
 
   const currencyState = useStore(useCurrencyStore, (state) => state);
   let currency = currencyState?.currency || "INR";
@@ -30,7 +31,7 @@ const CartItemsTable = () => {
           </tr>
         </thead>
         <tbody>
-          {cartState?.cart.map((item) => (
+          {items.map((item) => (
             <tr
               key={item.id}
               className="[&>*]:tw-align-middle [&>*]:tw-text-center"
@@ -38,7 +39,9 @@ const CartItemsTable = () => {
               <td>
                 <Link href={`/product/${item.id}`} className="tw-no-underline">
                   <Image
-                    src={item.images[0]}
+                    src={supabaseLoader({
+                      src: `products/${item.imageUrl}` || "/products/1.jpg",
+                    })}
                     alt={item.name}
                     width={60}
                     height={71}

@@ -23,8 +23,9 @@ const ProductCard = ({
     src: `products/${product?.images[0]}`,
   });
 
-  // Remove later
-  console.log("ProductCard -> imageSrc: ", imageSrc);
+  // let imageSrc = "/products/1.jpg";
+
+  //console.log("product card image src: ", imageSrc);
 
   return (
     <div className={columnsStyle}>
@@ -40,9 +41,6 @@ const ProductCard = ({
               <Link href={`/product/${product?.id}`}>
                 <Image
                   src={imageSrc}
-                  onError={(e) => {
-                    e.currentTarget.src = "/products/1.jpg";
-                  }}
                   alt={`${product?.name} card image`}
                   className="img-fluid"
                   width={920}

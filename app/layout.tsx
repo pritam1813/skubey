@@ -3,6 +3,7 @@ import { Merienda } from "next/font/google";
 import "./globals.css";
 
 const merienda = Merienda({
+  variable: "--font-merienda",
   subsets: ["latin"],
 });
 
@@ -18,7 +19,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={merienda.className}>{children}</body>
+      <body className={`${merienda.variable} antialiased`}>{children}</body>
     </html>
   );
 }

@@ -3,8 +3,13 @@ import prisma from "@/prisma/db";
 import { z } from "zod";
 import { ProductSchema } from "@/app/types/product";
 
-export async function GET(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function GET(
+  req: Request,
+  props: { params: Promise<{ id: string }> }
+) {
   const params = await props.params;
+  console.log("product fetch params backend: ", params);
+
   try {
     const product = await prisma.product.findUnique({
       where: { id: params.id },
@@ -45,7 +50,10 @@ export async function GET(req: Request, props: { params: Promise<{ id: string }>
   }
 }
 
-export async function PATCH(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function PATCH(
+  req: Request,
+  props: { params: Promise<{ id: string }> }
+) {
   const params = await props.params;
   try {
     const body = await req.json();
@@ -78,7 +86,10 @@ export async function PATCH(req: Request, props: { params: Promise<{ id: string 
   }
 }
 
-export async function DELETE(req: Request, props: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  req: Request,
+  props: { params: Promise<{ id: string }> }
+) {
   const params = await props.params;
   try {
     // Check if product has any associated orders

@@ -92,7 +92,7 @@ export default function Bradcrumb() {
         src="/images/banners/breadcrumb.jpg"
         alt="breadcrumb background image"
         fill
-        priority={true}
+        priority
         className="tw-object-cover"
       />
     </div>

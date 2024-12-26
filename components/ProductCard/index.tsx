@@ -19,9 +19,12 @@ const ProductCard = ({
   columnsStyle: string;
   isLoading?: boolean;
 }) => {
-  // console.log(
-  //   `Product: ${product?.name} Discount: ${Number(product?.priceDiscount)}`
-  // );
+  let imageSrc = supabaseLoader({
+    src: `products/${product?.images[0]}`,
+  });
+
+  // Remove later
+  console.log("ProductCard -> imageSrc: ", imageSrc);
 
   return (
     <div className={columnsStyle}>
@@ -31,23 +34,15 @@ const ProductCard = ({
             id="imageSection"
             className="tw-bg-backgroundColor tw-relative tw-text-center tw-overflow-hidden tw-rounded-tl-cardcustom tw-rounded-tr-cardcustom tw-border-8 tw-border-solid tw-border-secondary tw-transition-all tw-duration-500 group-hover:tw-border-secondaryHover"
           >
-            {/* <Link href={`/product/${id}`}>
-              <Image
-                src={`${images[0]}`}
-                alt={`${name} card image`}
-                className="img-fluid"
-                width={920}
-                height={1093}
-              />
-            </Link> */}
             {isLoading ? (
               <Skeleton height={300} />
             ) : (
               <Link href={`/product/${product?.id}`}>
                 <Image
-                  src={supabaseLoader({
-                    src: `products/${product?.images[0]}` || "/products/1.jpg",
-                  })}
+                  src={imageSrc}
+                  onError={(e) => {
+                    e.currentTarget.src = "/products/1.jpg";
+                  }}
                   alt={`${product?.name} card image`}
                   className="img-fluid"
                   width={920}

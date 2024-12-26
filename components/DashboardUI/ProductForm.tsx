@@ -54,11 +54,12 @@ import {
 
 import "./dashboard.scss";
 import Image from "next/image";
+import { env } from "@/app/utils/env";
 
 // Initialize Supabase client
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  env.NEXT_PUBLIC_SUPABASE_URL,
+  env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 );
 
 const ProductForm = () => {

@@ -1,5 +1,10 @@
 name: CICD Workflow
 
+permissions:
+  contents: read
+  pull-requests: read
+  deployments: write
+
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -14,6 +19,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Add job-level permissions if needed
+    permissions:
+      contents: read
     strategy:
       matrix:
         node-version: [20]
@@ -40,6 +48,9 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    # Add job-level permissions
+    permissions:
+      contents: read
     strategy:
       matrix:
         node-version: [20]
@@ -69,6 +80,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    # Add job-level permissions for deployment
+    permissions:
+      contents: read
+      deployments: write
     if: github.ref == 'refs/heads/main'
     needs: [build, test]
     steps:

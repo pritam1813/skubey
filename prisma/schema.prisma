@@ -8,18 +8,20 @@ datasource db {
   provider  = "postgresql"
   url       = env("DATABASE_URL")
   directUrl = env("DIRECT_URL")
-  schemas   = ["public", "auth"]
+  schemas   = ["public"]
 }
 
-// This model mirrors Supabase's auth.users table
 model User {
-  id        String   @id // Maps to Supabase user.id (UUID)
-  email     String   @unique // Maps to Supabase user.email
-  createdAt DateTime @default(now()) // Maps to Supabase user.created_at
-  updatedAt DateTime @updatedAt
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String
+  emailVerified DateTime? @map("email_verified")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
   // Additional user profile information
-  profile Profile? // One-to-one relation with profile
+  profile  Profile? // One-to-one relation with profile
+  sessions Session[]
 
   // E-commerce related relations
   orders        Order[]
@@ -29,30 +31,51 @@ model User {
   addresses     Address[]
 
   @@map("users")
-  @@schema("auth")
+  @@schema("public")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+  @@schema("public")
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+  @@schema("public")
 }
 
 // Separate profile model for additional user information
 model Profile {
-  id          String  @id @default(cuid())
-  userId      String  @unique // References Supabase user.id
-  user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  firstName   String?
-  lastName    String?
-  phoneNumber String?
-  role        Role    @default(CUSTOMER)
-  avatarUrl   String?
-  metadata    Json? // Additional profile data
+  id        String  @id @default(cuid())
+  userId    String  @unique // References Supabase user.id
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName String?
+  lastName  String?
+  phone     String?
+  role      Role    @default(CUSTOMER)
+  avatarUrl String?
+  metadata  Json? // Additional profile data
 
   @@map("profiles")
-  @@schema("auth")
+  @@schema("public")
 }
 
 enum Role {
   ADMIN
   CUSTOMER
 
-  @@schema("auth")
+  @@schema("public")
 }
 
 model Product {
@@ -171,7 +194,7 @@ model Order {
   paymentId     String?
 
   @@map("orders")
-  @@schema("auth")
+  @@schema("public")
 }
 
 enum OrderStatus {
@@ -181,7 +204,7 @@ enum OrderStatus {
   DELIVERED
   CANCELLED
 
-  @@schema("auth")
+  @@schema("public")
 }
 
 enum PaymentStatus {
@@ -190,7 +213,7 @@ enum PaymentStatus {
   FAILED
   REFUNDED
 
-  @@schema("auth")
+  @@schema("public")
 }
 
 model OrderItem {
@@ -203,7 +226,7 @@ model OrderItem {
   price     Decimal @db.Decimal(10, 2)
 
   @@map("order_items")
-  @@schema("auth")
+  @@schema("public")
 }
 
 model CartItem {
@@ -215,7 +238,7 @@ model CartItem {
   quantity  Int
 
   @@map("cart_items")
-  @@schema("auth")
+  @@schema("public")
 }
 
 model WishlistItem {
@@ -227,7 +250,7 @@ model WishlistItem {
   createdAt DateTime @default(now())
 
   @@map("wishlist_items")
-  @@schema("auth")
+  @@schema("public")
 }
 
 model Address {
@@ -248,7 +271,7 @@ model Address {
   orders      Order[]
 
   @@map("addresses")
-  @@schema("auth")
+  @@schema("public")
 }
 
 model Review {
@@ -263,5 +286,5 @@ model Review {
   updatedAt DateTime @updatedAt
 
   @@map("reviews")
-  @@schema("auth")
+  @@schema("public")
 }

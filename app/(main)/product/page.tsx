@@ -39,7 +39,7 @@ export default async function Product(props: {
     }
   });
 
-  console.log("Product Page Base URL: ", getBaseUrl());
+  // console.log("Product Page Base URL: ", getBaseUrl());
 
   const response = await fetch(
     `${getBaseUrl()}/api/products?${queryString.toString()}`

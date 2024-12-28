@@ -1,84 +1,81 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { createClient } from "@/app/utils/supabase/server";
 import prisma from "@/prisma/db";
 import { z } from "zod";
+import { hashPassword } from "@/utils/password";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { VerificationService } from "@/lib/verification";
 
-const PrismaUserSchema = z.object({
-  id: z.string().uuid(),
-  email: z.string().email(),
-  firstName: z.string().optional(),
-  lastName: z.string().optional(),
-  phoneNumber: z.string().regex(/^\d{10}$/),
-  newsletter: z.enum(["yes", "no"]).default("yes").optional(),
-});
-
-const SupabaseUserSchema = z.object({
+const UserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
   phone: z.string().regex(/^\d{10}$/),
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  newsletter: z.enum(["yes", "no"]).default("yes").optional(),
 });
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
+    const parsedData = UserSchema.safeParse(body);
 
-    const supabaseUserData = SupabaseUserSchema.parse(body);
-
-    const existingUser = await prisma.user.findUnique({
-      where: { email: supabaseUserData.email },
-    });
-
-    if (existingUser) {
+    if (!parsedData.success) {
       return NextResponse.json(
-        { error: "User already exists" },
-        { status: 409 }
+        { error: "Validation failed", issues: parsedData.error.issues },
+        { status: 400 }
       );
     }
 
-    const supabase = await createClient();
-    const { error, data } = await supabase.auth.signUp({
-      ...supabaseUserData,
-    });
+    const { email, phone, firstName, lastName, newsletter } = parsedData.data;
+    const password = await hashPassword(parsedData.data.password);
 
-    // console.log(data);
-
-    if (error) {
-      console.log("Error: ", error);
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
-
-    const prismaUserData = PrismaUserSchema.parse({
-      ...body,
-      id: data.user?.id,
-      phoneNumber: body.phone,
-    });
-
-    const { id, email, firstName, lastName, phoneNumber, newsletter } =
-      prismaUserData;
-
-    const user = await prisma.user.create({
-      data: {
-        id,
-        email,
-        profile: {
-          create: {
-            firstName,
-            lastName,
-            phoneNumber,
-            metadata: {
-              newsletter,
+    try {
+      const user = await prisma.user.create({
+        data: {
+          email,
+          password,
+          profile: {
+            create: {
+              phone,
+              firstName,
+              lastName,
+              metadata: {
+                newsletter,
+              },
             },
           },
         },
-      },
-      include: {
-        profile: true,
-      },
-    });
+      });
 
-    return NextResponse.json({ message: "Success", user }, { status: 201 });
+      const verificationData = await VerificationService.createVerification(
+        user.email
+      );
+      await VerificationService.sendVerificationEmail(
+        user.email,
+        verificationData
+      );
+
+      return NextResponse.json(
+        {
+          message: "Success. Please check your email to verify your account.",
+          user: { ...user, password: undefined },
+        },
+        { status: 201 }
+      );
+    } catch (e) {
+      if (e instanceof PrismaClientKnownRequestError) {
+        if (e.code === "P2002") {
+          // Unique constraint violation
+          return NextResponse.json(
+            { error: "User already exists" },
+            { status: 409 }
+          );
+        }
+      }
+      throw e; // Re-throw other database errors
+    }
   } catch (error) {
-    console.log("Server Side Error : ", error);
+    console.error("Server Side Error: ", error);
     return NextResponse.json(
       { error: "Internal Server Error" },
       { status: 500 }

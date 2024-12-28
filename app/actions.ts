@@ -70,25 +70,34 @@ export async function verifyEmailOTP(prevState: any, formData: FormData) {
         message: "Invalid Request",
       };
     }
-    const supabase = await createClient();
-    const { data, error } = await supabase.auth.verifyOtp({
-      email: result.data.email,
-      token: result.data.otp,
-      type: "signup",
+    // const supabase = await createClient();
+    // const { data, error } = await supabase.auth.verifyOtp({
+    //   email: result.data.email,
+    //   token: result.data.otp,
+    //   type: "signup",
+    // });
+    const { email, otp } = result.data;
+    const verifyemail = await fetch(`${getBaseUrl()}/api/auth/verify`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, otp }),
     });
 
     // console.log("DAta After Otp: ", data);
     // console.log("Error after otp: ", error);
+    const { error, message } = await verifyemail.json();
 
-    if (error) {
+    if (error !== null) {
       return {
         success: false,
-        message:
-          error.code === "otp_expired"
-            ? "OTP has expired or is invalid"
-            : "Invalid Request",
+        message: error,
       };
     }
+
+    return {
+      success: true,
+      message,
+    };
   } catch (error) {
     console.log(error);
     return {
@@ -96,8 +105,6 @@ export async function verifyEmailOTP(prevState: any, formData: FormData) {
       message: "Something went wrong",
     };
   }
-  revalidatePath("/", "layout");
-  redirect("/user");
 }
 
 export async function resendVerification(formData: FormData) {

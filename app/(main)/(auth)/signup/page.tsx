@@ -1,16 +1,14 @@
 import React from "react";
 import Registration from "@/components/Forms/Registration";
 import Link from "next/link";
-import { createClient } from "@/app/utils/supabase/server";
 import { redirect } from "next/navigation";
+import { verifySession } from "@/app/lib/dal";
 
 export default async function SignUp() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const session = await verifySession();
+  //console.log(isAuth);
 
-  if (user) {
+  if (session?.isAuth) {
     return redirect("/user");
   }
   return (

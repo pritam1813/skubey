@@ -12,7 +12,10 @@ import { getBaseUrl } from "./utils/getBaseUrl";
 import { redirect } from "next/navigation";
 import { createClient } from "./utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
+import { createSession } from "./lib/session";
+import prisma from "@/prisma/db";
+import { verifyPassword } from "@/utils/password";
 
 export async function createUser(
   prevState: any,
@@ -56,7 +59,8 @@ export async function createUser(
       code: "api",
     };
   }
-  redirect(`/verifyemail?email=${result.data.email}`);
+  // redirect(`/verifyemail?email=${result.data.email}`);
+  redirect("/login");
 }
 
 export async function verifyEmailOTP(prevState: any, formData: FormData) {
@@ -152,34 +156,36 @@ export async function login(
     };
   }
 
-  try {
-    const supabase = await createClient();
+  const user = await prisma.user.findUnique({
+    where: { email: result.data.email },
+  });
+  // console.log(user);
 
-    const { data, error } = await supabase.auth.signInWithPassword(result.data);
-    // console.log("data: ", data);
+  if (user) {
+    const passcheck = await verifyPassword(result.data.password, user.password);
+    // console.log(passcheck);
 
-    if (error) {
-      return {
-        success: false,
-        code: "api",
-        message: error.message || "Something went wrong",
-      };
+    if (passcheck) {
+      await createSession(user.id);
+      //window.dispatchEvent(new Event("auth-state-change"));
+      redirect("/user");
     }
-  } catch (error) {
-    console.log(error);
-    return {
-      success: false,
-      code: "api",
-    };
   }
-  revalidatePath("/", "layout");
-  redirect("/user");
+
+  return {
+    success: false,
+    code: "api",
+    message: "Invalid Credentials",
+  };
 }
 
 export async function logout() {
-  const supabase = await createClient();
-  await supabase.auth.signOut();
-  redirect("/login");
+  // const supabase = await createClient();
+  // await supabase.auth.signOut();
+  // redirect("/login");
+  (await cookies()).delete("session");
+  revalidatePath("/", "layout");
+  redirect("/");
 }
 
 // User's Address

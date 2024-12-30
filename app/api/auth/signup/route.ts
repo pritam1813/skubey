@@ -3,7 +3,7 @@ import prisma from "@/prisma/db";
 import { z } from "zod";
 import { hashPassword } from "@/utils/password";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { VerificationService } from "@/lib/verification";
+// import { VerificationService } from "@/lib/verification";
 
 const UserSchema = z.object({
   email: z.string().email(),
@@ -47,13 +47,13 @@ export async function POST(request: NextRequest) {
         },
       });
 
-      const verificationData = await VerificationService.createVerification(
-        user.email
-      );
-      await VerificationService.sendVerificationEmail(
-        user.email,
-        verificationData
-      );
+      // const verificationData = await VerificationService.createVerification(
+      //   user.email
+      // );
+      // await VerificationService.sendVerificationEmail(
+      //   user.email,
+      //   verificationData
+      // );
 
       return NextResponse.json(
         {

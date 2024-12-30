@@ -1,30 +1,38 @@
-import { createClient } from "@/app/utils/supabase/server";
 import prisma from "@/prisma/db";
+import { verifyPassword } from "@/utils/password";
 import { NextResponse } from "next/server";
+import { z } from "zod";
 
-export async function GET(request: Request) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  console.log("User: ", user);
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const parsedCredentials = z
+      .object({ email: z.string().email(), password: z.string().min(8) })
+      .safeParse(body);
+    let user = null;
+    if (parsedCredentials.success) {
+      const { email, password } = parsedCredentials.data;
+      user = await prisma.user.findUnique({ where: { email } });
+      if (!user)
+        return NextResponse.json(
+          { error: "Invalid Credentials" },
+          { status: 401 }
+        );
 
-  if (!user) {
-    return NextResponse.json(
-      { success: false, message: "Unauthorized" },
-      { status: 401 }
-    );
+      const passwordMatch = await verifyPassword(password, user.password);
+      if (passwordMatch) {
+        console.log(user);
+        return NextResponse.json(user, { status: 200 });
+      }
+      return NextResponse.json(
+        { error: "Invalid Credentials" },
+        { status: 401 }
+      );
+    }
+    return NextResponse.json({ error: "Invalid Request" }, { status: 403 });
+  } catch (error) {
+    return NextResponse.json({ status: 500 });
   }
-  const result = await prisma.user.findUnique({
-    where: {
-      id: user.id,
-    },
-    include: {
-      profile: true,
-    },
-  });
-
-  return NextResponse.json({ success: true, result }, { status: 200 });
 }
 
 export async function PATCH(request: Request) {

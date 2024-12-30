@@ -27,6 +27,9 @@ const nextConfig = {
   sassOptions: {
     quietDeps: true, // This will silence the deprecation warnings
   },
+  env: {
+    ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
+  },
   serverExternalPackages: ["@node-rs/argon2", "argon2"],
 };
 

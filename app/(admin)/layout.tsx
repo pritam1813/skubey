@@ -1,8 +1,23 @@
 import React from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { getSessionUser, verifySession } from "../lib/dal";
+import { redirect } from "next/navigation";
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await verifySession();
+  if (!session?.isAuth) {
+    redirect("/login");
+  }
+  const data = await getSessionUser();
+  if (data?.user.profile.role !== "ADMIN") {
+    redirect("/user");
+  }
+
   return (
     <SidebarProvider>
       <AppSidebar />

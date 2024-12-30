@@ -31,6 +31,7 @@ import {
 import { createClient } from "@/app/utils/supabase/client";
 import { useRouter } from "next/navigation";
 import { User } from "@supabase/supabase-js";
+import { logout } from "@/app/actions";
 
 // Modified menu items with submenu support
 const items = [
@@ -150,7 +151,9 @@ export function AppSidebar() {
   }, [supabase]);
 
   const handleSignOut = async () => {
-    await supabase.auth.signOut();
+    // await supabase.auth.signOut();
+
+    await logout();
 
     router.push("/");
   };
